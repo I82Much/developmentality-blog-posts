@@ -1,13 +1,74 @@
 2011-02-07
 
 # TextMate: How to have code syntax highlighting within an html view
-I've blogged about [TextMate][1] a few times in the past, and with good reason - it's an extremely versatile, light weight, powerful text editor for the Mac.  One great feature of TextMate is its extreme customizability.  
+I've blogged about [TextMate][1] a few times in the past, and with good reason - it's an extremely versatile, light weight, powerful text editor for the Mac.  One great feature of TextMate is its extreme customizability.  Today I'm going to show how to modify one of the TextMate language files in order to add language support nested within an HTML view.
 
-## Introduction
+By means of introduction, I write some of my blog posts in Markdown, convert the post to HTML, and use that as the body of my posts.  [WordPress has the ability to syntax highlight][2] and provide a nice monospaced version of sourcecode within a post if it's delimited by `[sourcecode language="language"][/sourcecode]` tags.  While the sourcecode comes out fine in the final post, it would be nice to have the syntax highlighting show up from within the Markdown view (i.e. while one is composing a blog post).  Let's get started.
 
-I write some of my blog posts in Markdown, convert the post to HTML, and use that as the body of my posts.  [WordPress has the ability to syntax highlight][2] and provide a nice monospaced version of sourcecode within a post if it's delimited by `[sourcecode language="language"][/sourcecode]` tags.  While the sourcecode comes out fine in the final post, it would be nice to have the syntax highlighting show up from within the Markdown view (i.e. while one is composing a blog post).  I'm going to show you how to do that by modifying one of the TextMate language files.
 
 ## Solution
+The language support in TextMate is extremely powerful, but it's a little complicated to get started.  In essence, a language defines a series of rules mapping patterns to scopes.  For instance, the Java language grammar defines a scope for comments, a scope for control characters, and so on and so forth.  The scope is extremely important for a few reasons.  The first is that it determines whether text is spellchecked or not (a top level scope of `source` is not spell checked; one that is `text` will be).  Secondly, it allows syntax highlighting, as certain scopes are associated with certain colors.  Finally, snippets can be targeted to only run when within a certain scope.  (See this article on [Scope selectors][3] for more.) For instance, all the Java snippets are defined as only being active in the `source.java` scope.
+
+[!An example of a Java snippet that's only accessible when the cursor is within something identified as `source.java`](http://grab.by/grabs/2fd35eadd62ad1859bf1d8921c38c285.png)
+
+As an aside, you might wonder why the scope is called `source.java` as opposed to `java.scope`.  The reason is that some scope selectors can target the more general case (`scope`), whereas those concerned with java can target the more specific scope (`java.scope`).
+
+Since someone has already done the hard work of creating a language definition for Java and for creating all of the snippets that support it, we want to leverage this body of work.  All we need to do is ensure that text between the `[sourcecode language="java"][/sourcecode]` tags is considered to be part of the source.java scope, and everything will just work.
+
+First, let us look at a sample grammar file.  Open up the HTML language definition file by going to Bundles -> Bundle Editor -> Edit Languages, or via the shortcut ⌃ ⌥ ⌘L, and choose the HTML option.  You'll be presented with a rather inscrutable, unstyled document to the right.  The first thing you should do, and which I found out the hard way, is copy all that text and paste it into a new document.  
+
+[!Edit Languages](http://grab.by/grabs/c43c0e6d669e2e94176300b34e2d98ce.png)
+
+[!Edit HTML language](http://grab.by/grabs/765ba56b006aaebd72c5571fb218da2a.png)
+
+When you paste the text into the document, the text is unstyled and interpreted as plain text.  In order to force TextMate to interpret this as a language grammar, you must click the item in the lower middle that says "Plain Text" and choose "Language Grammar" from the dropdown box.  The document should look a lot nicer after this step:
+
+[!Plain Text](http://grab.by/grabs/5ee1cd7bce89f4e635c3b4d3ad3c317d.png)
+[!After changing to Language Grammar](http://grab.by/grabs/c9ca0bae04868df1f73c9cfad11cdc3e.png)
+
+The important thing to look at is the list of patterns defined.  Here's just a small section:
+
+<div>
+<pre>
+    patterns = (
+		{	name = 'meta.tag.any.html';
+			begin = '(<)([a-zA-Z0-9:]++)(?=[^>]*></\2>)';
+			end = '(>(<)/)(\2)(>)';
+			beginCaptures = {
+				1 = { name = 'punctuation.definition.tag.html'; };
+				2 = { name = 'entity.name.tag.html'; };
+			};
+			endCaptures = {
+				1 = { name = 'punctuation.definition.tag.html'; };
+				2 = { name = 'meta.scope.between-tag-pair.html'; };
+				3 = { name = 'entity.name.tag.html'; };
+				4 = { name = 'punctuation.definition.tag.html'; };
+			};
+			patterns = ( { include = '#tag-stuff'; } );
+		}
+</pre>
+</div>
+
+This is the first pattern that will attempt to match.  You don't need to understand all of it, but you should understand that the parentheses in the regular expressions denote capturing groups, which are then referenced in the `beginCaptures` and `endCaptures` tags.  These assign scopes to the various captured groups.  Note too that we can recursively include patterns (via the `include = '#tag-stuff'` line) which assign scope to various parts of the matched text.  This allows us to define a pattern one time and reference it in multiple places, which cuts down on code duplications.  
+
+
+If you look through the HTML grammar, you'll notice that some embedded code is automatically detected and set to have the matching text use the corresponding language:
+
+<div><pre>
+ruby = {
+	patterns = (
+		{	name = 'comment.block.erb';
+			begin = '<%+#';
+			end = '%>';
+			captures = { 0 = { name = 'punctuation.definition.comment.erb'; }; };
+		},
+</pre>
+</div>
+
+Here, any times the `<%# %>` tag pair is seen, the entire block is captured and assigned to the scope `punctuation.definition.comment.erb`, which has the effect of distinguishing it from surrounding text.  You can see this in action in the following screenshot:
+
+
+
 
 <div>
 <pre>
@@ -34,8 +95,6 @@ patterns = (
 [sourcecode language="java"]
 @Test
 public void testTopicsFired() {
-
-
 	// Uses EventBus internally
 	DomainObject obj = new DomainObject();
 
@@ -63,3 +122,4 @@ The benefit of this is not merely cosmetic.  Telling TextMate that text within t
 
 [1]:http://developmentality.wordpress.com/tag/textmate/
 [2]:http://en.support.wordpress.com/code/posting-source-code/
+[3]:http://manual.macromates.com/en/scope_selectors
