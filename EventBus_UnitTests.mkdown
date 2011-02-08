@@ -1,0 +1,9 @@
+2011-02-07
+
+I've written previously about [EventBus], a great open source Java library for [pub-sub (publish subscribe)][2].  It's a truly excellent way to write loosely coupled systems, and much preferable to having to make your domain models extends [Observable][3] and your listeners implement [Observer][4].
+
+
+[1]:http://developmentality.wordpress.com/2010/05/11/eventbus-introduction-and-troubleshooting-for-annotation-problems/
+[2]:http://en.wikipedia.org/wiki/Publish/subscribe
+[3]:http://download.oracle.com/javase/1.4.2/docs/api/java/util/Observable.html
+[4]:http://download.oracle.com/javase/1.4.2/docs/api/java/util/Observer.html
