@@ -1,0 +1,111 @@
+<p>I&#8217;ve blogged about <a href="http://developmentality.wordpress.com/tag/textmate/">TextMate</a> a few times in the past, and with good reason - it&#8217;s an extremely versatile, light weight, powerful text editor for the Mac.  One great feature of TextMate is its extreme customizability.  Today I&#8217;m going to show how to modify one of the TextMate language files in order to add support for Java code within HTML text.</p>
+
+<p>Why is this useful?  My workflow for producing blog posts is often to write the post in TextMate using the <a href="http://daringfireball.net/projects/markdown/">Markdown</a> markup language, which I then convert to HTML.  <a href="http://en.support.wordpress.com/code/posting-source-code/">WordPress has the ability to syntax highlight</a> and provide a nice monospaced version of sourcecode within a post if it&#8217;s delimited by <code>[sou<span>rcecode language="language"][/sourc</span>ecode]</code> tags.  While the sourcecode comes out fine in the final post, it would be nice to have the syntax highlighting show up from within the Markdown view (i.e. while I am composing a blog post).  Let&#8217;s get started by looking at how language grammars work in TextMate.</p>
+
+<h2 id="introduction_to_language_grammar_editing">Introduction to Language Grammar Editing</h2>
+
+<p>The language support in TextMate is extremely powerful, but it&#8217;s a little complicated to get started.  In essence, a language defines a series of rules mapping patterns to scopes.  For instance, the Java language grammar defines a scope for comments, a scope for control characters, and so on and so forth.  The scope is extremely important for many reasons.  A few of them are</p>
+
+<ul>
+<li>The scope determines whether text is spellchecked or not (a top level scope of <code>source</code> is not spell checked; one that is <code>text</code> will be)</li>
+<li>It provides syntax highlighting, as certain scopes are associated with certain colors.  </li>
+<li>Snippets can be targeted to only run when within a certain scope.  (See this article on <a href="http://manual.macromates.com/en/scope_selectors">Scope selectors</a> for more.) For instance, all the Java snippets are defined as only being active in the <code>source.java</code> scope.</li>
+</ul>
+
+<p><img src="http://grab.by/grabs/2fd35eadd62ad1859bf1d8921c38c285.png" alt="An example of a Java snippet that's only accessible when the cursor is within something identified as source.java" title=""></p>
+
+<p>As an aside, you might wonder why the scope is called <code>source.java</code> as opposed to <code>java.scope</code>.  The reason is that some scope selectors can target the more general case (<code>scope</code>), whereas those concerned with java can target the more specific scope (<code>java.scope</code>).  </p>
+
+<p>Since someone has already done the hard work of creating a language definition for Java and for creating all of the snippets that support it, we want to leverage this body of work.  All we need to do is ensure that text between the <code>[sou<span>rcecode language="java"][/sourc</span>ecode]</code> tags is considered to be part of the source.java scope, and everything will just work.</p>
+
+<p>First, let us look at a sample grammar file.  Open up the HTML language definition file by going to Bundles -> Bundle Editor -> Edit Languages, or via the shortcut ⌃ ⌥ ⌘L, and choose the HTML option.  You&#8217;ll be presented with a rather inscrutable, unstyled document to the right.  The first thing you should do, and which I found out the hard way, is copy all that text and paste it into a new document.  </p>
+
+<p><img src="http://grab.by/grabs/c43c0e6d669e2e94176300b34e2d98ce.png" alt="Edit Languages" title=""></p>
+
+<p><img src="http://grab.by/grabs/765ba56b006aaebd72c5571fb218da2a.png" alt="Edit HTML language" title=""></p>
+
+<p>When you paste the text into the document, the text is unstyled and interpreted as plain text.  In order to force TextMate to interpret this as a language grammar, you must click the item in the lower middle that says &#8220;Plain Text&#8221; and choose &#8220;Language Grammar&#8221; from the dropdown box.  The document should look a lot nicer after this step:</p>
+
+<p><img src="http://grab.by/grabs/5ee1cd7bce89f4e635c3b4d3ad3c317d.png" alt="Plain Text" title="">
+<img src="http://grab.by/grabs/c9ca0bae04868df1f73c9cfad11cdc3e.png" alt="After changing to Language Grammar" title=""></p>
+
+<p>Take a look through the grammar, but don&#8217;t get bogged down in the details.  The important thing to look at is the list of patterns defined.  Here&#8217;s just a small section:</p>
+
+<div>
+<pre>
+    patterns = (
+        {   name = 'meta.tag.any.html';
+            begin = '(<)([a-zA-Z0-9:]++)(?=[^>]*></\2>)';
+            end = '(>(<)/)(\2)(>)';
+            beginCaptures = {
+                1 = { name = 'punctuation.definition.tag.html'; };
+                2 = { name = 'entity.name.tag.html'; };
+            };
+            endCaptures = {
+                1 = { name = 'punctuation.definition.tag.html'; };
+                2 = { name = 'meta.scope.between-tag-pair.html'; };
+                3 = { name = 'entity.name.tag.html'; };
+                4 = { name = 'punctuation.definition.tag.html'; };
+            };
+            patterns = ( { include = '#tag-stuff'; } );
+        }
+</pre>
+</div>
+
+<p>This is the first pattern that will attempt to match.  You don&#8217;t need to understand all of it, but you should understand that the parentheses in the <a href="http://en.wikipedia.org/wiki/Regular_expression">regular expressions</a> denote capturing groups, which are then referenced in the <code>beginCaptures</code> and <code>endCaptures</code> tags.  These assign scopes to the various captured groups.  Note too that we can recursively include patterns (via the <code>include = '#tag-stuff'</code> line) which assign scope to various parts of the matched text.  This allows us to define a pattern one time and reference it in multiple places, which cuts down on code duplications.  </p>
+
+<p>If you look through the HTML grammar, you&#8217;ll notice that some embedded code is automatically detected and set to have the matching text use the corresponding language:</p>
+
+<div><pre>
+ruby = {
+    patterns = (
+        {   name = 'comment.block.erb';
+            begin = '<%+#';
+            end = '%>';
+            captures = { 0 = { name = 'punctuation.definition.comment.erb'; }; };
+        },
+</pre>
+</div>
+
+<p>Here, any times the <code>&lt;%# %&gt;</code> tag pair is seen, the entire block is captured and assigned to the scope <code>punctuation.definition.comment.erb</code>, which has the effect of distinguishing it from surrounding text.  You can see this in action in the following screenshot:</p>
+
+<p><img src="http://grab.by/grabs/9b753b9a4bfde69a9d96bbabb2ce815f.png" alt="<code>comment.block.erb</code> scope" title=""></p>
+
+<p>In addition to the fact that the ERB snippet is syntax highlighted, take note of the popup in the screenshot showing "text.html.basic" and "comment.block.erb".  At any point in any TextMate file, you can hit  ⌃ ⇧P (Control Shift P) to get the current scope of the cursor.  This is extremely useful for debugging why certain elements are not being selected or assigned the scope you think they are.</p>
+
+<h2 id="adding_java_support">Adding Java support</h2>
+
+<p>While using a TextMate window to edit the grammar is extremely nice, unfortunately you cannot test your changes interactively here.  You must copy and paste the contents back to the original grammar window, overwriting the contents, and then press Test.  This will reload the grammar and you will see the change reflected in any window using that grammar currently.</p>
+
+<p>With that in mind, let's add the support for embedding Java within our Markdown blog posts.</p>
+
+<p>The basic pattern is pretty simple:</p>
+
+<div>
+<pre>
+    {   name = 'source.java';
+        comment = 'Use Java grammar';
+        begin = '\[sourc<span>ecode language="java"</span>\]';
+        end = '\[/sourcecode\]';
+        patterns = ( { include = 'source.java'; } );
+    }
+</pre>
+</div>
+
+<p>I look for the literal string <code>[sourc<span>ecode language="java"</span>]</code> to start the pattern, and then the literal string <code>[/so<span>urcecod</span>e]</code> to end it.  I have to escape the brackets due to the fact that they have a special meaning within regular expressions (<code>[aeiou]</code> matches any vowel, while <code>\[aeiou\]</code> matches the literal string <code>[aeiou]</code>).</p>
+
+<p>By adding this line to the top of the patterns, it is run before any of the others.  (Remember, we have to actually add it to the HTML grammar within the Bundle Editor, not just the TextMate window with the grammar inside of it).  Once the line is added and you press Test, the Java highlighting beings to work.</p>
+
+<p>Here&#8217;s what a snippet of Java embedded in a Markdown blog post looked like without this change:</p>
+
+<p><img src="http://grab.by/grabs/5414e84418b86e3ea0d01076eb1cf215.png" alt="without language support" title=""></p>
+
+<p>And after:</p>
+
+<p><img src="http://grab.by/grabs/f22a84961f346a11707ae9214a94a705.png" alt="with the language support" title=""></p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Language support in TextMate is a very complex task, and one that cannot be adequately covered in a single post.  I&#8217;ve shown here how to add a small snippet to the HTML grammar to allow syntax highlighting of sourcecode delimited by special blocks.  This technique could be expanded to support any number of other programming languages.  </p>
+
+<p>The ability to customize TextMate through editing snippets and language grammars makes it extremely powerful.  I hope this has only whetted your appetite to learn more.  If it has, please see the <a href="http://manual.macromates.com/en/language_grammars">macromates site</a> which has more information about this.</p>
