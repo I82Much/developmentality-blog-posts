@@ -1,31 +1,35 @@
 2011-02-07
 
 # TextMate: How to have code syntax highlighting within an html view
-I've blogged about [TextMate][1] a few times in the past, and with good reason - it's an extremely versatile, light weight, powerful text editor for the Mac.  One great feature of TextMate is its extreme customizability.  Today I'm going to show how to modify one of the TextMate language files in order to add language support nested within an HTML view.
+I've blogged about [TextMate][1] a few times in the past, and with good reason - it's an extremely versatile, light weight, powerful text editor for the Mac.  One great feature of TextMate is its extreme customizability.  Today I'm going to show how to modify one of the TextMate language files in order to add support for Java code within HTML text.
 
-By means of introduction, I write some of my blog posts in Markdown, convert the post to HTML, and use that as the body of my posts.  [WordPress has the ability to syntax highlight][2] and provide a nice monospaced version of sourcecode within a post if it's delimited by `[sourcecode language="language"][/sourcecode]` tags.  While the sourcecode comes out fine in the final post, it would be nice to have the syntax highlighting show up from within the Markdown view (i.e. while one is composing a blog post).  Let's get started.
+Why is this useful?  My workflow for producing blog posts is often to write the post in TextMate using the [Markdown][5] markup language, which I then convert to HTML.  [WordPress has the ability to syntax highlight][2] and provide a nice monospaced version of sourcecode within a post if it's delimited by `[sourcecode language="language"][/sourcecode]` tags.  While the sourcecode comes out fine in the final post, it would be nice to have the syntax highlighting show up from within the Markdown view (i.e. while I am composing a blog post).  Let's get started by looking at how language grammars work in TextMate.
 
 ## Introduction to Language Grammar Editing
-The language support in TextMate is extremely powerful, but it's a little complicated to get started.  In essence, a language defines a series of rules mapping patterns to scopes.  For instance, the Java language grammar defines a scope for comments, a scope for control characters, and so on and so forth.  The scope is extremely important for a few reasons.  The first is that it determines whether text is spellchecked or not (a top level scope of `source` is not spell checked; one that is `text` will be).  Secondly, it allows syntax highlighting, as certain scopes are associated with certain colors.  Finally, snippets can be targeted to only run when within a certain scope.  (See this article on [Scope selectors][3] for more.) For instance, all the Java snippets are defined as only being active in the `source.java` scope.
+The language support in TextMate is extremely powerful, but it's a little complicated to get started.  In essence, a language defines a series of rules mapping patterns to scopes.  For instance, the Java language grammar defines a scope for comments, a scope for control characters, and so on and so forth.  The scope is extremely important for many reasons.  A few of them are
 
-[!An example of a Java snippet that's only accessible when the cursor is within something identified as `source.java`](http://grab.by/grabs/2fd35eadd62ad1859bf1d8921c38c285.png)
+* The scope determines whether text is spellchecked or not (a top level scope of `source` is not spell checked; one that is `text` will be)
+* It provides syntax highlighting, as certain scopes are associated with certain colors.  
+* Snippets can be targeted to only run when within a certain scope.  (See this article on [Scope selectors][3] for more.) For instance, all the Java snippets are defined as only being active in the `source.java` scope.
 
-As an aside, you might wonder why the scope is called `source.java` as opposed to `java.scope`.  The reason is that some scope selectors can target the more general case (`scope`), whereas those concerned with java can target the more specific scope (`java.scope`).
+![An example of a Java snippet that's only accessible when the cursor is within something identified as `source.java`](http://grab.by/grabs/2fd35eadd62ad1859bf1d8921c38c285.png)
+
+As an aside, you might wonder why the scope is called `source.java` as opposed to `java.scope`.  The reason is that some scope selectors can target the more general case (`scope`), whereas those concerned with java can target the more specific scope (`java.scope`).  
 
 Since someone has already done the hard work of creating a language definition for Java and for creating all of the snippets that support it, we want to leverage this body of work.  All we need to do is ensure that text between the `[sourcecode language="java"][/sourcecode]` tags is considered to be part of the source.java scope, and everything will just work.
 
 First, let us look at a sample grammar file.  Open up the HTML language definition file by going to Bundles -> Bundle Editor -> Edit Languages, or via the shortcut ⌃ ⌥ ⌘L, and choose the HTML option.  You'll be presented with a rather inscrutable, unstyled document to the right.  The first thing you should do, and which I found out the hard way, is copy all that text and paste it into a new document.  
 
-[!Edit Languages](http://grab.by/grabs/c43c0e6d669e2e94176300b34e2d98ce.png)
+![Edit Languages](http://grab.by/grabs/c43c0e6d669e2e94176300b34e2d98ce.png)
 
-[!Edit HTML language](http://grab.by/grabs/765ba56b006aaebd72c5571fb218da2a.png)
+![Edit HTML language](http://grab.by/grabs/765ba56b006aaebd72c5571fb218da2a.png)
 
 When you paste the text into the document, the text is unstyled and interpreted as plain text.  In order to force TextMate to interpret this as a language grammar, you must click the item in the lower middle that says "Plain Text" and choose "Language Grammar" from the dropdown box.  The document should look a lot nicer after this step:
 
-[!Plain Text](http://grab.by/grabs/5ee1cd7bce89f4e635c3b4d3ad3c317d.png)
-[!After changing to Language Grammar](http://grab.by/grabs/c9ca0bae04868df1f73c9cfad11cdc3e.png)
+![Plain Text](http://grab.by/grabs/5ee1cd7bce89f4e635c3b4d3ad3c317d.png)
+![After changing to Language Grammar](http://grab.by/grabs/c9ca0bae04868df1f73c9cfad11cdc3e.png)
 
-The important thing to look at is the list of patterns defined.  Here's just a small section:
+Take a look through the grammar, but don't get bogged down in the details.  The important thing to look at is the list of patterns defined.  Here's just a small section:
 
 <div>
 <pre>
@@ -48,7 +52,7 @@ The important thing to look at is the list of patterns defined.  Here's just a s
 </pre>
 </div>
 
-This is the first pattern that will attempt to match.  You don't need to understand all of it, but you should understand that the parentheses in the regular expressions denote capturing groups, which are then referenced in the `beginCaptures` and `endCaptures` tags.  These assign scopes to the various captured groups.  Note too that we can recursively include patterns (via the `include = '#tag-stuff'` line) which assign scope to various parts of the matched text.  This allows us to define a pattern one time and reference it in multiple places, which cuts down on code duplications.  
+This is the first pattern that will attempt to match.  You don't need to understand all of it, but you should understand that the parentheses in the [regular expressions][6] denote capturing groups, which are then referenced in the `beginCaptures` and `endCaptures` tags.  These assign scopes to the various captured groups.  Note too that we can recursively include patterns (via the `include = '#tag-stuff'` line) which assign scope to various parts of the matched text.  This allows us to define a pattern one time and reference it in multiple places, which cuts down on code duplications.  
 
 
 If you look through the HTML grammar, you'll notice that some embedded code is automatically detected and set to have the matching text use the corresponding language:
@@ -71,7 +75,7 @@ Here, any times the `<%# %>` tag pair is seen, the entire block is captured and 
 In addition to the fact that the ERB snippet is syntax highlighted, take note of the popup in the screenshot showing "text.html.basic" and "comment.block.erb".  At any point in any TextMate file, you can hit  ⌃ ⇧P (Control Shift P) to get the current scope of the cursor.  This is extremely useful for debugging why certain elements are not being selected or assigned the scope you think they are.
 
 
-## Adding the Java support
+## Adding Java support
 While using a TextMate window to edit the grammar is extremely nice, unfortunately you cannot test your changes interactively here.  You must copy and paste the contents back to the original grammar window, overwriting the contents, and then press Test.  This will reload the grammar and you will see the change reflected in any window using that grammar currently.
 
 With that in mind, let's add the support for embedding Java within our Markdown blog posts.
@@ -90,14 +94,16 @@ The basic pattern is pretty simple:
 </pre>
 </div>
 
-I look for the literal string `[sourcecode language="java"]` to start the pattern, and then the literal string `[/sourcecode]` to end it.  I have to escape the brackets due to the fact that brackets have a special meaning within regular expressions (`[aeiou]` matches any vowel, while `\[aeiou\]` matches the literal string `[aeiou]`).
+I look for the literal string `[sourcecode language="java"]` to start the pattern, and then the literal string `[/sourcecode]` to end it.  I have to escape the brackets due to the fact that they have a special meaning within regular expressions (`[aeiou]` matches any vowel, while `\[aeiou\]` matches the literal string `[aeiou]`).
 
 By adding this line to the top of the patterns, it is run before any of the others.  (Remember, we have to actually add it to the HTML grammar within the Bundle Editor, not just the TextMate window with the grammar inside of it).  Once the line is added and you press Test, the Java highlighting beings to work.
 
 Here's what a snippet of Java embedded in a Markdown blog post looked like without this change:
+
 ![without language support](http://grab.by/grabs/5414e84418b86e3ea0d01076eb1cf215.png)
 
 And after:
+
 ![with the language support](http://grab.by/grabs/f22a84961f346a11707ae9214a94a705.png)
 
 
@@ -113,3 +119,5 @@ The ability to customize TextMate through editing snippets and language grammars
 [2]:http://en.support.wordpress.com/code/posting-source-code/
 [3]:http://manual.macromates.com/en/scope_selectors
 [4]:http://manual.macromates.com/en/language_grammars
+[5]:http://daringfireball.net/projects/markdown/
+[6]:http://en.wikipedia.org/wiki/Regular_expression
