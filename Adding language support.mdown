@@ -1,0 +1,65 @@
+2011-02-07
+
+# TextMate: How to have code syntax highlighting within an html view
+I've blogged about [TextMate][1] a few times in the past, and with good reason - it's an extremely versatile, light weight, powerful text editor for the Mac.  One great feature of TextMate is its extreme customizability.  
+
+## Introduction
+
+I write some of my blog posts in Markdown, convert the post to HTML, and use that as the body of my posts.  [WordPress has the ability to syntax highlight][2] and provide a nice monospaced version of sourcecode within a post if it's delimited by `[sourcecode language="language"][/sourcecode]` tags.  While the sourcecode comes out fine in the final post, it would be nice to have the syntax highlighting show up from within the Markdown view (i.e. while one is composing a blog post).  I'm going to show you how to do that by modifying one of the TextMate language files.
+
+## Solution
+
+<div>
+<pre>
+patterns = (
+		{	name = 'source.java';
+			comment = 'Use Java grammar';
+			begin = '\[sourcecode language="java"\]';
+			end = '\[/sourcecode\]';
+			patterns = ( { include = 'source.java'; } );
+		},
+		{	name = 'source.python';
+			comment = 'Use Python grammar';
+			begin = '\[sourcecode language="python"\]';
+			end = '\[/sourcecode\]';
+			patterns = ( { include = 'source.python'; } );
+		},
+		{	name = 'meta.tag.any.html';
+			begin = '(<)([a-zA-Z0-9:]++)(?=[^>]*></\2>)';
+			end = '(>(<
+</pre>
+</div>
+
+<div>
+[sourcecode language="java"]
+@Test
+public void testTopicsFired() {
+
+
+	// Uses EventBus internally
+	DomainObject obj = new DomainObject();
+
+	int count = 10;
+	EventBusListener listener = new EventBusListener();
+	for (int i = 0; i < count; i++) {
+		obj.doSomethingThatShouldFireEventBusPublishing();
+	}
+
+	assertEquals(count, listener.getNumTimesTopicOneCalled());
+	assertEquals(count, listener.getNumTimesTopicTwoCalled());
+}
+[/sourcecode]	
+</div>
+
+![without language support](http://grab.by/grabs/5414e84418b86e3ea0d01076eb1cf215.png)
+![with the language support](http://grab.by/grabs/f22a84961f346a11707ae9214a94a705.png)
+
+The benefit of this is not merely cosmetic.  Telling TextMate that text within the `[sourcecode][/sourcecode]` blocks is a certain language of code allows you to make use of all the keyboard shortcuts and snippets that the language supports.  Here's just a small sample of the options available for Java:
+
+![sample of snippets](http://grab.by/grabs/b9097fdecaaf49002c00dcd2995c0b36.png)
+
+## Conclusion
+
+
+[1]:http://developmentality.wordpress.com/tag/textmate/
+[2]:http://en.support.wordpress.com/code/posting-source-code/
