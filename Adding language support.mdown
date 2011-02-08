@@ -5,8 +5,7 @@ I've blogged about [TextMate][1] a few times in the past, and with good reason -
 
 By means of introduction, I write some of my blog posts in Markdown, convert the post to HTML, and use that as the body of my posts.  [WordPress has the ability to syntax highlight][2] and provide a nice monospaced version of sourcecode within a post if it's delimited by `[sourcecode language="language"][/sourcecode]` tags.  While the sourcecode comes out fine in the final post, it would be nice to have the syntax highlighting show up from within the Markdown view (i.e. while one is composing a blog post).  Let's get started.
 
-
-## Solution
+## Introduction to Language Grammar Editing
 The language support in TextMate is extremely powerful, but it's a little complicated to get started.  In essence, a language defines a series of rules mapping patterns to scopes.  For instance, the Java language grammar defines a scope for comments, a scope for control characters, and so on and so forth.  The scope is extremely important for a few reasons.  The first is that it determines whether text is spellchecked or not (a top level scope of `source` is not spell checked; one that is `text` will be).  Secondly, it allows syntax highlighting, as certain scopes are associated with certain colors.  Finally, snippets can be targeted to only run when within a certain scope.  (See this article on [Scope selectors][3] for more.) For instance, all the Java snippets are defined as only being active in the `source.java` scope.
 
 [!An example of a Java snippet that's only accessible when the cursor is within something identified as `source.java`](http://grab.by/grabs/2fd35eadd62ad1859bf1d8921c38c285.png)
@@ -67,59 +66,50 @@ ruby = {
 
 Here, any times the `<%# %>` tag pair is seen, the entire block is captured and assigned to the scope `punctuation.definition.comment.erb`, which has the effect of distinguishing it from surrounding text.  You can see this in action in the following screenshot:
 
+![`comment.block.erb` scope](http://grab.by/grabs/9b753b9a4bfde69a9d96bbabb2ce815f.png)
 
+In addition to the fact that the ERB snippet is syntax highlighted, take note of the popup in the screenshot showing "text.html.basic" and "comment.block.erb".  At any point in any TextMate file, you can hit  ⌃ ⇧P (Control Shift P) to get the current scope of the cursor.  This is extremely useful for debugging why certain elements are not being selected or assigned the scope you think they are.
+
+
+## Adding the Java support
+While using a TextMate window to edit the grammar is extremely nice, unfortunately you cannot test your changes interactively here.  You must copy and paste the contents back to the original grammar window, overwriting the contents, and then press Test.  This will reload the grammar and you will see the change reflected in any window using that grammar currently.
+
+With that in mind, let's add the support for embedding Java within our Markdown blog posts.
+
+The basic pattern is pretty simple:
 
 
 <div>
 <pre>
-patterns = (
-		{	name = 'source.java';
-			comment = 'Use Java grammar';
-			begin = '\[sourcecode language="java"\]';
-			end = '\[/sourcecode\]';
-			patterns = ( { include = 'source.java'; } );
-		},
-		{	name = 'source.python';
-			comment = 'Use Python grammar';
-			begin = '\[sourcecode language="python"\]';
-			end = '\[/sourcecode\]';
-			patterns = ( { include = 'source.python'; } );
-		},
-		{	name = 'meta.tag.any.html';
-			begin = '(<)([a-zA-Z0-9:]++)(?=[^>]*></\2>)';
-			end = '(>(<
+	{	name = 'source.java';
+		comment = 'Use Java grammar';
+		begin = '\[sourcecode language="java"\]';
+		end = '\[/sourcecode\]';
+		patterns = ( { include = 'source.java'; } );
+	}
 </pre>
 </div>
 
-<div>
-[sourcecode language="java"]
-@Test
-public void testTopicsFired() {
-	// Uses EventBus internally
-	DomainObject obj = new DomainObject();
+I look for the literal string `[sourcecode language="java"]` to start the pattern, and then the literal string `[/sourcecode]` to end it.  I have to escape the brackets due to the fact that brackets have a special meaning within regular expressions (`[aeiou]` matches any vowel, while `\[aeiou\]` matches the literal string `[aeiou]`).
 
-	int count = 10;
-	EventBusListener listener = new EventBusListener();
-	for (int i = 0; i < count; i++) {
-		obj.doSomethingThatShouldFireEventBusPublishing();
-	}
+By adding this line to the top of the patterns, it is run before any of the others.  (Remember, we have to actually add it to the HTML grammar within the Bundle Editor, not just the TextMate window with the grammar inside of it).  Once the line is added and you press Test, the Java highlighting beings to work.
 
-	assertEquals(count, listener.getNumTimesTopicOneCalled());
-	assertEquals(count, listener.getNumTimesTopicTwoCalled());
-}
-[/sourcecode]	
-</div>
-
+Here's what a snippet of Java embedded in a Markdown blog post looked like without this change:
 ![without language support](http://grab.by/grabs/5414e84418b86e3ea0d01076eb1cf215.png)
+
+And after:
 ![with the language support](http://grab.by/grabs/f22a84961f346a11707ae9214a94a705.png)
 
-The benefit of this is not merely cosmetic.  Telling TextMate that text within the `[sourcecode][/sourcecode]` blocks is a certain language of code allows you to make use of all the keyboard shortcuts and snippets that the language supports.  Here's just a small sample of the options available for Java:
 
-![sample of snippets](http://grab.by/grabs/b9097fdecaaf49002c00dcd2995c0b36.png)
 
 ## Conclusion
+Language support in TextMate is a very complex task, and one that cannot be adequately covered in a single post.  I've shown here how to add a small snippet to the HTML grammar to allow syntax highlighting of sourcecode delimited by special blocks.  This technique could be expanded to support any number of other programming languages.  
+
+The ability to customize TextMate through editing snippets and language grammars makes it extremely powerful.  I hope this has only whetted your appetite to learn more.  If it has, please see the [macromates site][4] which has more information about this.
+
 
 
 [1]:http://developmentality.wordpress.com/tag/textmate/
 [2]:http://en.support.wordpress.com/code/posting-source-code/
 [3]:http://manual.macromates.com/en/scope_selectors
+[4]:http://manual.macromates.com/en/language_grammars
