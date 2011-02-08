@@ -1,6 +1,49 @@
 2011-02-07
 
-I've written previously about [EventBus], a great open source Java library for [pub-sub (publish subscribe)][2].  It's a truly excellent way to write loosely coupled systems, and much preferable to having to make your domain models extends [Observable][3] and your listeners implement [Observer][4].
+I've written previously about [EventBus], a great open source Java library for [pub-sub (publish subscribe)][2].  It's a truly excellent way to write loosely coupled systems, and much preferable to having to make your domain models extends [Observable][3] and your listeners implement [Observer][4].  I'm writing today to describe some difficulties in incorporating EventBus into unit tests, and how to overcome that problem.
+
+## Problem description
+I was attempting to test that certain messages were being published by a domain model object when they were supposed to.  In order to test this, I wrote a simple class that did nothing more than listen to the topics I knew that my model object was supposed to publish to, and then increment a counter when these methods were called.  It looked something like this:
+
+<div>
+[sourcecode language="java"]
+class EventBusListener {
+	private int numTimesTopicOneCalled = 0;
+	private int numTimesTopicTwoCalled = 0;
+	
+	public EventBusListener() {
+		AnnotationProcessor.process(this);
+	}
+	
+	@EventTopicSubscriber(topic="topic_one")
+	public void topicOneCalled(String topic, Object arg) {
+		this.numTimesTopicOneCalled++;
+	}
+
+	@EventTopicSubscriber(topic="topic_two")
+	public void topicTwoCalled(String topic, Object arg) {
+		this.numTimesTopicTwoCalled++;
+	}
+	
+	public int getNumTimesTopicOneCalled() {
+		return this.numTimesTopicOneCalled;
+	}
+	
+	public int getNumTimesTopicOneCalled() {
+		return this.numTimesTopicTwoCalled;
+	}
+}
+[/sourcecode]
+</div>
+
+
+## Solution
+
+
+
+## Conclusion
+
+
 
 
 [1]:http://developmentality.wordpress.com/2010/05/11/eventbus-introduction-and-troubleshooting-for-annotation-problems/
