@@ -1,6 +1,6 @@
 2011-02-07
 
-I've written previously about [EventBus], a great open source Java library for [pub-sub (publish subscribe)][2].  It's a truly excellent way to write loosely coupled systems, and much preferable to having to make your domain models extends [Observable][3] and your listeners implement [Observer][4].  I'm writing today to describe some difficulties in incorporating EventBus into unit tests, and how to overcome that problem.
+I've written previously about [EventBus][1], a great open source Java library for [pub-sub (publish subscribe)][2].  It's a truly excellent way to write loosely coupled systems, and much preferable to having to make your domain models extends [Observable][3] and your listeners implement [Observer][4].  I'm writing today to describe some difficulties in incorporating EventBus into unit tests, and how to overcome that problem.
 
 ## Test setup
 I was attempting to test that certain messages were being published by a domain model object when they were supposed to.  In order to test this, I wrote a simple class that did nothing more than listen to the topics I knew that my model object was supposed to publish to, and then increment a counter when these methods were called.  It looked something like this:
