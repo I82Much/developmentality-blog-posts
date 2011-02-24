@@ -99,11 +99,50 @@ public void testTopicsFired() {
 This is an awful solution because it involves an absolute hack.  Furthermore, it makes that unit test always take at least 3 seconds, which is going to slow the whole test suite down.
 
 ### ThreadSafeEventService
+The real key is to ensure that whatever we call for EventBus within our unit testing code is using a [ThreadSafeEventService][7].  This EventService implementation does not use the `invokeLater` method, so you can be assured that the messages will be delivered in a deterministic manner.  As I previously described, the EventBus static methods are convenience wrappers around a certain implementation of the EventService interface.  We are able to modify what the default implementations will be by the [EventServiceLocator][8] class.  From the docs:
+
+>By default will lazily hold a SwingEventService, which is mapped to `SERVICE_NAME_SWING_EVENT_SERVICE` and returned by `getSwingEventService()`. Also by default this same instance is returned by `getEventBusService()`, is mapped to `SERVICE_NAME_EVENT_BUS` and wrapped by the EventBus.
+
+> To change the default implementation class for the EventBus' EventService, use the API:
+
+	EventServiceLocator.setEventService(EventServiceLocator.SERVICE_NAME_EVENT_BUS, new SomeEventServiceImpl());
+ 
+> Or use system properties by:
+
+ 	System.setProperty(EventServiceLocator.SERVICE_NAME_EVENT_BUS, YourEventServiceImpl.class.getName());
 
 
+In other words, you can replace the `SwingEventService` implementation with the `ThreadSafeEventService` by calling
+
+	EventServiceLocator.setEventService(EventServiceLocator.SERVICE_NAME_EVENT_BUS, new ThreadSafeEventService());
+	
+An alternative solution is use an EventService instance to publish to rather than the EventBus singleton, and expose getters/setters to that EventService.  It can start initialized to the same value that the EventBus would be wrapping, and then the ThreadSafeEventService can be injected for testing.  For instance:
+
+<div>
+[sourcecode language="java"]
+
+public class ClassToTest{
+	// Use the default EventBus implementation
+	private EventService eventService = EventServiceLocator.getEventBusService();
+	
+	public void setEventService(EventService service) {
+		this.eventService = service;
+	}
+	public EventService getEventService() {
+		return this.eventService;
+	}
+	
+	public void doSomethingThatNotifiesOthers() {
+		// as opposed to EventBus.publish
+		eventService.publish(...);
+	}
+}
+
+[/sourcecode]
+</div>
 
 ## Conclusion
-
+I have explained how EventBus static method calls map directly to a singleton implementation of the EventService interface.  The default interface works well for Swing applications, due to its queuing of messages via the `SwingUtilities.invokeLater` method.  Unfortunately, it does not work for unit tests that listen for these EventBus publish events, since the behavior is nondeterministic and the listener might not be notified by the end of the unit test.  I presented a solution for replacing the default SwingEventService implementation with a ThreadSafeEventService, which will work perfectly for unit tests.
 
 
 
@@ -113,3 +152,5 @@ This is an awful solution because it involves an absolute hack.  Furthermore, it
 [4]:http://download.oracle.com/javase/1.4.2/docs/api/java/util/Observer.html
 [5]:http://www.jarvana.com/jarvana/view/org/bushe/eventbus/1.3/eventbus-1.3-javadoc.jar!/org/bushe/swing/event/EventBus.html
 [6]:http://eventbus.org/api/org/bushe/swing/event/SwingEventService.html
+[7]:http://www.eventbus.org/api/org/bushe/swing/event/ThreadSafeEventService.html
+[8]:http://www.eventbus.org/api/org/bushe/swing/event/EventServiceLocator.html
