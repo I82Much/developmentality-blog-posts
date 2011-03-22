@@ -1,0 +1,44 @@
+2011-03-20
+
+constraints - needs to be able to answer any given request in < 30 seconds.
+
+
+workflow:
+choose N pictures to upload.  Could have clientside (javascript?) do the image resize and calculations, and then only transmit small data to server.  OR,
+
+Java gets the full size images.  Calculates the average color statistics etc., as well as a few size thumbnails (32x32, 64x64, 128x128)... OR could store it as a single MIPMap (and then index into the image as necessary.  Not sure of all the pluses/minuses to that approach).  Iteration 0: just store a single size (64x64) and choose a square section from the middle of image)
+
+~~~
+public static Rectangle getCroppedArea(Rectangle original, int width, int height) {
+	int centerX = original.getWidth() / 2;
+	int centerY = original.getHeight() / 2;
+	
+	//
+}
+
+~~~
+
+
+the thumbnail(s) + some metadata is written to a BigTable or some other type of database.  Also includes the user id token so that only the images you upload are accessible.  i.e. if I upload images, no one else can get to them.
+
+Schema:
+~~~
+primary key Unique ID  (autoincrement long)
+Thumbnail (blob)
+link to full size image / key 
+average color (int)
+when (date)
+user token (long)
+~~~
+
+then when it's time to actually create a photomosaic, user would upload a new image or choose from gallery of previously uploaded images (implying that the previous step would need to store more than just a thumbnail, but a link to the full size image)
+
+
+ok now we have 30 seconds to produce a png/jpeg that we can return to the browser.  No threading allowed.
+
+step 1: break down the input image.  Calculate the average colors for different squares throughout entire image.
+step 2: get all the thumbnails that user has said the images can be made from (some sort of query) and load them into memory
+Step 3: for each square, find best match out of all possible thumbnails (subject to whatever constraints we impose, e.g. we can only repeat a given thumbnail image M times)
+Step 4: Fill in raw image array with the thumbnail, scaled to fit
+Step 5: save image to the database
+step 6: write the result to browser
