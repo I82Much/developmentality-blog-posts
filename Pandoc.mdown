@@ -77,7 +77,7 @@ followed by a screenshot of the PDF that LaTeX formatted via Pandoc:
 
 
 
-If you do any sort of writing in plaintext, you owe it to yourself to check out Pandoc.  It allows you to write once and create multiple versions of the same document in formats appropriate to the task.  
+I hope this has piqued your interest in Pandoc.  I love the beautiful output of LaTeX but hate working with its syntax.  With Pandoc I'm free to compose in Markdown, a language with a very lightweight syntax, and then convert into TeX when and if I want to.  
 
 
 
