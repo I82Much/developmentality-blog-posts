@@ -9,7 +9,7 @@ cabal install pandoc
 
 This assumes, of course, that the `cabal` program that the Haskell package installs is accessible from your path.
 
-The next step for me was to install the excellent [Pandoc TextMate bundle][].  This gives you the standard things like syntax highlighting of your document, as well as a variety of useful snippets.  For instance, when I am in Pandoc mode and press <!--⌃ ⌥ ⌘ P,--> I get the following popup from which I can easily choose options via mouse or keyboard:
+The next step for me was to install the excellent [Pandoc TextMate bundle][].  This gives you the standard things like syntax highlighting of your document, as well as a variety of useful snippets.  For instance, when I am in Pandoc mode and press ⌃ ⌥ ⌘ P, I get the following popup from which I can easily choose options via mouse or keyboard:
 
 ![Easy way to preview your document in various output formats][Popup snippets]
 
@@ -26,7 +26,7 @@ Go to TextMate -> Preferences -> Advanced -> PATH and append `:/Users/ndunn/Libr
 
 
 
-Pandoc makes a few extensions to the Markdown syntax, which I really like.  For instance, you can set a designate a section of text to be interpreted literally by surrounding it with three `~` characters.  Furthermore, you can specify what language the code is in, if it's source code, and the Pandoc converter will syntax highlight it in the final document if the correct extensions have been installed.  
+Pandoc makes a few extensions to the Markdown syntax, which I really like.  For instance, you can designate a section of text to be interpreted literally by surrounding it with three `~` characters.  Furthermore, you can specify what language the source code is in, and the Pandoc converter will syntax highlight it in the final document (assuming the correct extensions have been installed).
 
 I like this setup because it allows you to specify the language of the block of text, which means that you can force TextMate to interpret it the same way.  As I've blogged about previously, one can [add source code syntax highlighting embedded in HTML documents][Intro to Language Grammars].  I added the following lines to my HTML language grammar in order to have a few different languages recognized and interpreted as source code within these delimited blocks.
 
@@ -58,7 +58,7 @@ Here is the relevant section:
 		},
 ~~~
 
-One tricky bit to get used to is that you need to have at least one blank space between surrounding text and a `~~~` delimited block, or else the `~` characters are interpreted as strikeouts through the text.
+(One tricky bit to get used to is that you need to have at least one blank space between surrounding text and a `~~~` delimited block, or else the `~` characters are interpreted as strikeouts through the text.)
 
 Here is a screenshot of this working in TextMate:
 
