@@ -1,0 +1,16 @@
+I see the question come up [time][1] and [time][2] [again][3] on StackOverflow - how do you restrict the input of a textfield to be numerical?  There are usually 3 main answers.
+
+# JFormattedTextField
+
+# DocumentFilter
+
+# Custom document overriding `insertString`
+
+
+
+
+
+[1]:http://stackoverflow.com/questions/5662651/how-to-implement-in-java-jtextfield-class-to-allow-entering-only-digits
+[2]:http://stackoverflow.com/questions/4431199/java-jmenu-and-jtextfield-that-only-handles-numbers-not-strings
+[3]:http://stackoverflow.com/questions/4516969/unable-to-set-limit-the-number-of-characters-in-jtextfield
+
