@@ -1,0 +1,73 @@
+Today I'm going to be writing about a feature of Python I'd never read before, namely [__slots__][slots].  In a nutshell, using `__slots__` allows you to decrease the memory needed by your classes, as well as prevent unintended assignment to new member variables.
+
+By default, each class has a dictionary which it uses to map from attribute names to the member variable itself.  [Dictionaries][dict] are extremely well designed in Python, yet by their very nature they are somewhat wasteful of space.  Why is this?  [Hash tables][Hash table] strive to minimize collisions by ensuring that the [load factor][Load factor] (number of elements/size of internal array) does not get too high.  In general hash tables use O(n) space, but with a constant factor nearer to 2 than 1 (again, in order to minimize collisions).  For classes with very small numbers of member variables, the overhead might be even greater.
+
+<div>
+<pre>
+[sourcecode language="python"]
+class DictExample:
+  def __init__(self):
+    self.int_var = 5
+    self.list_var = [0,1,2,3,4]
+    self.nested_dict = {'a':{'b':2}}
+
+# Note that this extends from 'object'; the __slots__ only has an effect
+# on these types of 'new' classes
+class SlotsExample(object):
+  __slots__ = ('int_var','list_var','nested_dict')
+  
+  def __init__(self):
+    self.int_var = 5
+    self.list_var = [0,1,2,3,4]
+    self.nested_dict = {'a':{'b':2}}
+  
+# jump to the repl
+>>> a = DictExample()
+# Here is the dictionary I was talking about.
+>>> a.__dict__
+{'int_var': 5, 'list_var': [0, 1, 2, 3, 4], 'nested_dict': {'a': {'b': 2}}}
+>>> a.x = 5
+# We were able to assign a new member variable
+>>> a.__dict__
+{'x': 5, 'int_var': 5, 'list_var': [0, 1, 2, 3, 4], 'nested_dict': {'a': {'b': 2}}}
+
+
+
+>>> b = SlotsExample()
+# There is no longer a __dict__ object
+>>> b.__dict__
+Traceback (most recent call last):
+  File "<input>", line 1, in <module>
+AttributeError: 'SlotsExample' object has no attribute '__dict__'
+>>> b.__slots__
+('int_var', 'list_var', 'nested_dict')
+>>> getattr(b, 'int_var')
+5
+>>> getattr(a, 'int_var')
+5
+>>> a.x = 5
+# We cannot assign a new member variable; we have declared that there will only
+# be member variables whose names appear in the __slots__ iterable
+>>> b.x = 5
+Traceback (most recent call last):
+  File "<input>", line 1, in <module>
+AttributeError: 'SlotsExample' object has no attribute 'x'
+[/sourcecode]
+</pre>
+</div>
+
+
+Note that for the `__slots__` declaration to have any effect, you must inherit from `object` (i.e. be a 'new style class').  Furthermore, if you extend a class with `__slots__` defined, you must also declare `__slots__` in that child class, or else it will have a dict allocated, obviating the space savings.  See this [StackOverflow question][make slots work] for more. 
+
+
+This feature was useful to me when using Python to implement a packed binary message format.  The specification spells out in exquisite detail how each and every byte over the wire must be sent.  By using the `__slots__` mechanism, I was able to ensure that the client could not accidentally modify the message classes and add new member variables, which would not be serialized anyways.  
+
+
+
+[slots]:http://www.network-theory.co.uk/docs/pylang/__slots__.html
+[dict]:http://docs.python.org/library/stdtypes.html#dict
+[Hash table]:http://en.wikipedia.org/wiki/Hash_table
+[Load factor]:http://en.wikipedia.org/wiki/Hash_table#Load_factor
+[make slots work]:http://stackoverflow.com/questions/4860751/i-dont-know-how-to-make-slots-work
+
+[Stack overflow quesiton on dictionary]:http://stackoverflow.com/questions/671403/memory-efficiency-one-large-dictionary-or-a-dictionary-of-smaller-dictionaries
