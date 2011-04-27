@@ -1,0 +1,27 @@
+If you have an attribute in xml that spans multiple lines, e.g.
+
+<div>
+[sourcecode language="xml"]
+q2="2
+B"
+[/sourcecode]
+</div>
+
+you might expect the newline literal to be encoded in the resulting string when the attribute is parsed.  Instead, the above example will be parsed as "2 B", at least with Java's [SAX parser implementation][SAX Parser].  In order to have the new line literal included, you should insert the entity `&#10;` instead.  This [StackOverflow][] answer by [Tomalak][] gives some more insight:
+
+<blockquote cite="http://stackoverflow.com/users/18771/tomalak">
+Bottom line is, the value string is saved verbatim. You get out what you put in, no need to interfere.
+<br>
+However… some implementations are not compliant. For example, they will encode & characters in attribute values, but forget about newline characters or tabs. This puts you in a losing position since you can't simply replace newlines with &#10; beforehand.
+<br>
+...
+<br>
+Upon parsing such a document, literal newlines in attributes are normalized into a single space (again, in accordance to the spec) - and thus they are lost.
+<br>
+Saving (and retaining!) newlines in attributes is impossible in these implementations.
+</blockquote>
+
+
+[StackOverflow]:http://stackoverflow.com/questions/2004386/how-to-save-newlines-in-xml-attribute
+[Tomalak]:http://stackoverflow.com/users/18771/tomalak
+[SAX Parser]:http://download.oracle.com/javase/1.4.2/docs/api/javax/xml/parsers/SAXParser.html
