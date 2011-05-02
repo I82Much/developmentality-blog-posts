@@ -6,10 +6,12 @@ Download and install [MonoDevelop][].  I am using version 2.4.2.
 # Step 2 - NHibernate:
 Download [NHibernate zip][NHibernate] (I am using version 3.2.0.Alpha2), extract to a location you will remember later (I put it on my Desktop)
 
-# Step 3 - Databases
-3a.) Download MySQL, and install it.  I used the 64 bit DMG Archive for Mac.  I opened the package, and ran all of the installers.  Make sure you install the PrefPane support too.  When you go into the System Preferences, you should see an entry for MySQL.
+# Step 3 - Install MySQL
+3a.) Download [MySQL][], and install it.  I used the 64 bit DMG Archive for Mac.  I opened the package, and ran all of the installers.  Make sure you install the PrefPane support too.  When you go into the System Preferences, you should see an entry for MySQL.
 
-Go into the MySQL settings and choose Start MySQL Server.  After this is done, launch a terminal window.  Type 'mysql' in the window; if everything is configured correctly, you should get a command prompt that looks like the following:
+![Pref pane][]
+
+Go into the MySQL settings and choose Start MySQL Server.  After this is done, launch a terminal window.  Type `mysql -u root` in the window; if everything is configured correctly, you should get a command prompt that looks like the following:
 
 ~~~
 $ mysql -u root
@@ -26,16 +28,179 @@ Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 mysql> 
 ~~~
 
-Type the following at the command line prompt to create a new table and user we will use later:
+Type the following at the command line prompt to create a new database and user we will use later: (Note that in a production system you should not have a dev account with such a simple password, and certainly not with all privileges.)
+
+~~~
+mysql> CREATE DATABASE products;
+Query OK, 1 row affected (0.00 sec)
+mysql> CREATE USER 'dev'@'localhost' IDENTIFIED BY 'test_password';
+Query OK, 1 row affected (0.00 sec)
+mysql> GRANT ALL PRIVILEGES ON *.* TO 'dev'@'localhost' WITH GRANT OPTION;
+Query OK, 1 row affected (0.00 sec)
+~~~
+
+At this point, we now have an account named 'dev' with password 'test_password', and a database named 'products'.  We will use that information when connecting to the database using NHibernate.
+
+# Step 4 - Download MySQL Driver
+In order to use MySQL with .NET, you need a database driver.  From the [MySQL Connectors][] page, choose Connector/Net, and then choose .NET & Mono from the dropdown.  Download the file; it should be entitled [mysql-connector-net-6.3.6-noinstall.zip][MySQL Connector.net].
+
+When the file finishes downloading, unzip it and place the folder somewhere easy to get to; I put it on my Desktop.
+
+# Step 5 - Create Domain Objects / Hibernate configs
+
+Follow the instructions on [Your first NHibernate based application][], up until the section "Test the Setup" to create all of the domain classes.  We need to modify the `hibernate.cfg.xml` file as follows:
+
+~~~{.xml}
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-configuration xmlns="urn:nhibernate-configuration-2.2">
+ <!-- an ISessionFactory instance -->
+ <session-factory>
+  <!-- properties -->
+  <property name="connection.provider">
+    NHibernate.Connection.DriverConnectionProvider
+  </property> 
+  <property name="connection.driver_class">
+    NHibernate.Driver.MySqlDataDriver
+  </property> 
+  <property name="connection.connection_string">
+    <!-- Found from http://www.connectionstrings.com/mysql; note that the 'dev' and 'test_password' 
+    match the user we created, and 'products' matches the Database -->
+Server=localhost;Database=products;Uid=dev;Pwd=test_password;
+  </property>
+  
+  <!-- Will automatically create a fresh table each time we create an ISessionFactory object -->
+  <property name="hbm2ddl.auto">create-drop</property>
+    
+  <property name="dialect">
+    NHibernate.Dialect.MySQLDialect
+  </property>
+  <property name="show_sql">true</property>
+ </session-factory>
+</hibernate-configuration>
+~~~
+
+Note that the `dialect`, `connection.driver_class`, and `connection.connection_string` properties have all been changed; I also added an `hbm2ddl.auto` property.  You can read more about that [here][hbm2ddl.auto].
+
+
+# Fix missing references
+
+At this point, we need to ensure that all of the `dll`s we need are referenced correctly.  Right click on the References node, and choose Edit references.  Choose the .Net Assembly tab, and browse to where you saved the `mysql-connector-net-6.3.6-noinstall` folder; I placed mine on the desktop.  Choose the v2 folder, select all of the dlls, and choose add.
+
+At this point your screen should look something like the following:
+
+![edit references][]
+
+
+If you don't have an NHibernate.dll listed in your references, you will need to add this as well.  Follow the same steps as previously listed, and add the NHibernate.dll found in `NHibernate-3.2.0.Alpha2-src/lib/net/3.5/`.   I added all of the dlls in that folder, but that's overkill.
+
+# Add main entry point
+
+At this point, you're almost ready to get started.  Create a file named Main.cs at the same level as your `hibernate.cfg.xml` file.  Use the following code:
+
+
+~~~{.cs}
+using System;
+using System.Collections.Generic;
+using NHibernate;
+using NHibernateTest.Domain;
+using NHibernate.Tool.hbm2ddl;
+
+namespace NHibernateTest
+{
+	class MainClass
+	{
+		public static void Main (string[] args)
+		{
+			IList<Product> products; 
+			
+			// Don't need to use schema export because of the hbm2dll property.
+			var cfg = new NHibernate.Cfg.Configuration();
+		    cfg.Configure();
+			// ensure that mapping hbm.xml file is loaded
+			cfg.AddAssembly(typeof(MainClass).Assembly);
+			
+			Product p = new Product() {Name="Captains of Crush Gripper #1", Category="fitness" };
+			
+			ISessionFactory factory = 
+				cfg.BuildSessionFactory();
+			
+			using (ISession session = factory.OpenSession()) 
+			{ 
+				session.Save(p);
+				session.Flush();
+				
+			  	ICriteria sc = session.CreateCriteria<Product>(); 
+			  	products = sc.List<Product>();
+				Console.WriteLine(products[0].Name);
+			  	session.Close(); 
+			} 
+			factory.Close(); 
+			
+			Console.WriteLine( products.Count );
+			
+			Console.WriteLine ("Hello World!");
+		}
+	}
+}
+~~~
+
+My namespace might be slightly different from yours; modify accordingly.
+
+Build and run the project.  You should get output like the following:
+
+~~~
+NHibernate: INSERT INTO Product (Name, Category, Discontinued, Id) VALUES (?p0, ?p1, ?p2, ?p3);?p0 = 'Captains of Crush Gripper #1' [Type: String (28)], ?p1 = 'fitness' [Type: String (7)], ?p2 = False [Type: Boolean (0)], ?p3 = a9f8e586-727f-49b9-98da-59f534163ae7 [Type: Guid (0)]
+NHibernate: SELECT this_.Id as Id0_0_, this_.Name as Name0_0_, this_.Category as Category0_0_, this_.Discontinued as Disconti4_0_0_ FROM Product this_
+Captains of Crush Gripper #1
+1
+Hello World!
+Abort trap
+
+Press any key to continue...
+~~~
+
+
+# Conclusion/Troubleshooting
+
+I hope this helps newbies like myself get up and running in a Mono environment with NHibernate and MySQL.  The complete code can be found on [Github][].  
+
+## MappingException
+
+~~~
+Unhandled Exception: NHibernate.MappingException: No persister for: NHibernateTest.Domain.Product
+~~~
+
+If you get an exception like this, the Product.hbm.xml file is not being loaded correctly.  Make sure that you have the following line:
+
+~~~
+cfg.AddAssembly(typeof(MainClass).Assembly);
+~~~
+
+Conversely, make sure that your `Product.hbm.xml` file is set to be 'embed as resource'.  (Right click, choose Build Action, Embed as resource).
+
+![embed as resource][]
+
+## Could not compile the mapping document
+
+~~~
+Unhandled Exception: NHibernate.MappingException: Could not compile the mapping document: NHibernateTest.Mappings.Product.hbm.xml ---> System.InvalidOperationException: Could not find the dialect in the configuration
+~~~
+
+If you get an error like this, you have inadvertently switched the order of your AddAssembly and Configure calls.  Make sure you call Configure *before* you call AddAssembly.
 
 
 
 
+
+[Pref pane]:http://i54.tinypic.com/30j2wiv.jpg
 [MonoDevelop]:http://monodevelop.com/
 [NHibernate]:http://www.downloadplex.com/Mac/Development/Tools/nhibernate-for-mac_251736.html
 [MySQL]:http://dev.mysql.com/downloads/mysql/
-
-
-
-
-http://dev.mysql.com/downloads/mirror.php?id=399565
+[MySQL Connectors]:http://dev.mysql.com/downloads/connector/
+[MySQL Connector.net]:http://dev.mysql.com/downloads/mirror.php?id=399565#mirrors
+[Your first NHibernate based application]:http://nhforge.org/wikis/howtonh/your-first-nhibernate-based-application.aspx
+[hbm2ddl.auto]:http://docs.jboss.org/hibernate/core/3.5/reference/en/html/session-configuration.html
+[references]:http://i56.tinypic.com/2ibnwv8.png
+[edit references]:http://i52.tinypic.com/bj8pah.png
+[embed as resource]:http://i56.tinypic.com/fekl6p.png
+[Github]:https://github.com/I82Much/Mono-NHibernate/tree/mysql
