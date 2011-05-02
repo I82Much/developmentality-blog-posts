@@ -1,0 +1,41 @@
+This article aims to show you how to use Mono, MonoDevelop 2.4.2 and NHibernate (3.2.0.Alpha2) to connect to a MySQL database on Mac OSX 10.6, Snow Leopard.  (I'm assuming the solution can be adapted to other *NIX variants, but I've only tried it on Snow Leopard).  The examples I found online were frequently Windows only.  I ran into a lot of problems along the way, which I am documenting here to prevent others from having the same issues.
+
+# Step 1 - MonoDevelop:
+Download and install [MonoDevelop][].  I am using version 2.4.2.
+
+# Step 2 - NHibernate:
+Download [NHibernate zip][NHibernate] (I am using version 3.2.0.Alpha2), extract to a location you will remember later (I put it on my Desktop)
+
+# Step 3 - Databases
+3a.) Download MySQL, and install it.  I used the 64 bit DMG Archive for Mac.  I opened the package, and ran all of the installers.  Make sure you install the PrefPane support too.  When you go into the System Preferences, you should see an entry for MySQL.
+
+Go into the MySQL settings and choose Start MySQL Server.  After this is done, launch a terminal window.  Type 'mysql' in the window; if everything is configured correctly, you should get a command prompt that looks like the following:
+
+~~~
+$ mysql -u root
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 1553
+Server version: 5.5.11 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2010, Oracle and/or its affiliates. All rights reserved.
+This software comes with ABSOLUTELY NO WARRANTY. This is free software,
+and you are welcome to modify and redistribute it under the GPL v2 license
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> 
+~~~
+
+Type the following at the command line prompt to create a new table and user we will use later:
+
+
+
+
+[MonoDevelop]:http://monodevelop.com/
+[NHibernate]:http://www.downloadplex.com/Mac/Development/Tools/nhibernate-for-mac_251736.html
+[MySQL]:http://dev.mysql.com/downloads/mysql/
+
+
+
+
+http://dev.mysql.com/downloads/mirror.php?id=399565
