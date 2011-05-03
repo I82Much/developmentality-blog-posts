@@ -1,0 +1,41 @@
+~~~
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace SwmCoach.Core
+{
+    public class PersonProfile
+    {
+        
+        public virtual long ID { get; set; }
+        public virtual Person Person { get; set; }
+    }
+}
+~~~
+
+~~~
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" 
+                   assembly="SwmCoach.Core" 
+                   namespace="SwmCoach.Core">
+  
+  <class name="PersonProfile" lazy="false">
+    <id name="ID">
+      <generator class="hilo" />
+    </id>
+
+    <!-- will not work -->
+    <!-- <property name="Person"/>-->
+    
+    <many-to-one name="Person"
+   		class="Person"
+   		column="PersonId" 
+   		cascade="all"
+   	/>
+  </class>
+  
+</hibernate-mapping>
+~~~
+
