@@ -1,0 +1,82 @@
+I've [written previously][Past post] about working with dates in Java; as I mentioned there it's very easy to get dates/times incorrect.  I feel like I have a fairly good handle on how things work in Java, but today I was faced with learning how to deal with dates/times in Python.  It wasn't an altogether pleasant experience, but I'm going to show what I learned, so hopefully this is of use to you.  
+
+The task I was trying to accomplish was to convert between Unix timestamps (seconds/milliseconds since the [Epoch][]) and more user friendly data objects.  Creating a [datetime][] is easy:
+
+<div>
+[sourcecode language="python"]
+>>> from datetime import *
+>>> datetime.now()
+datetime.datetime(2011, 4, 5, 19, 36, 18, 894325)
+>>> datetime(2004, 1, 24)
+datetime.datetime(2004, 1, 24, 0, 0)
+[/sourcecode]
+</div>
+
+One gotcha to note is that both the month and day fields are 1 based (`1 <= month <= 12`, `1 <= day <= number of days in the given month and year`), whereas in Java, the month field is 0 indexed.
+
+By default, these datetime objects will use a naïve time zone understanding that ignores offsets from [UTC][]/day light savings time.  To fix this, you need to implement your own subclass of [tzinfo][].  It's kind of unfortunate that they don't make this easier.  Here is an example implementation representing the UTC timezone from the previously linked page:
+
+<div>
+[sourcecode language="python"]
+from datetime import tzinfo, timedelta, datetime
+
+ZERO = timedelta(0)
+HOUR = timedelta(hours=1)
+
+class UTC(tzinfo):
+    """UTC"""
+
+    def utcoffset(self, dt):
+        return ZERO
+
+    def tzname(self, dt):
+        return "UTC"
+
+    def dst(self, dt):
+        return ZERO
+[/sourcecode]
+</div>
+
+OK that's not the end of the world.  Now assuming we've created out datetime object correctly, how do we retrieve its corresponding Unix style timestamp?  Let's look at the available methods.
+
+<div>
+[sourcecode language="python"]
+>>> [x for x in dir(datetime) if not x.startswith("__")]
+['astimezone', 'combine', 'ctime', 'date', 'day', 'dst', 'fromordinal', 'fromtimestamp', 'hour', 'isocalendar', 'isoformat', 'isoweekday', 'max', 'microsecond', 
+'min', 'minute', 'month', 'now', 'replace', 'resolution', 'second', 'strftime', 'strptime', 'time', 'timetuple', 'timetz', 'today', 'toordinal', 'tzinfo', 'tznam
+e', 'utcfromtimestamp', 'utcnow', 'utcoffset', 'utctimetuple', 'weekday', 'year']
+[/sourcecode]
+</div>
+
+Well, there's a bunch of methods that convert *from* a timestamp to a datetime object.  But going back the other direction is a little harder.  After digging, I found a [way to do so][time bug report]:
+
+
+<div>
+[sourcecode language="python"]
+>>> from datetime import datetime
+>>> from time import mktime
+>>> dt = datetime(2008, 5, 1, 13, 35, 41, 567777)
+>>> seconds = mktime(dt.timetuple())
+>>> seconds += (dt.microsecond / 1000000.0)
+>>> seconds
+1209663341.5677769
+>>> 
+>>> dt2 = datetime.fromtimestamp(seconds)
+>>> dt == dt2
+True
+[/sourcecode]
+</div>
+
+
+Well, there you have it.  To convert from a unix timestamp to a `datetime` object, use `datetime.fromtimestamp`.  To convert the other direction, use `time.mktime(datetime_instance.timetuple())`.  I wish that the library authors had seen fit to maintain symmetry (i.e. `datetime` should implement a `totimestamp` method), but fortunately there is an easy workaround.  The last thing to note if you're used to Java is that the timestamps in Python measure seconds from the epoch, as opposed to Java which deals in milliseconds from the epoch.
+
+
+[Epoch]:http://en.wikipedia.org/wiki/Epoch_(reference_date)
+[time bug report]:http://bugs.python.org/issue2736
+[tzinfo]:http://docs.python.org/release/2.5.2/lib/datetime-tzinfo.html
+[UTC]:http://en.wikipedia.org/wiki/Coordinated_Universal_Time
+[Past post]:http://developmentality.wordpress.com/2010/06/16/minimum-to-know-about-dates-and-time-in-java/
+[Unix time]:http://en.wikipedia.org/wiki/Unix_time
+[datetime]:http://docs.python.org/library/datetime.html
+[time]:http://docs.python.org/library/time.html
+[Java Calendar]:http://download.oracle.com/javase/1.5.0/docs/api/java/util/Calendar.html

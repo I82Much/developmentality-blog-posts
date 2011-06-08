@@ -1,0 +1,22 @@
+[WorldWind][1] is a great open source geospatial mapping / visualization released by NASA.  I have used it to great success in a few projects.  That being said, there are some problems with it, most of which you can work around, provided you know the tricks.  This post aims to collect some of the lessons learned from working with the software.
+
+# Disappearing map tiles
+
+http://forum.worldwindcentral.com/showthread.php?p=90479#post90479
+
+http://forum.worldwindcentral.com/showthread.php?t=29232
+
+# Reset orientation of map
+
+// very important; without this the viewport will move to straight overhead view and then instantly switch back.  It's very jarring and annoying.
+view.stopAnimations();
+view.setHeading(Angle.ZERO);
+view.setRoll(Angle.ZERO);
+view.setPitch(Angle.ZERO);
+
+
+
+
+
+
+[1]:http://worldwind.arc.nasa.gov/java/
