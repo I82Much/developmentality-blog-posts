@@ -1,0 +1,73 @@
+# Introduction
+
+# Acquiring the data
+
+http://explore.data.gov/Other/FEMA-Disaster-Declarations-Summary/uihf-be6u
+
+
+raw data available url: http://explore.data.gov/download/uihf-be6u/CSV
+
+Contributing Agency Information
+Citation
+FEMA Disaster Declaration Summary (http://www.fema.gov/hazard/index.shtm)
+Agency Program Page
+http://www.fema.gov
+Agency Data Series Page
+http://www.fema.gov/hazard/index.shtm
+
+
+In R, tabular data can be read in via either the `read.csv` or `read.table` commands.  `read.csv` is basically the same thing as `read.table` except that it defaults to using a comma as the separator character.  You can either download the csv file and read it in locally, or read the data directly from a URL.  The choice is yours.
+
+
+	# The first two lines are immaterial to the dataset; skip them.
+	> disasters = read.csv("http://explore.data.gov/download/uihf-be6u/CSV", skip=2)
+	
+	> class(disasters)
+	[1] "data.frame"
+	
+
+	# Number of columns
+	> length(disasters)
+	[1] 14
+	
+	# colnames gives a list of all the column names of a data frame
+	> colnames(disasters)
+	 [1] "Disaster.Number"         "IH.Program.Declared"     "IA.Program.Declared"     "PA.Program.Declared"    
+	 [5] "HM.Program.Declared"     "State"                   "Declaration.Date"        "Disaster.Type"          
+	 [9] "Incident.Type"           "Title"                   "Incident.Begin.Date"     "Incident.End.Date"      
+	[13] "Disaster.Close.Out.Date" "Declared.County.Area"   
+	
+	> length(disasters[,1])
+	[1] 38687
+	
+	# Show the first row of the data set.  Note that this is 1-based indexing.
+	> disasters[1,]
+	  Disaster.Number IH.Program.Declared IA.Program.Declared PA.Program.Declared HM.Program.Declared State Declaration.Date
+	1               1                  No                 Yes                 Yes                 Yes    GA         5/2/1953
+	  Disaster.Type Incident.Type   Title Incident.Begin.Date Incident.End.Date Disaster.Close.Out.Date Declared.County.Area
+	1            DR       Tornado TORNADO            5/2/1953          5/2/1953                6/1/1954                     
+	
+	
+	# Show the first column of data
+	> disasters[,1]
+	    [1]    1    2    3    4    5    6    7    8    9   11   12   13   14   15   16   17   18   19   20   21   22   23   24   25
+	   [25]   26   27   28   29   30   31   32   33   34   35   36   37   38   39   40   41   42   43   44   45   46   47   48   49
+	   [49]   50   51   52   53   54   55   56   57   58   59   60   61   62   63   64   65   66   67   68   69   70   71   72   73
+	   [73]   74   75   76   77   78   79   80   81   82   83   84   85   86   87   88   89   90   91   92   93   94   95   96   97
+		#snip
+	# Note that the numbers in brackets are not part of the data returned; they merely indicate the current index so that you can keep track
+
+	# Since we have a data frame, we can refer to the column by name instead of ordinal.
+	> disasters$Disaster.Number
+	    [1]    1    2    3    4    5    6    7    8    9   11   12   13   14   15   16   17   18   19   20   21   22   23   24   25
+	   [25]   26   27   28   29   30   31   32   33   34   35   36   37   38   39   40   41   42   43   44   45   46   47   48   49
+	   [49]   50   51   52   53   54   55   56   57   58   59   60   61   62   63   64   65   66   67   68   69   70   71   72   73
+	   [73]   74   75   76   77   78   79   80   81   82   83   84   85   86   87   88   89   90   91   92   93   94   95   96   97
+		#snip
+		
+	
+
+
+
+
+# Exploring the columns / rows of data
