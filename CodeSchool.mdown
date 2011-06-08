@@ -1,0 +1,18 @@
+[CodeSchool][] is a site designed to teach programming skills in an interactive fashion.  I went through their free course offering, [Rails for Zombies][], yesterday and was thoroughly impressed with the offering.
+
+![Rails for zombies image](http://grab.by/grabs/3981fda7eb9781d8564652299c4b1ea1.png "Rails for zombies")
+
+In this course, there are a series of 5 segments, each introduced by an extremely well produced video segment.  At the end of the segment, there is an interactive lab in which you must successfully code solutions to questions covering what was just discussed in the video.  For instance, in a section on Rails Routes, it might ask you how to add a global redirect from `/all` to the page `/tweets`.  
+
+Right now the site is very web development focused, but I'm looking forward to when they start having classes on other topics/languages.
+
+I recently completed a course on [School of Webcraft][], and while the experience was a good one, it was nowhere nearly as nice as that of CodeSchool.  In particular, the awarding of badges for having completed certain tasks is automated and instant on CodeSchool; in P2PU a human must manually acknowledge that you've completed all the requirements.  In my case I've been waiting over a week for that recognition.
+
+I highly recommend checking out CodeSchool, even if you don't plan on paying for a course.  The Rails for Zombies example is free and definitely worth the approximately two hours it took to complete.
+
+
+
+
+[CodeSchool]:http://www.codeschool.com/
+[Rails for Zombies]:http://www.codeschool.com/courses/rails-for-zombies
+[School of Webcraft]:http://p2pu.org/webcraft

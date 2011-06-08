@@ -1,3 +1,111 @@
+<<<<<<< HEAD
 2011-03-20
 
 Pandoc is a remarkable piece of software that allows you to convert with ease between many different formats.  For instance, you can write a piece once in Markdown syntax and create a HTML page from it (which is nothing new), as well as a LaTeX document and PDF.  
+=======
+[Pandoc][Pandoc homepage] is a great tool to convert between various text based formats.  For instance, with a single input [Markdown][] file, I can generate an HTML page of that document, a [LaTeX][] document, and a beautifully typeset PDF.
+
+I had troubles installing it on Mac OSX via MacPorts; a simpler solution for me was to download and install the [Haskell package][] and then use the commands:
+
+~~~
+cabal update
+cabal install pandoc
+~~~
+
+This assumes, of course, that the `cabal` program that the Haskell package installs is accessible from your path.
+
+The next step for me was to install the excellent [Pandoc TextMate bundle][].  This gives you the standard things like syntax highlighting of your document, as well as a variety of useful snippets.  For instance, when I am in Pandoc mode and press ⌃ ⌥ ⌘ P, I get the following popup from which I can easily choose options via mouse or keyboard:
+
+![Easy way to preview your document in various output formats][Popup snippets]
+
+Before you can start using the Pandoc TextMate bundle, you must ensure that the Pandoc executable is on the PATH exposed to TextMate, which is different than your global system path.  In other words, just because you can execute `pandoc` in a shell and have it work, this doesn't mean it will work in TextMate.  For instance, on my computer, Pandoc is located in:
+
+~~~{.shell}
+$ which pandoc
+/Users/ndunn/Library/Haskell/bin/pandoc
+~~~
+
+Go to TextMate -> Preferences -> Advanced -> PATH and append `:/Users/ndunn/Library/Haskell/bin` to the end of the PATH variable.  
+
+![Appending the Pandoc path to the PATH variable][TextMate path]
+
+
+
+Pandoc makes a few extensions to the Markdown syntax, which I really like.  For instance, you can designate a section of text to be interpreted literally by surrounding it with three `~` characters.  Furthermore, you can specify what language the source code is in, and the Pandoc converter will syntax highlight it in the final document (assuming the correct extensions have been installed).
+
+I like this setup because it allows you to specify the language of the block of text, which means that you can force TextMate to interpret it the same way.  As I've blogged about previously, one can [add source code syntax highlighting embedded in HTML documents][Intro to Language Grammars].  I added the following lines to my HTML language grammar in order to have a few different languages recognized and interpreted as source code within these delimited blocks.
+
+Here is the relevant section:
+
+~~~
+    {	name = 'source.java';
+			comment = 'Use Java grammar';
+			begin = '~~~\s*{.java}';
+			end = '~~~';
+			patterns = ( { include = 'source.java'; } );
+		},
+		{	name = 'text.xml';
+			comment = 'Use XML grammar';
+			begin = '~~~\s*{.xml}';
+			end = '~~~';
+			patterns = ( { include = 'text.xml'; } );
+		},
+		{	name = 'source.shell';
+			comment = 'Use Shell grammar';
+			begin = '~~~\s*{.shell}';
+			end = '~~~';
+			patterns = ( { include = 'source.shell'; } );
+		},
+		{	name = 'source';
+			begin = '~~~';
+			end = '~~~';
+			patterns = ( { include = 'source'; } );
+		},
+~~~
+
+(One tricky bit to get used to is that you need to have at least one blank space between surrounding text and a `~~~` delimited block, or else the `~` characters are interpreted as strikeouts through the text.)
+
+Here is a screenshot of this working in TextMate:
+
+![Syntax highlighting of sourcecode within the Pandoc document][Syntax highlighting]
+
+
+Finally, just to get really meta on you here's a screenshot of the text of this document
+
+![Text version of the document][Text of this article]
+
+followed by a screenshot of the HTML that Pandoc produces:
+![HTML version of the document][HTML version of this article]
+
+followed by a screenshot of the PDF that LaTeX formatted via Pandoc:
+![PDF version of the document][PDF version of this article]
+
+
+
+I hope this has piqued your interest in Pandoc.  I love the beautiful output of LaTeX but hate working with its syntax.  With Pandoc I'm free to compose in Markdown, a language with a very lightweight syntax, and then convert into TeX when and if I want to.  
+
+
+
+[Pandoc homepage]:http://johnmacfarlane.net/pandoc/
+[Markdown]:http://daringfireball.net/projects/markdown/
+[LaTeX]:http://en.wikipedia.org/wiki/LaTeX
+[online example]:http://johnmacfarlane.net/pandoc/try
+[Haskell package]:http://hackage.haskell.org/platform/mac.html
+[Pandoc TextMate bundle]:https://github.com/dsanson/Pandoc.tmbundle
+[Intro to Language Grammars]:http://developmentality.wordpress.com/2011/02/08/textmate-introduction-to-language-grammars/
+
+[Syntax highlighting]:http://grab.by/grabs/3ab627587a040e4b4d0f3c1ec3e7cee3.png
+[Text of this article]:http://grab.by/grabs/cd79f4e4c7cad9cada663467812b7d81.png
+[HTML version of this article]:http://grab.by/grabs/41ce10ad6d57598c46088bdc95697c1d.png
+[Popup snippets]:http://grab.by/grabs/89566708978b4900d650633c6be127d5.png
+[TextMate path]:http://grab.by/grabs/a151e4e701f67cf6ac9cb24818edb91c.png
+[PDF version of this article]:http://grab.by/grabs/43ee5f89ba69671ebc4c6b37b0b41d54.png
+
+<!--
+[Syntax highlighting]:images/pandoc_syntax_highlighting.png
+[Text of this article]:images/pandoc_text_image.png
+[HTML version of this article]:images/pandoc_preview_as_html.png
+[Popup snippets]:images/pandoc_popups.png
+[TextMate path]:images/pandoc_path.png
+-->
+>>>>>>> 81366ab1a588d0daf5f9b38b7aa40658892d9aaf

@@ -1,0 +1,23 @@
+I have [previously written][3] about the [NetBeans Platform][1]
+I've been using  a lot recently at work and so have found a lot of pain points when using the APIs.  I'll try to document some of the more vexing problems here for other programmers who might be facing the same problem.
+
+One problem you will probably face while using the NetBeans Platform is an inscrutable error message when you start up your application, something to the effect of:
+
+<div>
+[sourcecode language="java"]
+java.lang.IllegalStateException: Duplicate pair in treePair1: java.lang.Object pair2: java.lang.Object index1: 55 index2: 55 item1: null item2: null id1: 16309239 id2: 4ecfe790
+
+	at org.openide.util.lookup.ALPairComparator.compare(ALPairComparator.java:83)
+	at org.openide.util.lookup.ALPairComparator.compare(ALPairComparator.java:54)
+	at java.util.TreeMap.put(TreeMap.java:530)
+	at java.util.TreeSet.add(TreeSet.java:238)
+	at org.openide.util.lookup.AbstractLookup.getPairsAsLHS(AbstractLookup.java:322)
+	at org.openide.util.lookup.MetaInfServicesLookup.beforeLookup(Met...
+[/sourcecode]
+</div>
+
+While it's impossible to know from this error message, this really indicates that you had some sort of exception in the initializer of one or more of your [TopComponents][2], leading to duplicate null entries in some internal set that NetBeans Platform maintains, leading to this error message.  Fortunately, there is usually a "Previous" button on the exception window so you can see what caused the real problem.
+
+[1]:http://netbeans.org/features/platform/
+[2]:http://bits.netbeans.org/dev/javadoc/org-openide-windows/org/openide/windows/TopComponent.html
+[3]:http://developmentality.wordpress.com/tag/netbeans-platform-2/
