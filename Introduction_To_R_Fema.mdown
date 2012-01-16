@@ -1,11 +1,18 @@
 # Introduction
 
+[R][] is an excellent language for doing statistical programming and analysis.  It is a free and open-source project, used in some big name companies like Google.  
+
+The article "[Making Government Transparent Using R][]"
+
+
+I decided to use one of the data sets provided by [Data.gov](http://explore.data.gov/Other/FEMA-Disaster-Declarations-Summary/uihf-be6u), namely a CSV document detailing all of the Federal Disasters ever declared by FEMA.  I will illustrate how to do some basic tasks such as loading the data into R, exploring the data, and ultimately making charts and graphs of interesting facets of the data.
+
+
 # Acquiring the data
 
-http://explore.data.gov/Other/FEMA-Disaster-Declarations-Summary/uihf-be6u
+The first step in any data analysis task is to acquire the data and ingest it into R.  The data set in question is available in CSV (comma separated value) format, an incredibly ubiquitous plain text data format that R can read very easily.  The data can be found at [http://explore.data.gov/download/uihf-be6u/CSV](http://explore.data.gov/download/uihf-be6u/CSV).
 
 
-raw data available url: http://explore.data.gov/download/uihf-be6u/CSV
 
 Contributing Agency Information
 Citation
@@ -64,10 +71,113 @@ In R, tabular data can be read in via either the `read.csv` or `read.table` comm
 	   [49]   50   51   52   53   54   55   56   57   58   59   60   61   62   63   64   65   66   67   68   69   70   71   72   73
 	   [73]   74   75   76   77   78   79   80   81   82   83   84   85   86   87   88   89   90   91   92   93   94   95   96   97
 		#snip
-		
+	
+	# Take the first 10 elements 	
+	> disasters$Disaster.Number[1:10]
+	 [1]  1  2  3  4  5  6  7  8  9 11
+	
+	# Take the first, second, fifth element
+	> disasters$Disaster.Number[c(1,2,5)]
+	[1] 1 2 5
+	
+	# Get a high level summary of the data (a useful first step to decide what to begin analyzing)
+	> summary(disasters)
+	 Disaster.Number IH.Program.Declared IA.Program.Declared PA.Program.Declared HM.Program.Declared     State      
+	 Min.   :   1       :    1              :    1              :    1              :    1           TX     : 3293  
+	 1st Qu.: 995    No :32684           No :18563           No : 1362           No : 9481           MO     : 1738  
+	 Median :1490    Yes: 6002           Yes:20123           Yes:37324           Yes:29205           KY     : 1730  
+	 Mean   :1688                                                                                    VA     : 1610  
+	 3rd Qu.:3001                                                                                    OK     : 1540  
+	 Max.   :3315                                                                                    FL     : 1380  
+	 NA's   :   1                                                                                    (Other):27396  
+	  Declaration.Date Disaster.Type          Incident.Type                                      Title       Incident.Begin.Date
+	 9/10/2005:  777     :    1      Severe Storm(s) :12464   SEVERE STORMS & FLOODING              : 3387   8/29/2005 : 2764   
+	 9/5/2005 :  647   DR:28155      Flood           : 7899   SEVERE STORMS AND FLOODING            : 2796   3/13/1993 :  771   
+	 9/13/2005:  615   EM: 9673      Hurricane       : 7150   HURRICANE KATRINA EVACUATION          : 2602   11/27/2005:  419   
+	 1/13/1996:  453   FM:  468      Snow            : 3684   SEVERE STORMS, TORNADOES, AND FLOODING: 1353   1/6/1996  :  415   
+	 9/2/2005 :  329   FS:  390      Fire            : 2238   SEVERE WINTER STORM                   : 1353   1/26/2009 :  357   
+	 9/21/2005:  319                 Severe Ice Storm: 1469   DROUGHT                               : 1014   9/20/2005 :  319   
+	 (Other)  :35547                 (Other)         : 3783   (Other)                               :26182   (Other)   :33642   
+	  Incident.End.Date Disaster.Close.Out.Date          Declared.County.Area
+	 10/1/2005 : 2926             :15873        Washington (County):  337    
+	 3/17/1993 :  635   6/30/1994 :  408        Jefferson (County) :  320    
+	 10/14/2005:  602   7/3/1978  :  393        Jackson (County)   :  311    
+	 1/12/1996 :  555   9/18/2001 :  390        Franklin (County)  :  295    
+	           :  403   3/24/2006 :  336        Lincoln (County)   :  264    
+	 8/31/1998 :  257   11/22/1995:  317        Clay (County)      :  234    
+	 (Other)   :33309   (Other)   :20970        (Other)            :36926    
+	
+	# As you can see, each column of the data set is analyzed individually.  You can choose each 
+	# column manually to get much more detail
+	> summary(d$State)
+	       AK   AL   AR   AS   AZ   CA   CO   CT   DC   DE   FL   FM   GA   GU   HI   IA   ID   IL   IN   KS   KY   LA   MA   MD 
+	   1  128 1002 1089   50  201  955  419  116   13   32 1380   31 1110   12   55 1259  196  888 1163 1086 1730 1158  253  270 
+	  ME   MH   MI   MN   MO   MP   MS   MT   NC   ND   NE   NH   NJ   NM   NV   NY   OH   OK   OR   PA   PR   PW   RI   SC   SD 
+	 354   61  569 1047 1738   29 1060  288 1072  971  937  196  375  233  132  998  900 1540  317  842  971    6   59  296  827 
+	  TN   TX   UT   VA   VI   VT   WA   WI   WV   WY 
+	1016 3293  119 1610   54  165  567  628  778   42 
+	
+	
+	# We can plot this easily with the plot command.  To see all of the options
+	# available for plot, enter ?plot
+	plot(summary(d$State), main="Number of disasters per state", ylab="Number of disasters")
+	
+	# To save as a png instead,
+	> png('unsorted_first_draft.png')
+	> plot(summary(d$State), main="Number of disasters per state", ylab="Number of disasters")
+	> dev.off()
+	
+`plot` is good for plotting basic two dimensional data.  In this first version of the image, we don't have much useful information - the states are in alphabetical order but there are no labels giving us that information.  In order to solve this problem, we need to do two things:
+
+1. extract the names of the states corresponding with each entry in the summary table
+2. plot the name of the state instead of a dot
+
+The first can be accomplished by using the `table` command instead of `summary`.  Table gives us a similar output, but with additional information, namely the name of the state mapping to each count.
+
+	
+	> table(d$State)
+
+	       AK   AL   AR   AS   AZ   CA   CO   CT   DC   DE   FL   FM   GA   GU   HI   IA   ID   IL   IN   KS   KY   LA   MA   MD 
+	   1  128 1002 1089   50  201  955  419  116   13   32 1380   31 1110   12   55 1259  196  888 1163 1086 1730 1158  253  270 
+	  ME   MH   MI   MN   MO   MP   MS   MT   NC   ND   NE   NH   NJ   NM   NV   NY   OH   OK   OR   PA   PR   PW   RI   SC   SD 
+	 354   61  569 1047 1738   29 1060  288 1072  971  937  196  375  233  132  998  900 1540  317  842  971    6   59  296  827 
+	  TN   TX   UT   VA   VI   VT   WA   WI   WV   WY 
+	1016 3293  119 1610   54  165  567  628  778   42
+	
+	> class(summary(d$State))
+	[1] "integer"
+	> class(table(d$State))
+	[1] "table"
+	>
+	# `rownames` will give us the states as a vector of strings, which is exactly what we need
+	> rownames(table(d$State))
+	 [1] ""   "AK" "AL" "AR" "AS" "AZ" "CA" "CO" "CT" "DC" "DE" "FL" "FM" "GA" "GU" "HI" "IA" "ID" "IL" "IN" "KS" "KY" "LA" "MA"
+	[25] "MD" "ME" "MH" "MI" "MN" "MO" "MP" "MS" "MT" "NC" "ND" "NE" "NH" "NJ" "NM" "NV" "NY" "OH" "OK" "OR" "PA" "PR" "PW" "RI"
+	[49] "SC" "SD" "TN" "TX" "UT" "VA" "VI" "VT" "WA" "WI" "WV" "WY"
+
+
+
+	
+	
+	
+	# That's interesting to see but not entirely useful - the states are sorted alphabetically, making
+	# it hard to see which states have more or less disasters.  Let's sort them.
+	> sort(summary(d$State))
+	       PW   GU   DC   MP   FM   DE   WY   AS   VI   HI   RI   MH   CT   UT   AK   NV   VT   ID   NH   AZ   NM   MA   MD   MT 
+	   1    6   12   13   29   31   32   42   50   54   55   59   61  116  119  128  132  165  196  196  201  233  253  270  288 
+	  SC   OR   ME   NJ   CO   WA   MI   WI   WV   SD   PA   IL   OH   NE   CA   ND   PR   NY   AL   TN   MN   MS   NC   KS   AR 
+	 296  317  354  375  419  567  569  628  778  827  842  888  900  937  955  971  971  998 1002 1016 1047 1060 1072 1086 1089 
+	  GA   LA   IN   IA   FL   OK   VA   KY   MO   TX 
+	1110 1158 1163 1259 1380 1540 1610 1730 1738 3293 
+	
+	
 	
 
 
 
-
 # Exploring the columns / rows of data
+
+
+[R]:http://www.r-project.org/
+[Making Government Transparent Using R]:http://radar.oreilly.com/2009/07/making-government-transparent.html
+[Google and Facebook use R]:http://www.dataspora.com/2009/02/predictive-analytics-using-r/
