@@ -1,5 +1,229 @@
-Title: Lessons learned from searching for the perfect mobile guitar fretboard app
+Title: The best free guitar fretboard app for iOS: Lessons learned
 Hook: 
 
-After 
+If you're a guitar player or someone interested in mobile apps and UI design, this post should be of interest to you.
 
+I have been playing guitar for about 3 years but I'm ashamed to admit I haven't mastered the fretboard.  Now that I'm paying for lessons, there's an economic incentive to learn as well - the faster I can locate notes on the fretboard, the less time (and money) I waste in my lesson.
+
+At one point I toyed with writing an application to help me learn the fretboard, but I thought I'd look and see what was out there first before spending my effort.  I'm glad I did, because there are some excellent free offerings.  I found four apps that fit the bill: [Guitar Trainer HDx][], [Electric Guitar Fretboard Addict][], [Fretboard Warrior][], and [Fretronome][]. Before I go in depth on each of them and reveal the best, here is the bottom line up front:
+
+* Aesthetics matter
+* Fat fingers != precise mouse.  Touch targets must be *big*
+* What's most convenient for the programmer is not best for the user
+* There is such thing as too much minimalism
+* Do not make me accidentally click the 'buy' button.  I can guarantee I will not complete the transaction
+
+
+# Guitar anatomy
+For those not familar with the guitar, there are six strings, tuned to different frequencies.  The finger presses down on various frets, shortening the string and producing a different (higher) tone when the string vibrates.  There are typically X frets on a standard guitar, but there is no need to display more than twelve on the screen at any one time - an entire octave fits in 12 frets (12 half steps)
+
+0 1 2  3 4  5 6  7 8 9  10 11 12
+E F F# G G# A A# B C C# D  D# E
+
+On my guitar, 12 frets measures approximately X inches long and Y inches wide.  How then do we represent that on a X by Y inch mobile screen?
+
+There are two main approaches - either display the entire fretboard in a zoomed out, small fashion, or provide a zoomed in view of a few frets.  There are pros and cons of each approach.
+
+Global view (entire fretboard)
+
+Pros
+
+* Better simulates what you see while actually playing guitar
+* Provides global picture - easier to see relationship between notes and where frets fall in absolute and relative terms
+
+Cons
+
+* Frets and strings can be very close together and hard to distinguish
+
+
+Zoomed in view (partial fretboard)
+
+Pros
+
+* Able to provide much more separation between strings, providing larger touch targets
+* 
+
+Cons
+
+* Hard to get a sense of where notes are relative to each other
+* Does not simulate reality, unless you play guitar with blinders on with your nose an inch or two from the fretboard
+
+There are three variables at play 
+
+* Fret/string combo
+* note name
+* note value (on staff)
+
+
+After the visual display, the second distinguishing mark of the app is how the testing is done.  There are two main ways of testing knowledge - from fret to note, and from note to fret.  When going from fret to note, a given fret is somehow distinguished and the user must indicate the name of the note.  This is unambiguous - there is only one answer (well, two different names for the same notes for accidentals, e.g. F# or Gb both refer to the same note).
+
+On the other hand, we can be asked to go from a note name to a fret/string combination.  This mapping *is* ambiguous - there are multiple Es on the fretboard, for instance.  We need another piece of information in order to pick the correct answer.  For instance, if we are limited to a single string, then our choices drop down to a maximum of two (the open fret and the 12th fret form an octave for instance).  
+
+
+
+
+
+
+# Guitar Trainer HDx
+[Guitar Trainer HDx][]
+
+Vertically oriented scroll pane
+asdfasdf
+
+
+
+Pros:
+
+* Keeps track of hits, miss, hit %, and total time
+* Supports both landscape and portrait views
+* Easy to track the portion of the fretboard you've mastered
+* Keeps track of some nice stats - Hits, Misses, success rate, total time, time per hit, top score, top level
+
+
+Cons:
+ 
+* Only see approximately 4 frets at a time, so it's hard to get a big picture view
+* Very easy to accidentally hit the "Unlock Guitar" button at bottom of the screen while choosing one of the options
+* The same note sometimes pops up twice in a row.  This should be avoided.
+* Only tests in one direction - from fret/note combo to note name.
+
+* By default, too much information is presented.  E A D G B E on the strings, numbers on the frets rather than forcing you to see them yourself.  (Necessary given the zoomed in view)
+
+
+Meh:
+
+* Accidentals are mixed up - e.g. F# will sometimes show up as Gb, sometimes as F#.
+* GameCenter integration.  Not really necessary, but you do get achievements from time to time.
+
+Question mark on given fret/string combo, you must select from a variety of possible notes.
+
+## Modes:
+
+* Training mode
+* Game
+
+### Game
+Gets incrementally harder
+Have to identify X notes per level out of Y possible choices
+
+4 selections in a minute with 3 choices for level 1
+level 2 4 hits in a minute 
+
+some achievements ("Hit 100 notes")
+
+Can pick multiple tunings, as well as custom tunings
+
+defaults to Show all fret numbers, Show helper notes but you can turn it off in the options
+Can also choose the accidentals to be only flats or sharps or both, but again it doesn't show *both* when in both.  Somewhat confusing
+
+Paid options
+starting fet, number of frets, number of note choices
+
+Some clever features - vibrating string so while you're scrolled off the screen you can still tell which string you're looking for
+
+Aesthetics - It's OK but nothing to write home about.
+
+Some interesting stats tracked - Hits, Misses, success rate, total time, time per hit, top score, top level
+
+
+4 stars?
+
+Cons -
+it's only one direction, given a note/string combo, name the note.  Never goes the opposite direction, namely given a note, pick the string/fret combo
+
+v3.6x
+
+
+
+# Electric Guitar Fretboard Addict v1.4.3
+Products by Michael Rylee
+[App store][Electric Guitar Fretboard Addict]
+
+Aesthetics - ugly.  Bad clipart, logo looks like it's from a MS word/powerpoint template
+
+Tiny thumbnails advertising his other products - cannot even read them on a retina display
+
+"Each built in Notes exercise contains 133 progressive rounds.  After completing each exercise, you will know the Key and Fretboard by Note, by Position, by String, by Fret, Forwards, Backwards and Randomly."
+
+In app purchases of Chords, Solo etc.  Focusing on notes aspect
+
+Photograph of guitar rather than vector art - no scrolling
+Displays 12 frets (full octave) on the screen.  Good global picture
+Cons - extremely small touch targets towards the nut.  
+
+Pros:
+Displays the actual note on a musical staff, note name
+Has you go the opposite direction too
+
+
+starts off slowly, working just on fret zero.  Work your way up over 133 rounds
+
+No way to jump ahead if you already know some of the fretboard.
+
+
+No horizontal mode
+
+Free mode lets you play through 28 of 133 exercises for key of C.
+
+3 stars
+
+
+It's clear that this is a multiplatform game - doesn't fit look and feel of the system at all.
+
+
+
+# Freboard Warrior
+[App store][Fretboard Warrior]
+
+Pick a duration - 1 2 5 10 minutes
+Jagged fretboard - not very aesthetically appealing.  Some swirly background.
+Horizontal orientation
+Large menu taking up space that could be used to either provide bigger touch targets or bigger visualization of the fretboard.  
+
+Jumps all over all 12 frets on all strings.  No way to practice a specific string, section of fretboard
+
+Extremely bare boned.  No frills.  Provides a test of your skills in one direction (fret/string -> note).
+
+3 stars
+
+
+Guitar Fretboard Addict v 1.4.3
+Michael Rylee
+
+Exactly the same as the Electric Guitar Fretboard with a different visualization of the fretboard
+
+
+
+# Fretronome
+[App store link][Fretronome]
+Horizontal
+Vector graphic rather than photo - no perspective distortion
+Can focus on one string at a time, or do all for variety
+
+Extremely large touch target - up to you to keep track of if you get it right or not.  Kind of like flashcards
+
+Result -> What the note was
+Large dot, easy to tell which fret is indicated
+
+Also does interval training
+Extremely attractive aesthetics - nice fade to black near edges of fretboard
+Notes reference - wtf ?  B is erroneously indicated as H.  Off by one error? But you don't need to use it.
+
+No countdown / ticking clock to distract you
+
+Perhaps only thing that would be better is if it gave you a Yes / No button to let it automatically track your accuracy.
+
+4 or 4.5 stars
+
+still only goes one direction
+
+
+
+
+
+[Guitar Trainer HDx]:http://itunes.apple.com/us/app/guitar-trainer-hdx/id443265532?mt=8
+[Guitar Fretboard Addict iTunes Link]:http://itunes.apple.com/us/app/guitar-fretboard-addict/id406919259?mt=8
+[Guitar Fretboard Addict]:http://guitaraddict.net/guitarfretboardaddict.aspx
+[Fretboard Warrior]:http://itunes.apple.com/ca/app/fretboard-warrior-lite/id339661294?mt=8
+[Electric Guitar Fretboard Addict]:http://itunes.apple.com/us/app/electric-guitar-fretboard/id420135377?mt=8
+[Fretronome]:http://itunes.apple.com/us/app/fretronome/id412725768?mt=8
