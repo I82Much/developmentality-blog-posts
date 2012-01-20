@@ -1,3 +1,9 @@
+iphone guitar app global 8,100	 local 2,900	
+
+
+
+Best iPhone guitar app
+
 Title: The best free guitar fretboard app for iOS: Lessons learned
 Hook: 
 
@@ -218,6 +224,73 @@ Perhaps only thing that would be better is if it gave you a Yes / No button to l
 still only goes one direction
 
 
+# Fret Tester
+$1.99 [App store link][Fret Tester]
+
+
+I decided to try a paid app to see if it would fare any better than these free ones.  I'm glad I did - I use it almost exclusively now
+
+On first axis, zoomed in or global view, it provides both options, defaulting to zoomed in.  Unlike Guitar Trainer HDx, the fret board does not scroll in zoomed in view; rather the region of interest is displayed.  It shows 6 frets at a time, while filling almost all of the available vertical space.  
+
+Aesthetically, the app is very well done.  It, like Fretronome, uses an idealized graphical form rather than a photograph, which ensures that there is no distortion on the board.
+
+There are four modes - Name Note, Find Note, Notation, and Notes on Staff.  Recall that only Electric Guitar Fretboard Addict had some of these additional features.
+
+Unlike the other apps, there is no timed mode.  (In my opinion the lack of a ticking clock is good).  You are not totally without a measure of your speed, however.  In addition to keeping track of your hits and misses, the app displays a 'beats per minute' value as well as a graphical representation of your speed (turtle, hare, car, rocket ship).  This is a great motivation factor that feels less stressful than a countdown.
+
+Since the accidentals (A#, C#, D#, F#, G#) are hidden by default, there are larger touch targets and better separation between them for the notes.  This is a good tradeoff.  Tap once to reveal the accidentals, tap again to hide (or choose one; will default back to the naturals)
+
+You can track your progress by means of a graphical representation of your mastery of each fret.
+
+One minor complaint about this display is that there is no real meaning to the order of the color.  As Edward Tufte, a noted interaction designer writes, 
+...
+In my opinion, this should have been  a linear interpolation between two colors (white to black).  This would allow one to get a better sense of overall progress without continually having to refer to the color chart.
+
+
+Just like Fretronome, you can restrict the strings that are quizzed.  Furthermore, you can restrict the range of frets (from first to third, for instance), as well as toggling accidentals.  This allows you to focus on one specific problem area.
+
+
+Supports bass, mandolin, 5 string base, left handed mode, alternate tunings
+
+Find note - 
+zoomed in, extremely generous touch markers
+zoomed out, still able to hit the notes accurately - because it restricts to a single string, you do not need to worry about the tiny spacing between strings
+
+
+
+
+Strange UI thing - hits are registered on *press* rather than *release*, meaning it's impossible for you to correct yourself if you realize you're about to make a mistake by moving your fingers off the fret.  It's a minor annoyance, and has the positive side effect of seemingly increasing the responsiveness (when you're right, you're on to the next note in a flash)
+
+
+
+
+Left handed mode
+
+
+
+
+
+## Name Note
+
+
+# FretSurfer
+$2.99 [Fret Surfer][]
+
+
+
+
+## Chart
+| Name       | Name Note   | Find Note    | Find Note From Staff |	Left handed mode |
+|:-----------|------------:|:------------:|----------------------|-------------------|
+| Fret Tester| X		   | X            | X 					 |  X                |
+| Fretronome | X[^1]       |              |                      |                   |
+|            |             |              |                      |                   |
+|            |             |              |                      |                   |
+|            |             |              |                      |                   |
+|            |             |              |                      |                   |
+
+
+Fretronome does not have you pick the note from a list, but rather hides and reveals the answer.  Up to you to keep track.
 
 
 
@@ -227,3 +300,5 @@ still only goes one direction
 [Fretboard Warrior]:http://itunes.apple.com/ca/app/fretboard-warrior-lite/id339661294?mt=8
 [Electric Guitar Fretboard Addict]:http://itunes.apple.com/us/app/electric-guitar-fretboard/id420135377?mt=8
 [Fretronome]:http://itunes.apple.com/us/app/fretronome/id412725768?mt=8
+[Fret Tester]:http://itunes.apple.com/us/app/fret-tester-learn-notes-for/id442144977?mt=8
+[Fret Surfer]:http://itunes.apple.com/us/app/fret-surfer-guitar-trainer/id288733409?mt=8
