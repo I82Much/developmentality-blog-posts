@@ -279,18 +279,6 @@ $2.99 [Fret Surfer][]
 
 
 
-## Chart
-| Name       | Name Note   | Find Note    | Find Note From Staff |	Left handed mode |
-|:-----------|------------:|:------------:|----------------------|-------------------|
-| Fret Tester| X		   | X            | X 					 |  X                |
-| Fretronome | X[^1]       |              |                      |                   |
-|            |             |              |                      |                   |
-|            |             |              |                      |                   |
-|            |             |              |                      |                   |
-|            |             |              |                      |                   |
-
-
-Fretronome does not have you pick the note from a list, but rather hides and reveals the answer.  Up to you to keep track.
 
 
 
