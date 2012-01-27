@@ -1,7 +1,5 @@
 iphone guitar app global 8,100	 local 2,900	
 
-
-
 Best iPhone guitar app
 
 Title: The best free guitar fretboard app for iOS: Lessons learned
@@ -65,18 +63,10 @@ After the visual display, the second distinguishing mark of the app is how the t
 
 On the other hand, we can be asked to go from a note name to a fret/string combination.  This mapping *is* ambiguous - there are multiple Es on the fretboard, for instance.  We need another piece of information in order to pick the correct answer.  For instance, if we are limited to a single string, then our choices drop down to a maximum of two (the open fret and the 12th fret form an octave for instance).  
 
-
-
-
-
-
 # Guitar Trainer HDx
 [Guitar Trainer HDx][]
 
 Vertically oriented scroll pane
-asdfasdf
-
-
 
 Pros:
 
@@ -138,7 +128,6 @@ Cons -
 it's only one direction, given a note/string combo, name the note.  Never goes the opposite direction, namely given a note, pick the string/fret combo
 
 v3.6x
-
 
 
 # Electric Guitar Fretboard Addict v1.4.3
@@ -228,7 +217,7 @@ still only goes one direction
 $1.99 [App store link][Fret Tester]
 
 
-I decided to try a paid app to see if it would fare any better than these free ones.  I'm glad I did - I use it almost exclusively now
+I decided to try a paid app to see if it would fare any better than these free ones.  I'm glad I did - I use it exclusively now.
 
 On first axis, zoomed in or global view, it provides both options, defaulting to zoomed in.  Unlike Guitar Trainer HDx, the fret board does not scroll in zoomed in view; rather the region of interest is displayed.  It shows 6 frets at a time, while filling almost all of the available vertical space.  
 
@@ -246,9 +235,7 @@ One minor complaint about this display is that there is no real meaning to the o
 ...
 In my opinion, this should have been  a linear interpolation between two colors (white to black).  This would allow one to get a better sense of overall progress without continually having to refer to the color chart.
 
-
 Just like Fretronome, you can restrict the strings that are quizzed.  Furthermore, you can restrict the range of frets (from first to third, for instance), as well as toggling accidentals.  This allows you to focus on one specific problem area.
-
 
 Supports bass, mandolin, 5 string base, left handed mode, alternate tunings
 
@@ -257,30 +244,11 @@ zoomed in, extremely generous touch markers
 zoomed out, still able to hit the notes accurately - because it restricts to a single string, you do not need to worry about the tiny spacing between strings
 
 
-
-
 Strange UI thing - hits are registered on *press* rather than *release*, meaning it's impossible for you to correct yourself if you realize you're about to make a mistake by moving your fingers off the fret.  It's a minor annoyance, and has the positive side effect of seemingly increasing the responsiveness (when you're right, you're on to the next note in a flash)
-
-
-
-
-Left handed mode
-
-
-
-
-
-## Name Note
 
 
 # FretSurfer
 $2.99 [Fret Surfer][]
-
-
-
-
-
-
 
 [Guitar Trainer HDx]:http://itunes.apple.com/us/app/guitar-trainer-hdx/id443265532?mt=8
 [Guitar Fretboard Addict iTunes Link]:http://itunes.apple.com/us/app/guitar-fretboard-addict/id406919259?mt=8
