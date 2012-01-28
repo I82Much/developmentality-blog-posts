@@ -1,9 +1,10 @@
 iphone guitar app global 8,100	 local 2,900	
 
-The Best iPhone Guitar Fretboard App: UI Lessons Learned
+
+Usability lessons learned in the search for the best iPhone Guitar Fretboard App: Usability UI Lessons Learned
 
 
-If you're a guitar player or someone interested in mobile apps and UI design, this post should be of interest to you.
+If you're a guitar player or someone interested in mobile apps and user interface (UI) design, this post should be of interest to you.
 
 I have been playing guitar for about 3 years but I'm ashamed to admit I haven't mastered the fretboard.  Now that I'm paying for lessons, there's an economic incentive to learn as well - the faster I can locate notes on the fretboard, the less time (read: money) I waste in my lesson.
 
@@ -52,10 +53,6 @@ Cons
 * Does not simulate reality, unless you play guitar with blinders on with your nose an inch or two from the fretboard
 
 
-
-
-
-
 There are three variables at play 
 
 * Fret/string combo
@@ -87,7 +84,8 @@ Cons:
 * Only tests in one direction - from fret/note combo to note name.
 
 * By default, too much information is presented.  E A D G B E on the strings, numbers on the frets rather than forcing you to see them yourself.  (Necessary given the zoomed in view)
-
+* Distracting animations
+* Slow time between notes (~2 seconds)
 
 Meh:
 
@@ -125,7 +123,7 @@ Aesthetics - It's OK but nothing to write home about.
 Some interesting stats tracked - Hits, Misses, success rate, total time, time per hit, top score, top level
 
 
-4 stars?
+2 stars
 
 Cons -
 it's only one direction, given a note/string combo, name the note.  Never goes the opposite direction, namely given a note, pick the string/fret combo
@@ -207,7 +205,7 @@ No countdown / ticking clock to distract you
 
 Perhaps only thing that would be better is if it gave you a Yes / No button to let it automatically track your accuracy.
 
-4 or 4.5 stars
+4 stars
 
 still only goes one direction
 
@@ -221,6 +219,7 @@ This app gives a horizontal view of the fretboard, defaulting to a zoomed in vie
 
 There are four modes - Name Note, Find Note, Notation, and Notes on Staff.  
 
+## Name Note
 Name Note is the standard mode which all of these apps provide.  In this mode, dots appear on the strings and you must name the note, choosing from among the options at the bottom of the screen.  The names of the 7 notes are displayed as large touch targets on the bottom of the screen (A, B, C, D, E, F, G).  The accidentals (sharps and flats) are hidden and only revealed when the sharp key is pressed.  When in that mode, the A turns to A#, C to C#, and so on and so forth.
 
 This is a great design choice for two reasons.  First, natural notes are more common (7 out of 12 possible notes), so it makes sense to optimize for finding them quickly.  Second, by restricting the choices to 7 as opposed to 12 as many of the other apps do, the touch targets can be much bigger with more separation between them.  This makes a huge difference in the usability of the app, as you will rarely if ever click the wrong button on accident.
@@ -233,16 +232,11 @@ Playing with this app provides a much more fluid experience and helps me enter t
 
 The first is that there is no extraneous animation between the identification of one note and the display of the next.  For instance, Guitar Trainer HDx hides all the other answers after you've made the correct choice, and displays a huge CORRECT! on the screen which rotates around and leaves the screen.  I'm all for positive reinforcement but I don't need that much, and I don't need the second or two pause between the identification of one note and the display of the next.  This app moves on to the next note with no hesitation, allowing you to drill yourself as fast as you can think.
 
-The second difference is more technical.  If 
+The second difference is more technical.  To explain it, first some background.  What we think of as a mouse click is really two separate actions - the mouse button is pressed and subsequently released.  In most cases the time between these two actions is so tiny that we can treat the two as the same.  The distinction between the press and release is important.  Why?  Try this test - press and hold the mouse over the following [link](http://www.google.com).  Now drag the mouse out of the url and release the mouse.  Note that you have effectively canceled the navigation.  The same is true of most button implementations - the action does not occur until the mouse is released within the button area.  This pattern of having actions occur on mouse release is in general a great thing - it allows you to rethink your decision before commiting to it.
 
+Fret Master eschews the standard for action on finger press.  This means that by the time your finger has come off the screen, the hit has already been registered and the next note displayed.  This really contributes to the feeling of speed.  Since there are no real negative consequences for making a wrong note choice (it's not like you're going to delete an important document, for instance), the extra speed increase is worth the lack of a safety net.  It's a very subtle touch but it makes a big difference.
 
-Strange UI thing - hits are registered on *press* rather than *release*, meaning it's impossible for you to correct yourself if you realize you're about to make a mistake by moving your fingers off the fret.  It's a minor annoyance, and has the positive side effect of seemingly increasing the responsiveness (when you're right, you're on to the next note in a flash)
-
-
-
-
-Recall that only Electric Guitar Fretboard Addict had some of these additional features.
-
+The options allow you to focus on the areas you need to improve.  For instance, you can restrict the range of the fretboard tested (e.g. frets 3-6) as well as the specific string or strings (the B string is a weak area for me personally).  You can also choose whether to test accidentals (sharps or flats) or only the natural notes.  I personally choose to play on the natural note mode since it works so well with the UI decisions I discussed earlier.  I find this combination of options extremely appealing as it allows you to focus just on the weak areas rather than wasting your time with what you have already mastered.
 
 You can track your progress by means of a graphical representation of your mastery of each fret.
 
@@ -250,18 +244,32 @@ One minor complaint about this display is that there is no real meaning to the o
 ...
 In my opinion, this should have been  a linear interpolation between two colors (white to black).  This would allow one to get a better sense of overall progress without continually having to refer to the color chart.
 
-Just like Fretronome, you can restrict the strings that are quizzed.  Furthermore, you can restrict the range of frets (from first to third, for instance), as well as toggling accidentals.  This allows you to focus on one specific problem area.
+
+## Find Note
+Find Note is a rarer mode; only Electric Guitar Fretboard Addict had this feature.  In this mode, you are given a note name and four consecutive dots on a string and must choose the correct fret.  The touch targets are big and well-spaced in the zoomed in mode.  When zoomed out, it's ocasionally hard to select the correct fret but the fact that the choices are limited to one string (rather than adjacent strings) obviates most of the annoyance.
+
+
+
+## Miscellaneous
 
 Supports bass, mandolin, 5 string base, left handed mode, alternate tunings
 
-Find note - 
-zoomed in, extremely generous touch markers
-zoomed out, still able to hit the notes accurately - because it restricts to a single string, you do not need to worry about the tiny spacing between strings
-
-
-
 # FretSurfer
 $2.99 [Fret Surfer][]
+
+# Comparison chart
+The following chart summarizes the various features of the tested products.
+
+# Conclusion
+This post explored six different applications' approaches to a given UI challenge - how to represent a large physical guitar fretboard on a small mobile screen.  We saw that certain applications did not pay enough attention to the separation needed between adjacent touch targets, as well as the size of each target.  We also saw how certain paradigms which work well for standard apps (the scroll display) do not work well for such a task where global positioning and spatial relationships are important.  
+
+Fret Tester was the clear winner of the contest, due to its great aesthetics, usability, and design.  Its modes eschewed flash and animation for a fast, accurate, responsive testing environment.  The time pressure of a ticking clock that exists in many of the apps is thankfully absent here, though there are clear visual indications of progress (both in terms of speed, accuracy, and overall progression on the fretboard).
+
+While this post focused on guitar fretboard applications, many of these user interface lessons can be applied to other 
+
+
+"One thumb and one eyeball" - http://www.uie.com/brainsparks/2011/04/08/luke-wroblewski-designing-mobile-web-experiences/
+
 
 [Guitar Trainer HDx]:http://itunes.apple.com/us/app/guitar-trainer-hdx/id443265532?mt=8
 [Guitar Fretboard Addict iTunes Link]:http://itunes.apple.com/us/app/guitar-fretboard-addict/id406919259?mt=8
