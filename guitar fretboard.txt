@@ -1,8 +1,6 @@
 iphone guitar app global 8,100	 local 2,900	
 
-
 Usability lessons learned in the search for the best iPhone Guitar Fretboard App: Usability UI Lessons Learned
-
 
 If you're a guitar player or someone interested in mobile apps and user interface (UI) design, this post should be of interest to you.
 
