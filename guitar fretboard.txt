@@ -1,6 +1,8 @@
 iphone guitar app global 8,100	 local 2,900	
 
-Usability lessons learned in the search for the best iPhone Guitar Fretboard App: Usability UI Lessons Learned
+The Best iPhone Guitar Fretboard App: Usability Lessons Learned
+
+
 
 If you're a guitar player or someone interested in mobile apps and user interface (UI) design, this post should be of interest to you.
 
@@ -18,7 +20,7 @@ At one point I toyed with writing an application to help me learn the fretboard,
 * Think twice about animation
 
 # Guitar anatomy
-For those not familar with the guitar, there are six strings, tuned to different frequencies.  The finger presses down on various frets, shortening the string and producing a different (higher) tone when the string vibrates.  There are typically X frets on a standard guitar, but there is no need to display more than twelve on the screen at any one time - an entire octave fits in 12 frets (12 half steps)
+For those not familar with the guitar, there are six strings, tuned to different frequencies.  The finger presses down on various locations on the neck of the guiar, aka frets, shortening the string and producing a different (higher) tone when the string vibrates.  There are typically X frets on a standard guitar, but there is no need to display more than twelve on the screen at any one time - an entire octave fits in 12 frets (12 half steps)
 
 0 1 2  3 4  5 6  7 8 9  10 11 12
 E F F# G G# A A# B C C# D  D# E
@@ -181,9 +183,6 @@ Extremely bare boned.  No frills.  Provides a test of your skills in one directi
 3 stars
 
 
-
-
-
 # Fretronome
 [App store link][Fretronome]
 Horizontal
@@ -246,8 +245,6 @@ In my opinion, this should have been  a linear interpolation between two colors 
 ## Find Note
 Find Note is a rarer mode; only Electric Guitar Fretboard Addict had this feature.  In this mode, you are given a note name and four consecutive dots on a string and must choose the correct fret.  The touch targets are big and well-spaced in the zoomed in mode.  When zoomed out, it's ocasionally hard to select the correct fret but the fact that the choices are limited to one string (rather than adjacent strings) obviates most of the annoyance.
 
-
-
 ## Miscellaneous
 
 Supports bass, mandolin, 5 string base, left handed mode, alternate tunings
@@ -259,9 +256,9 @@ $2.99 [Fret Surfer][]
 The following chart summarizes the various features of the tested products.
 
 # Conclusion
-This post explored six different applications' approaches to a given UI challenge - how to represent a large physical guitar fretboard on a small mobile screen.  We saw that certain applications did not pay enough attention to the separation needed between adjacent touch targets, as well as the size of each target.  We also saw how certain paradigms which work well for standard apps (the scroll display) do not work well for such a task where global positioning and spatial relationships are important.  
+This post explored six different applications' approaches to a given UI challenge - how to represent a large physical guitar fretboard on a small mobile screen.  We saw that certain applications did not pay enough attention to the separation needed between adjacent touch targets, as well as the size of each target.  We also saw how the ubiquitous scroll pane works well for standard apps but does not work well for a task where global positioning and spatial relationships are important.  
 
-Fret Tester was the clear winner of the contest, due to its great aesthetics, usability, and design.  Its modes eschewed flash and animation for a fast, accurate, responsive testing environment.  The time pressure of a ticking clock that exists in many of the apps is thankfully absent here, though there are clear visual indications of progress (both in terms of speed, accuracy, and overall progression on the fretboard).
+Fret Tester was the clear winner of the contest, due to its great aesthetics, usability, and design.  Its modes eschewed flash and animation for a fast, accurate, responsive testing environment.  There is no ticking clock to exert pressure on you, but there are clear visual indications of progress (both in terms of speed, accuracy, and overall progression on the fretboard).
 
 While this post focused on guitar fretboard applications, many of these user interface lessons can be applied to other 
 
