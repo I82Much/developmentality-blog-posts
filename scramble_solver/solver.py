@@ -52,12 +52,19 @@ class BoardSolver(object):
     self.board = board
     self.dictionary = dictionary
 
+
+    self.trie = Trie()
+    for index, word in enumerate(dictionary):
+      self.trie.add(word, index)
+
+
   def HasPrefix(self, prefix):
+    return len(self.trie.find_prefix_matches(prefix))
     # Naiive implementation
-    for word in self.dictionary:
-      if word.startswith(prefix):
-        return True
-    return False
+    #for word in self.dictionary:
+    #  if word.startswith(prefix):
+    #    return True
+    #return False
 
   def HasWord(self, word):
     return word in self.dictionary
