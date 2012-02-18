@@ -1,0 +1,32 @@
+# The Chromatic Keyboard
+
+[Sean McCullough][] pointed me towards an interesting article a few weeks back of the Chromatic Keyboard.  I don't know exactly how the mechanical contraption works, but each keystroke on an old-fashioned typewriter corresponds with a different color.  By typing, one creates art.  The article intrigued me - how hard would it be to create art in this way?  Since I don't have the actual mechanical device handy, I figured I'd give it a shot the best way I know how - recreating the experience in code.
+
+# Demo
+Link:
+
+
+# Process
+
+## Sampling the colors
+Color picker on mac
+
+## Mapping letters to colors
+Copying / pasting the RGB values
+
+## Writing the code
+
+# UI challenges
+* cannot see your cursor
+* technically no undo
+
+# Conclusion
+Please share any comments, questions, and most of all artwork in the discussion thread below. 
+
+Source code is available at 
+
+
+
+
+[Sean McCullough]:
+
