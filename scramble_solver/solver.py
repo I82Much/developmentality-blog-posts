@@ -32,11 +32,12 @@ class FoundWord(object):
 
 class Board(object):
 
-  def __init__(self):
-    # 4x4
+  def __init__(self, num_rows=4, num_cols=4):
+    self.num_rows = num_rows
+    self.num_cols = num_cols
     self.board = []
-    for i in range(4):
-      self.board.append([random.choice(TOKENS) for x in range(4)])
+    for i in range(num_rows):
+      self.board.append([random.choice(TOKENS) for x in range(num_cols)])
 
   def __repr__(self):
     return repr(self.board)
@@ -74,14 +75,11 @@ class BoardSolver(object):
     solutions = []
 
     # Start an exhaustive search of the board
-    locations = [Location(row, col) for row in range(4) for col in range(4)]
+    locations = [Location(row, col) for row in range(self.board.num_rows) for col in range(self.board.num_cols)]
     for location in locations:
-      marked_up_board = [
-        [False, False, False, False],
-        [False, False, False, False],
-        [False, False, False, False],
-        [False, False, False, False]
-      ]
+      marked_up_board = []
+      for row in range(self.board.num_rows):
+        marked_up_board.append( [False] * self.board.num_cols)
       solutions.extend(self.DoSolve(marked_up_board, location, ''))
 
     return solutions
@@ -209,6 +207,15 @@ def main():
     ['s', 'y', 'a', 'e'],
     ['r', 'p', 'd', 'i']
   ]
+
+  b.board = [
+    ['u', 'n', 'o', 'l'],
+    ['e', 't', 'a', 'c'],
+    ['h', 's', 'r', 'r'],
+    ['y', 't', 'o', 'h']
+  ]
+
+
 
   words = ReadDictionary(sys.argv[1])
   solver = BoardSolver(b, words)
