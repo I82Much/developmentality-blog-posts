@@ -44,7 +44,25 @@ class Board(object):
   def __str__(self):
     return '\n'.join([str(row) for row in self.board])
 
-  def Solve(self, dictionary):
+  def __getitem__(self, key):
+    return self.board.__getitem__(key)
+
+class BoardSolver(object):
+  def __init__(self, board, dictionary):
+    self.board = board
+    self.dictionary = dictionary
+
+  def HasPrefix(self, prefix):
+    # Naiive implementation
+    for word in self.dictionary:
+      if word.startswith(prefix):
+        return True
+    return False
+
+  def HasWord(self, word):
+    return word in self.dictionary
+
+  def Solve(self):
     """Returns a list of FoundWord objects."""
     solutions = []
 
@@ -57,7 +75,7 @@ class Board(object):
         [False, False, False, False],
         [False, False, False, False]
       ]
-      solutions.extend(self.DoSolve(dictionary, marked_up_board, location, ''))
+      solutions.extend(self.DoSolve(marked_up_board, location, ''))
 
     return solutions
 
@@ -73,39 +91,30 @@ class Board(object):
       return False
     return True
 
-    
-
-  def DoSolve(self, dictionary, marked_up_board, start_index, word_prefix):
+  def DoSolve(self, marked_up_board, start_index, word_prefix):
     """Returns all possible words."""
     solutions = []
 
     new_word = word_prefix + self.board[start_index.row][start_index.col]
 
-    found_prefix = False
-    for word in dictionary:
-
-      if word.startswith(new_word):
-        found_prefix = True
-        if word == new_word:
-          solutions.append(word)
-        continue
-
-    if not found_prefix:
+    if not self.HasPrefix(new_word):
       print 'No words found starting with "%s"' %(new_word)
       return solutions
 
+    if self.HasWord(new_word):
+      solutions.append(new_word)
+     
     # We've used it up
     marked_up_board[start_index.row][start_index.col] = True
 
     # Recursively search in all directions
     for direction in DIRECTIONS:
       if self.IsLegalMove(marked_up_board, start_index, direction):
-        solutions.extend(self.DoSolve(dictionary, marked_up_board, Location(start_index.row + direction.row_offset, start_index.col + direction.col_offset), new_word))
+        solutions.extend(self.DoSolve(marked_up_board, Location(start_index.row + direction.row_offset, start_index.col + direction.col_offset), new_word))
       else:
         print 'Illegal move for %s %s %s' %(marked_up_board, Location(start_index.row + direction.row_offset, start_index.col + direction.col_offset), new_word)
 
     return solutions
-
 
 def ReadDictionary(path):
   words = set([])
@@ -114,6 +123,73 @@ def ReadDictionary(path):
     words.add(line.lower().strip())
   f.close()
   return words
+
+# From https://bitbucket.org/woadwarrior/trie/src/6bc187d770ba/python/trie.py
+_SENTINEL = ()
+
+class Trie(object) :
+    __slots__ = ['root']
+
+    def __init__( self ) :
+        self.root = [None,{}]
+
+    def __getstate__( self ) :
+        if any(self.root) :
+            return self.root
+        else :
+            return False
+
+    def __setstate__(self, s) :
+        self.root = s
+
+    def __contains__( self, s ) :
+        if self.find_full_match(s,_SENTINEL) is _SENTINEL :
+            return False
+        return True
+
+    def add( self, key, value ) :
+        curr_node = self.root
+        for ch in key :
+            node = curr_node[1]
+            if ch in node :
+                curr_node = node[ch]
+            else :
+                curr_node = node[ch] = [None,{}]
+        curr_node[0] = value
+
+    def _find_prefix_match( self, key ) :
+        curr_node = self.root
+        remainder = key
+        for ch in key :
+            if ch in curr_node[1] :
+                curr_node = curr_node[1][ch]
+            else :
+                break
+            remainder = remainder[1:]
+        return [curr_node,remainder]
+
+    def find_full_match( self, key, fallback=None ) :
+        '''
+        Returns the value associated with the key if found else, returns fallback
+        '''
+        r = self._find_prefix_match( key )
+        if not r[1] and r[0] :
+            return r[0][0]
+        return fallback
+
+    def find_prefix_matches( self, prefix ) :
+        l = self._find_prefix_match( prefix )
+        if l[1] :
+            return []
+        stack = [l[0]]
+        ret = []
+        while stack :
+            d = stack.pop()
+            if d[0] :
+                ret.insert(0,d[0])
+            for c in d[1] :
+                stack.append(d[1][c])
+        return ret
 
 def main():
   print TOKENS
@@ -128,11 +204,12 @@ def main():
   ]
 
   words = ReadDictionary(sys.argv[1])
+  solver = BoardSolver(b, words)
   #print words
   
   #b = Board()
   print b
-  solutions = b.Solve(words)
+  solutions = solver.Solve()
   
   #words = [ sol.word for sol in solutions ]
   #assert 'red' in solutions #words
