@@ -202,17 +202,7 @@ class Trie(object) :
         return ret
 
 def main():
-  print TOKENS
-  #words = set(['red'])
-
   b = Board()
-  b.board = [
-    ['n', 'h', 'o', 'l'],
-    ['a', 'c', 's', 'r'],
-    ['s', 'y', 'a', 'e'],
-    ['r', 'p', 'd', 'i']
-  ]
-
   b.board = [
     ['u', 'n', 'o', 'l'],
     ['e', 't', 'a', 'c'],
@@ -220,25 +210,16 @@ def main():
     ['y', 't', 'o', 'h']
   ]
 
-
   words = ReadDictionary(sys.argv[1])
-  #words = set(['cranes','crates','crash'])#ReadDictionary(sys.argv[1])
+  #words = set(['cranes','crates','crash'])
   solver = BoardSolver(b, words)
   #print words
-  
-  #b = Board()
   print b
   solutions = set(solver.Solve())
   
   print 'Found %d solutions' %len(solutions)
   for solution in sorted(solutions):
     print solution
-
-
-  #print solver.trie.find_prefix_matches('c')
-
-  #assert solver.HasPrefix('cranes')
-
 
   assert 'cranes' in solutions
   assert 'crates' in solutions
