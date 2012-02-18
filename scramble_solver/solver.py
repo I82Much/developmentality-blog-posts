@@ -217,7 +217,7 @@ def main():
 
 
 
-  words = ReadDictionary(sys.argv[1])
+  words = set(['cranes','crates','crash'])#ReadDictionary(sys.argv[1])
   solver = BoardSolver(b, words)
   #print words
   
@@ -225,12 +225,13 @@ def main():
   print b
   solutions = solver.Solve()
   
-  #words = [ sol.word for sol in solutions ]
-  #assert 'red' in solutions #words
-
   for solution in sorted(solutions):
     print solution
   print 'Found %d solutions' %len(solutions)
+
+  assert 'cranes' in solutions
+  assert 'crates' in solutions
+  assert 'crash' in solutions
 
 if __name__ == '__main__':
   main()
