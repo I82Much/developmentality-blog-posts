@@ -56,7 +56,8 @@ class BoardSolver(object):
 
     self.trie = Trie()
     for index, word in enumerate(dictionary):
-      self.trie.add(word, index)
+      # need 1 based values
+      self.trie.add(word, index+1)
 
 
   def HasPrefix(self, prefix):
@@ -108,16 +109,20 @@ class BoardSolver(object):
 
     if self.HasWord(new_word):
       solutions.append(new_word)
-     
+
+    board_copy = [ list(row) for row in marked_up_board ]
+    board_copy[start_index.row][start_index.col] = True
+
+
     # We've used it up
-    marked_up_board[start_index.row][start_index.col] = True
+    #marked_up_board[start_index.row][start_index.col] = True
 
     # Recursively search in all directions
     for direction in DIRECTIONS:
-      if self.IsLegalMove(marked_up_board, start_index, direction):
-        solutions.extend(self.DoSolve(marked_up_board, Location(start_index.row + direction.row_offset, start_index.col + direction.col_offset), new_word))
+      if self.IsLegalMove(board_copy, start_index, direction):
+        solutions.extend(self.DoSolve(board_copy, Location(start_index.row + direction.row_offset, start_index.col + direction.col_offset), new_word))
       else:
-        print 'Illegal move for %s %s %s' %(marked_up_board, Location(start_index.row + direction.row_offset, start_index.col + direction.col_offset), new_word)
+        print 'Illegal move for %s %s %s' %(board_copy, Location(start_index.row + direction.row_offset, start_index.col + direction.col_offset), new_word)
 
     return solutions
 
@@ -216,22 +221,29 @@ def main():
   ]
 
 
-
-  words = set(['cranes','crates','crash'])#ReadDictionary(sys.argv[1])
+  words = ReadDictionary(sys.argv[1])
+  #words = set(['cranes','crates','crash'])#ReadDictionary(sys.argv[1])
   solver = BoardSolver(b, words)
   #print words
   
   #b = Board()
   print b
-  solutions = solver.Solve()
+  solutions = set(solver.Solve())
   
+  print 'Found %d solutions' %len(solutions)
   for solution in sorted(solutions):
     print solution
-  print 'Found %d solutions' %len(solutions)
+
+
+  #print solver.trie.find_prefix_matches('c')
+
+  #assert solver.HasPrefix('cranes')
+
 
   assert 'cranes' in solutions
   assert 'crates' in solutions
   assert 'crash' in solutions
+
 
 if __name__ == '__main__':
   main()
