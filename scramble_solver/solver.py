@@ -18,6 +18,10 @@ class Location(object):
   def __init__(self, row, col):
     self.row = row
     self.col = col
+  def __str__(self):
+    return '(%d, %d)' %(self.row, self.col)
+  def __repr__(self):
+    return '(%d, %d)' %(self.row, self.col)
 
 DIRECTIONS = [ Direction(delta_row, delta_col) for delta_row in [-1,0,1] for delta_col in [-1,0,1] if delta_row != 0 or delta_col != 0 ]
 
@@ -31,7 +35,6 @@ class FoundWord(object):
     return "%s: %s" %(self.word, self.indices)
 
 class Board(object):
-
   def __init__(self, num_rows=4, num_cols=4):
     self.num_rows = num_rows
     self.num_cols = num_cols
@@ -81,7 +84,7 @@ class BoardSolver(object):
       marked_up_board = []
       for row in range(self.board.num_rows):
         marked_up_board.append( [False] * self.board.num_cols)
-      solutions.extend(self.DoSolve(marked_up_board, location, ''))
+      solutions.extend(self.DoSolve(marked_up_board, [], location, ''))
 
     return solutions
 
@@ -97,18 +100,19 @@ class BoardSolver(object):
       return False
     return True
 
-  def DoSolve(self, marked_up_board, start_index, word_prefix):
-    """Returns all possible words."""
+  def DoSolve(self, marked_up_board, previous_locations, start_index, word_prefix):
+    """Returns all possible words and how to create them."""
     solutions = []
 
     new_word = word_prefix + self.board[start_index.row][start_index.col]
+    previous_locations.append(start_index)
 
     if not self.HasPrefix(new_word):
       print 'No words found starting with "%s"' %(new_word)
       return solutions
 
     if self.HasWord(new_word):
-      solutions.append(new_word)
+      solutions.append( (new_word, previous_locations) )
 
     board_copy = [ list(row) for row in marked_up_board ]
     board_copy[start_index.row][start_index.col] = True
@@ -120,9 +124,10 @@ class BoardSolver(object):
     # Recursively search in all directions
     for direction in DIRECTIONS:
       if self.IsLegalMove(board_copy, start_index, direction):
-        solutions.extend(self.DoSolve(board_copy, Location(start_index.row + direction.row_offset, start_index.col + direction.col_offset), new_word))
+        solutions.extend(self.DoSolve(board_copy, list(previous_locations), Location(start_index.row + direction.row_offset, start_index.col + direction.col_offset), new_word))
       else:
-        print 'Illegal move for %s %s %s' %(board_copy, Location(start_index.row + direction.row_offset, start_index.col + direction.col_offset), new_word)
+        #print 'Illegal move for %s %s %s' %(board_copy, Location(start_index.row + direction.row_offset, start_index.col + direction.col_offset), new_word)
+        pass
 
     return solutions
 
@@ -209,21 +214,23 @@ def main():
     ['h', 's', 'r', 'r'],
     ['y', 't', 'o', 'h']
   ]
-
+   
   words = ReadDictionary(sys.argv[1])
   #words = set(['cranes','crates','crash'])
   solver = BoardSolver(b, words)
   #print words
   print b
-  solutions = set(solver.Solve())
+  solutions = solver.Solve() #set(solver.Solve())
   
   print 'Found %d solutions' %len(solutions)
   for solution in sorted(solutions):
     print solution
 
-  assert 'cranes' in solutions
-  assert 'crates' in solutions
-  assert 'crash' in solutions
+  for word, locs in solutions:
+    assert len(word) == len(locs), '%s was length %d; only had locs %s' %(word, len(word), locs)
+  #assert 'cranes' in solutions
+  #assert 'crates' in solutions
+  #assert 'crash' in solutions
 
 
 if __name__ == '__main__':
