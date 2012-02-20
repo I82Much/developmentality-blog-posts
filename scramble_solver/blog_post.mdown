@@ -1,0 +1,49 @@
+# Solving Scramble with Friends - Recursion, Stacks, and Tries
+
+# Problem statement
+Given an N x N board, (4x4 in case of scramble with friends), find the set of all words and the path through the board that makes the words that can be formed from moving in any of 8 adjacent tiles, using each tile at most once.
+
+# Problem approach
+
+## Dictionary
+
+## Recursion
+Recursion - method calls itself
+
+Must have a stopping criteria
+
+## Basic strategy
+Start search at a given point on the board
+Examine square
+	If the entire word built up so far is a word, add it to list
+	If the word built up so far + the new letter starts at least one word in the dictionary
+		Recursively search all squares around this one, ensuring that we do not 1) go off the board and 2) reuse a square
+		
+## Optimization
+This algorithm works but it is extremely inefficient.  Why?  For each square we examine, we need to examine the entire dictionary (all M words) and do a 'startswith' check on all of them
+
+O(n)
+
+Wouldn't it make more sense to eliminate a large number of words?
+
+binary search - O(log n) - but we're not searching for a specific entry, but just that one *starts* with a specific substring
+
+
+trie
+
+
+"Looking up a key of length m takes worst case O(m) time. A BST performs O(log(n)) comparisons of keys, where n is the number of elements in the tree, because lookups depend on the depth of the tree, which is logarithmic in the number of keys if the tree is balanced. Hence in the worst case, a BST takes O(m log n) time. Moreover, in the worst case log(n) will approach m. Also, the simple operations tries use during lookup, such as array indexing using a character, are fast on real machines"
+-- [Trie wikipedia][]
+
+
+
+
+[Trie wikipedia]:http://en.wikipedia.org/wiki/Trie
+
+
+# Conclusion
+We have seen how using the correct data structure (trie) makes an enormous difference when it comes to runtime performance.  
+
+We have also seen how recursion makes it very succint to express an algorithm that otherwise would be very complicated
+
+We have also seen how to replace a recursive implementation with an explicit stack based, iterative approach.
