@@ -24,6 +24,7 @@ class Location(object):
     return '(%d, %d)' %(self.row, self.col)
 
 DIRECTIONS = [ Direction(delta_row, delta_col) for delta_row in [-1,0,1] for delta_col in [-1,0,1] if delta_row != 0 or delta_col != 0 ]
+assert len(DIRECTIONS) == 8
 
 
 class FoundWord(object):
@@ -49,6 +50,7 @@ class Board(object):
     return '\n'.join([str(row) for row in self.board])
 
   def __getitem__(self, key):
+    """Allow the board to be indexed."""
     return self.board.__getitem__(key)
 
 class BoardSolver(object):
@@ -59,7 +61,7 @@ class BoardSolver(object):
 
     self.trie = Trie()
     for index, word in enumerate(dictionary):
-      # need 1 based values
+      # need 1 based values because 0 is False
       self.trie.add(word, index+1)
 
 
@@ -101,7 +103,7 @@ class BoardSolver(object):
     return True
 
   def DoSolve(self, marked_up_board, previous_locations, start_index, word_prefix):
-    """Returns all possible words and how to create them."""
+    """Returns all possible words and how to create them as a list."""
     solutions = []
 
     new_word = word_prefix + self.board[start_index.row][start_index.col]
