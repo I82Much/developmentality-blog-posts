@@ -36,9 +36,17 @@ trie
 -- [Trie wikipedia][]
 
 
-
+[Directed acyclic word graph][]
 
 [Trie wikipedia]:http://en.wikipedia.org/wiki/Trie
+[Directed acyclic word graph]:http://en.wikipedia.org/wiki/Acyclic_deterministic_finite_automaton
+[fast scrabble solver]:http://www.cs.cmu.edu/afs/cs/academic/class/15451-s06/www/lectures/scrabble.pdf
+
+[Compressiong dictionaries with a DAWG: dawg in python]:http://stevehanov.ca/blog/index.php?id=115
+[wordutils dawg]:http://pypi.python.org/pypi/WordUtils/0.8.0
+[extremely space efficient dawg]:http://www.wutka.com/dawg.html
+
+
 
 
 # Conclusion
