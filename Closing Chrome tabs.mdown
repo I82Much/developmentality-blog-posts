@@ -1,0 +1,38 @@
+# Closing subset of Google Chrome tabs
+
+Do you use [Google Chrome][]?  Do you sometimes want to close multiple tabs at once?  Here are three ways to do that, two of which are not immediately obvious.
+
+# Close Tabs to the Right
+This is the standard way I've been using to close tabs.  You right click on a tab, choose "Close Tabs to the Right", and all tabs to the right of that tab are closed.  This works well for two reasons:
+
+1. When you manually create a new tab, it opens on the far right
+2. When you open links in a new tab, it will open immediately to the right of the tab you're currently in.  
+
+Thus if you have opened a few tangentially related tabs from a main article, you can click on the main article's tabs, choose Close Tabs to the Right, and all of those newly opened tabs will go away.
+
+# Ctrl/Meta click tabs
+You can add tabs to the current selection by holding control (Windows/Linux) or command (OSX) while clicking on additional tabs.  This is exactly the same behavior as when you are selecting multiple files from the desktop GUI.  Once you have the tabs you want to close selected, you can right click on any one of the selected tabs and choose "Close Tabs."  This approach works better than the "Close Tabs to the Right" approach when the tabs you want to close are not all next to each other.
+
+![Control click example](https://lh5.googleusercontent.com/-RWoESaR4Xpc/T1PX9K_9S4I/AAAAAAAABDQ/QRSpEa2Bhb8/s578/chrome%2520control%2520sellect.jpg)
+
+Why might you want to do this rather than clicking the X in each tab individually?  I can think of two main reasons.
+
+The first is that it provides you with a much larger click target for each tab.  With this method, you can click almost the entire tab to add it to the selection, then right click almost the entire area of any of these tabs to bring up the context menu to close tabs.  The X button itself, by contrast, has a small clickable area that requires more dexterity.  (See the Wikipedia article on [Fitt's Law][] for more information on the relationship between accurate navigation to a UI element and the size of that UI element)
+
+The second reason you might use this method is that it allows you to make your selections all at once before closing any one of them.  If you close them one at a time, the tabs move around to take up the empty space.  The Chrome team has done an amazing team with the UI design of the standard close tab functionality (e.g. the close button will always stay under your mouse cursor as the tabs reshuffle, and they only will change size once your cursor leaves the tab bar), but it might still be more intuitive to select them all at once while their location is fixed rather than finding them in the changing tab bar as each consecutive tab is closed.
+
+See this [excellent blog post by Basil Safwat](http://theinvisibl.com/2009/12/08/chrometabs/) for more on the Chrome tab close behavior.
+
+# Shift click tabs
+Finally, you can *extend* the selection of tabs by shift clicking on any other tab.  In other words, the currently opened tab is one endpoint of the selection, you shift click on any other tab (either to the left or right), and that becomes the other endpoint in the selection interval. Here is an illustration of the process:
+
+![Shift click example](https://lh4.googleusercontent.com/-vQeyr1nJSn4/T1PX9KqsE7I/AAAAAAAABDU/IK0RkfRrWPk/s620/shift_select_words.jpg)
+
+Once you have your selection, you can right click on any of them and choose Close Tabs as mentioned earlier.  This approach is best when you have a contiguous span of tabs you want to close, but there are some tabs to the right that you want to keep open.  
+
+
+# Conclusion
+I hope you found this brief foray into the ways of closing multiple tabs in Chrome as interesting.  I think most Chrome users know of the Close Tabs to the Right option, but I would guess most people don't know about about the shift click and ctrl/command click ways of selecting tabs.
+
+[Chrome]:http://support.google.com/chrome/bin/answer.py?hl=en&answer=95346
+[Fitt's Law]:http://en.wikipedia.org/wiki/Fitts's_law
