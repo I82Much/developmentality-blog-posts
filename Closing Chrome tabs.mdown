@@ -34,5 +34,5 @@ Once you have your selection, you can right click on any of them and choose Clos
 # Conclusion
 I hope you found this brief foray into the ways of closing multiple tabs in Chrome as interesting.  I think most Chrome users know of the Close Tabs to the Right option, but I would guess most people don't know about about the shift click and ctrl/command click ways of selecting tabs.
 
-[Chrome]:http://support.google.com/chrome/bin/answer.py?hl=en&answer=95346
+[Google Chrome]:http://support.google.com/chrome/bin/answer.py?hl=en&answer=95346
 [Fitt's Law]:http://en.wikipedia.org/wiki/Fitts's_law
