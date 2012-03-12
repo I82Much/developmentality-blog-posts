@@ -1,4 +1,4 @@
-I recently had the opportunity to speak with William Wilson, the man behind [Fret Tester][].  Fret Tester is, in my opinion, the best guitar fretboard learning application available for iOS.  I wrote about its great UI features in my previous post, [The Best iPhone Guitar Fretboard App: Usability Lessons Learned][Blog post].  I wanted to pick the designer's brain to see what lessons he could impart about designing usable applications.
+I recently had the opportunity to speak with William Wilson, the man behind [Fret Tester][], the best guitar fretboard learning application available for iOS, and one of the nicest designed apps I've used.  I wrote about its great UI features in my previous post, [The Best iPhone Guitar Fretboard App: Usability Lessons Learned][Blog post].  I wanted to pick the designer's brain to see what lessons he could impart about designing usable applications.  Here's what he had to say.
 
 <blockquote>I started designing apps for my guitar students as a way to compete with Guitar Hero</blockquote>
 <blockquote>I like to hand someone my phone and say, try this. You'd be amazed at how they struggle to find something you thought was obvious.</blockquote>
@@ -10,7 +10,7 @@ I recently had the opportunity to speak with William Wilson, the man behind [Fre
 Please tell me a little about your background.  Do you design mobile applications for a living or as a hobby?
 </em></b>
 
-I'm actually a professional guitarist. I make my living teaching and performing classical and Spanish guitar in San Diego.  I've always loved programming, starting with Basic, then HyperCard, Java, Flash, and eventually C. I started designing apps for my guitar students as a way to compete with Guitar Hero. I got tired of hearing: "Sorry Mr. Wilson, I didnt practice, but I played Guitar Hero, does that count?" My first attempts were in Java, and were really awful. I've since done about 15 flash games (on my site guitargames.net) and 4 iOS apps. I've mostly learned from books and online tutorials. Right now it's a hobby, but I'd love to do more of it.
+![Guitar Hero Pullquote][] I'm actually a professional guitarist. I make my living teaching and performing classical and Spanish guitar in San Diego.  I've always loved programming, starting with Basic, then HyperCard, Java, Flash, and eventually C. I started designing apps for my guitar students as a way to compete with Guitar Hero. I got tired of hearing: "Sorry Mr. Wilson, I didn't practice, but I played Guitar Hero, does that count?" My first attempts were in Java, and were really awful. I've since done about 15 flash games (on my site [guitargames.net][]) and 4 iOS apps. I've mostly learned from books and online tutorials. Right now it's a hobby, but I'd love to do more of it.
 
 <b><em>
 As a musician first and foremost, what were the deficiencies you saw in the other published guitar apps and how did you aim to address them?</em></b>
@@ -22,7 +22,6 @@ One of the biggest challenges I saw was how to zoom in on the neck. With many of
 <!--
 [caption id="" align="alignnone" width="418" caption="Fret Tester screenshot - note that only the natural keys are shown and that the incorrect answer that was pressed pops up above the obstructing finger"]<img title="Fret Tester screenshot" src="https://lh6.googleusercontent.com/-9HI3ctTPuPI/TzycZKKBVYI/AAAAAAAABAA/hiYwaVfrH1s/w419-h279-k/IMG_1899.jpg" alt="Fret Tester screenshot" width="418" height="278" />[/caption]
 -->
-
 
 <b><em>
 How have your students received your work? Have you seen a measurable improvement in their progress?
@@ -36,7 +35,7 @@ What advice would you offer to other people who are not programmers by trade but
 
 There are tons of great resources out there. I always recommend [http://masters-of-the-void.com/][] as a first step. Also Steven Kochan's [Programming in Objective C][] is great for learning to write for iOS.
 
-Outside "traditional" programming there were three books that greatly influenced me. One is [The Non-Designers Design Book][] by Robin Williams, it will help you design a decent looking app. Second is Dave Woolridge's [Business of iPhone App Development][], make sure you can sell one or two before you spend a year creating an app. And finally [Don't Make Me Think][] by Steve Krug, a guide for good UI principles.
+Outside "traditional" programming there were three books that greatly influenced me. One is [The Non-Designer's Design Book][] by Robin Williams, it will help you design a decent looking app. Second is Dave Woolridge's [Business of iPhone App Development][], make sure you can sell one or two before you spend a year creating an app. And finally [Don't Make Me Think][] by Steve Krug, a guide for good UI principles.
 
 Also I would say make sure to beta test often. I had about 8 people test Fret Tester and learned something from everyone. I like to hand someone my phone and say, try this. You'd be amazed at how they struggle to find something you thought was obvious.
 
@@ -61,13 +60,20 @@ One thing I read in Apple's docs was to only include features in an app that 80%
 
 <hr/>
 
+Thank you to Mr. William Wilson for giving me this interview.  You can find more about him on his website, [WilliamWilson.net][].  See my [Google+ album][Google+ Fret Tester Gallery] for more screenshots of Fret Tester.
+
 [Fret Tester]:http://itunes.apple.com/us/app/fret-tester-learn-notes-for/id442144977?mt=8
 [Blog post]:http://developmentality.wordpress.com/2012/02/16/the-best-iphone-guitar-fretboard-app-usability-lessons-learned/
-[William Wilson]:http://www.williamwilson.net/
-[Gallery]:https://plus.google.com/photos/110571686519390324685/albums/5718855375476527553?authkey=CKrZ-tmN2L3DbQ
+[WilliamWilson.net]:http://www.williamwilson.net/
+[Google+ Fret Tester Gallery]:https://plus.google.com/photos/110571686519390324685/albums/5718855375476527553?authkey=CKrZ-tmN2L3DbQ
 [Screenshot 1]:https://lh6.googleusercontent.com/-9HI3ctTPuPI/TzycZKKBVYI/AAAAAAAABAA/hiYwaVfrH1s/w419-h279-k/IMG_1899.jpg
-
+[guitargames.net]:http://guitargames.net
 [Fretboard blog post]:http://developmentality.wordpress.com/2012/02/16/the-best-iphone-guitar-fretboard-app-usability-lessons-learned/
+
+[Guitar Hero pullquote]:https://lh5.googleusercontent.com/-kWsCDEo_KTY/T1182g8xdKI/AAAAAAAABNw/HaWqNSaADIc/s557/Picture+163.png
+[Obvious pullquote]:https://lh4.googleusercontent.com/-g0N26MQa_g4/T1182pFcO8I/AAAAAAAABNo/p2OioBT-G6E/s576/Picture+164.png
+[Wife nuts pullquote]:https://lh4.googleusercontent.com/-QtKVL_D4UKw/T1182gVaf1I/AAAAAAAABNs/utmN0X8I2LE/s531/Picture+165.png
+[80% pullquote]:https://lh6.googleusercontent.com/-0BkZq20wbMg/T1183PPQgAI/AAAAAAAABOA/TJhwRUK1CFE/s518/Picture+166.png
 
 [Don't Make Me Think]:http://www.amazon.com/Dont-Make-Me-Think-Usability/dp/0321344758/ref=sr_1_1?ie=UTF8&qid=1331432204&sr=8-1
 
