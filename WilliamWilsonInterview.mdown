@@ -1,4 +1,11 @@
 
+<head>
+<style type="text/css">
+h1.intro {color:blue;}
+p.q {color:red;}
+p.a {color:blue;}
+</style>
+</head>
 
 
 <blockquote>I started designing apps for my guitar students as a way to compete with Guitar Hero</blockquote>
@@ -11,7 +18,9 @@
 Please tell me a little about your background.  Do you design mobile applications for a living or as a hobby?
 </p>
 
+<p class="a">
 I'm actually a professional guitarist. I make my living teaching and performing classical and Spanish guitar in San Diego.  I've always loved programming, starting with Basic, then HyperCard, Java, Flash, and eventually C. I started designing apps for my guitar students as a way to compete with Guitar Hero. I got tired of hearing: "Sorry Mr. Wilson, I didn't practice, but I played Guitar Hero, does that count?" My first attempts were in Java, and were really awful. I've since done about 15 flash games (on my site guitargames.net) and 4 iOS apps. I've mostly learned from books and online tutorials. Right now it's a hobby, but I'd love to do more of it.
+</p>
 
 <p class="q">As a musician first and foremost, what were the deficiencies you saw in the other published guitar apps and how did you aim to address them?</p>
 
