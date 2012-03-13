@@ -11,6 +11,7 @@ from collections import defaultdict
 # Google Calendar CSV format described at http://support.google.com/calendar/bin/answer.py?hl=en&answer=45656
 
 HEADER_ROW = ['Subject','Start Date']
+
 def main():
   if len(sys.argv) != 2:
     print >> sys.stderr, "Usage: python activity_calendar.py /path/to/activities"
