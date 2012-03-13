@@ -1,89 +1,64 @@
-I recently had the opportunity to speak with William Wilson, the man behind [Fret Tester][], the best guitar fretboard learning application available for iOS, and one of the nicest designed apps I've used.  I wrote about its great UI features in my previous post, [The Best iPhone Guitar Fretboard App: Usability Lessons Learned][Blog post].  I wanted to pick the designer's brain to see what lessons he could impart about designing usable applications.  Here's what he had to say.
+<p>I recently had the opportunity to speak with William Wilson, the man behind <a href="http://itunes.apple.com/us/app/fret-tester-learn-notes-for/id442144977?mt=8">Fret Tester</a>, the best guitar fretboard learning application available for iOS, and one of the nicest designed apps I&#8217;ve used.  I wrote about its great UI features in my previous post, <a href="http://developmentality.wordpress.com/2012/02/16/the-best-iphone-guitar-fretboard-app-usability-lessons-learned/">The Best iPhone Guitar Fretboard App: Usability Lessons Learned</a>.  I wanted to pick the designer&#8217;s brain to see what lessons he could impart about designing usable applications.  Here&#8217;s what he had to say.</p>
 
-<blockquote>I started designing apps for my guitar students as a way to compete with Guitar Hero</blockquote>
-<blockquote>I like to hand someone my phone and say, try this. You'd be amazed at how they struggle to find something you thought was obvious.</blockquote>
-<blockquote>If my wife looks at me like I'm nuts (which happens frequently) I try to rethink things.</blockquote>
-<blockquote>only include features in an app that 80% of users will use</blockquote>
-<blockquote>If you look at Apple's success I think its largely the result of keeping things simple and easy to use, and gearing products for the average user. Take the same approach in your apps.</blockquote>
-
-<b><em>
+<p><b><em>
 Please tell me a little about your background.  Do you design mobile applications for a living or as a hobby?
-</em></b>
+</em></b></p>
 
-![Guitar Hero Pullquote][] I'm actually a professional guitarist. I make my living teaching and performing classical and Spanish guitar in San Diego.  I've always loved programming, starting with Basic, then HyperCard, Java, Flash, and eventually C. I started designing apps for my guitar students as a way to compete with Guitar Hero. I got tired of hearing: "Sorry Mr. Wilson, I didn't practice, but I played Guitar Hero, does that count?" My first attempts were in Java, and were really awful. I've since done about 15 flash games (on my site [guitargames.net][]) and 4 iOS apps. I've mostly learned from books and online tutorials. Right now it's a hobby, but I'd love to do more of it.
+<p><img src="https://lh5.googleusercontent.com/-kWsCDEo_KTY/T1182g8xdKI/AAAAAAAABNw/HaWqNSaADIc/s557/Picture+163.png" alt="Guitar Hero Pullquote" /> </p>
 
-<b><em>
-As a musician first and foremost, what were the deficiencies you saw in the other published guitar apps and how did you aim to address them?</em></b>
+<p>I&#8217;m actually a professional guitarist. I make my living teaching and performing classical and Spanish guitar in San Diego.  I&#8217;ve always loved programming, starting with Basic, then HyperCard, Java, Flash, and eventually C. I started designing apps for my guitar students as a way to compete with Guitar Hero. I got tired of hearing: &#8220;Sorry Mr. Wilson, I didn&#8217;t practice, but I played Guitar Hero, does that count?&#8221; My first attempts were in Java, and were really awful. I&#8217;ve since done about 15 flash games (on my site <a href="http://guitargames.net">guitargames.net</a>) and 4 iOS apps. I&#8217;ve mostly learned from books and online tutorials. Right now it&#8217;s a hobby, but I&#8217;d love to do more of it.</p>
 
-Traditionally when learning the neck students start with the natural (not sharp and flat) notes. That way they establish landmarks on the neck. I didn't see this feature being a big part of any app. For me having the iPhone version just display the natural notes made sense (with a button to shift into sharps). Plus it's tough to fit 12 buttons on the screen without clutter.
+<p><b><em>
+As a musician first and foremost, what were the deficiencies you saw in the other published guitar apps and how did you aim to address them?</em></b></p>
 
-One of the biggest challenges I saw was how to zoom in on the neck. With many of the apps, I tried I lost a sense of where I was on the neck. But if the whole neck was shown it was too small. I decided to have my app zoom to the area that was being tested, but to allow sufficient area on either side so the user had a sense for where they were. Plus I included the option to zoom all the way out should the user prefer it. Related to this, I thought many of the apps lacked reinforcement. When you pushed the correct answer your finger covered it. I added the key style buttons so users could see what note the pushed and thus reinforce the correct answer.
+<p>Traditionally when learning the neck students start with the natural (not sharp and flat) notes. That way they establish landmarks on the neck. I didn&#8217;t see this feature being a big part of any app. For me having the iPhone version just display the natural notes made sense (with a button to shift into sharps). Plus it&#8217;s tough to fit 12 buttons on the screen without clutter.</p>
+
+<p>One of the biggest challenges I saw was how to zoom in on the neck. With many of the apps, I tried I lost a sense of where I was on the neck. But if the whole neck was shown it was too small. I decided to have my app zoom to the area that was being tested, but to allow sufficient area on either side so the user had a sense for where they were. Plus I included the option to zoom all the way out should the user prefer it. Related to this, I thought many of the apps lacked reinforcement. When you pushed the correct answer your finger covered it. I added the key style buttons so users could see what note the pushed and thus reinforce the correct answer.</p>
 
 <!--
 [caption id="" align="alignnone" width="418" caption="Fret Tester screenshot - note that only the natural keys are shown and that the incorrect answer that was pressed pops up above the obstructing finger"]<img title="Fret Tester screenshot" src="https://lh6.googleusercontent.com/-9HI3ctTPuPI/TzycZKKBVYI/AAAAAAAABAA/hiYwaVfrH1s/w419-h279-k/IMG_1899.jpg" alt="Fret Tester screenshot" width="418" height="278" />[/caption]
 -->
 
-<b><em>
+<p><b><em>
 How have your students received your work? Have you seen a measurable improvement in their progress?
-</em></b>
+</em></b></p>
 
-I wish I could say that the app was a runaway success with my students... Unfortunately there is a mindset out there that you aren't practicing unless you have a guitar in your hand. Mental practice is too often neglected, both with note naming and music theory. For the students who have taken my advice and used the app I've seen good things. I think separating the mental and physical complexities of the guitar is the way to go.</p>
+<p>I wish I could say that the app was a runaway success with my students&#8230; Unfortunately there is a mindset out there that you aren&#8217;t practicing unless you have a guitar in your hand. Mental practice is too often neglected, both with note naming and music theory. For the students who have taken my advice and used the app I&#8217;ve seen good things. I think separating the mental and physical complexities of the guitar is the way to go.</p></p>
 
-<b><em>
+<p><b><em>
 What advice would you offer to other people who are not programmers by trade but have an idea for a program or application that could simplify or improve some aspect of their everyday life?  What resources have you found that were useful in turning your dream into reality?
-</em></b>
+</em></b></p>
 
-There are tons of great resources out there. I always recommend [http://masters-of-the-void.com/][] as a first step. Also Steven Kochan's [Programming in Objective C][] is great for learning to write for iOS.
+<p>There are tons of great resources out there. I always recommend <a href="http://masters-of-the-void.com/">http://masters-of-the-void.com/</a> as a first step. Also Steven Kochan&#8217;s <a href="http://www.amazon.com/Programming-Objective-C-Edition-Developers-Library/dp/0321811909/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1331432528&amp;sr=1-1">Programming in Objective C</a> is great for learning to write for iOS.</p>
 
-Outside "traditional" programming there were three books that greatly influenced me. One is [The Non-Designer's Design Book][] by Robin Williams, it will help you design a decent looking app. Second is Dave Woolridge's [Business of iPhone App Development][], make sure you can sell one or two before you spend a year creating an app. And finally [Don't Make Me Think][] by Steve Krug, a guide for good UI principles.
+<p><img src="https://lh4.googleusercontent.com/-g0N26MQa_g4/T1182pFcO8I/AAAAAAAABNo/p2OioBT-G6E/s576/Picture+164.png" alt="Obvious pullquote" /> </p>
 
-Also I would say make sure to beta test often. I had about 8 people test Fret Tester and learned something from everyone. I like to hand someone my phone and say, try this. You'd be amazed at how they struggle to find something you thought was obvious.
+<p>Outside &#8220;traditional&#8221; programming there were three books that greatly influenced me. One is <a href="http://www.amazon.com/Non-Designers-Design-Book-The-Edition/dp/0321534042/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1331432839&amp;sr=1-1">The Non-Designer&#8217;s Design Book</a> by Robin Williams, it will help you design a decent looking app. Second is Dave Woolridge&#8217;s <a href="http://www.amazon.com/The-Business-iPhone-App-Development/dp/1430227338/ref=sr_1_2?ie=UTF8&amp;qid=1331432367&amp;sr=8-2">Business of iPhone App Development</a>, make sure you can sell one or two before you spend a year creating an app. And finally <a href="http://www.amazon.com/Dont-Make-Me-Think-Usability/dp/0321344758/ref=sr_1_1?ie=UTF8&amp;qid=1331432204&amp;sr=8-1">Don&#8217;t Make Me Think</a> by Steve Krug, a guide for good UI principles.</p>
 
-<b><em>
+<p>Also I would say make sure to beta test often. I had about 8 people test Fret Tester and learned something from everyone. I like to hand someone my phone and say, try this. You&#8217;d be amazed at how they struggle to find something you thought was obvious.</p>
+
+<p><b><em>
 You mentioned making sure that you can sell a product before you invest too much time in producing it.  How do you recommend that app developers do this?  Do you create a bare bones v 0.0 prototype and put it on the app store to gauge interest?  Or do you have an alternative technique for market research?
-</em></b>
+</em></b></p>
 
-First I look around and see if there are similar apps already out there. If there are a ton, and they're good, I move on. If there are none I also move on, since there probably isn't a market for what I'm designing, I want to at least see things that are similar. My goal is to design an app that reaches an already existing need. Not that I'm always successful in it. After reading Woolridge's book, as well as listening to Seth Godin's [Purple Cow][] (Audio Book) I've improved in this area. 
-I also just talk to people about my idea. If my wife looks at me like I'm nuts (which happens frequently) I try to rethink things.
+<p><img src="https://lh4.googleusercontent.com/-QtKVL_D4UKw/T1182gVaf1I/AAAAAAAABNs/utmN0X8I2LE/s531/Picture+165.png" alt="Wife nuts pullquote" /></p>
 
-<b><em>
+<p>First I look around and see if there are similar apps already out there. If there are a ton, and they&#8217;re good, I move on. If there are none I also move on, since there probably isn&#8217;t a market for what I&#8217;m designing, I want to at least see things that are similar. My goal is to design an app that reaches an already existing need. Not that I&#8217;m always successful in it. After reading Woolridge&#8217;s book, as well as listening to Seth Godin&#8217;s <a href="http://www.amazon.com/Purple-Cow-New-Edition-Remarkable--Includes/dp/1591843170/ref=sr_1_2?s=books&amp;ie=UTF8&amp;qid=1331432446&amp;sr=1-2">Purple Cow</a> (Audio Book) I&#8217;ve improved in this area. I also just talk to people about my idea. If my wife looks at me like I&#8217;m nuts (which happens frequently) I try to rethink things.</p>
+
+<p><b><em>
 Are you working on any new projects currently?  Or do you have ideas for the next thing you want to work on?</p>
-</em></b>
+</em></b></p>
 
-Yes, I've been playing around with Adobe's new [Stage 3D][] and the [Starling Framework][]. It seems promising. I'm hoping to release my first game using it soon. It is called Tab Warrior and is kind of a cross between Fret Tester and Space Invaders. Also, I'm going to try my hand at an Android app this year.
+<p>Yes, I&#8217;ve been playing around with Adobe&#8217;s new <a href="http://www.adobe.com/devnet/flashplayer/stage3d.html">Stage 3D</a> and the <a href="http://gamua.com/starling/">Starling Framework</a>. It seems promising. I&#8217;m hoping to release my first game using it soon. It is called Tab Warrior and is kind of a cross between Fret Tester and Space Invaders. Also, I&#8217;m going to try my hand at an Android app this year.</p>
 
-<b><em>
+<p><b><em>
 Great to hear. Thank you for taking the time to speak with me. Do you have any parting thoughts for the readers?
-</em></b>
+</em></b></p>
 
-One thing I read in Apple's docs was to only include features in an app that 80% of users will use. That totally changed my approach. If you look at Apple's success I think its largely the result of keeping things simple and easy to use, and gearing products for the average user. Take the same approach in your apps.
+<p><img src="https://lh6.googleusercontent.com/-0BkZq20wbMg/T1183PPQgAI/AAAAAAAABOA/TJhwRUK1CFE/s518/Picture+166.png" alt="80% pullquote" /> </p>
+
+<p>One thing I read in Apple&#8217;s docs was to only include features in an app that 80% of users will use. That totally changed my approach. If you look at Apple&#8217;s success I think its largely the result of keeping things simple and easy to use, and gearing products for the average user. Take the same approach in your apps.</p>
 
 <hr/>
 
-Thank you to Mr. William Wilson for giving me this interview.  You can find more about him on his website, [WilliamWilson.net][].  See my [Google+ album][Google+ Fret Tester Gallery] for more screenshots of Fret Tester.
-
-[Fret Tester]:http://itunes.apple.com/us/app/fret-tester-learn-notes-for/id442144977?mt=8
-[Blog post]:http://developmentality.wordpress.com/2012/02/16/the-best-iphone-guitar-fretboard-app-usability-lessons-learned/
-[WilliamWilson.net]:http://www.williamwilson.net/
-[Google+ Fret Tester Gallery]:https://plus.google.com/photos/110571686519390324685/albums/5718855375476527553?authkey=CKrZ-tmN2L3DbQ
-[Screenshot 1]:https://lh6.googleusercontent.com/-9HI3ctTPuPI/TzycZKKBVYI/AAAAAAAABAA/hiYwaVfrH1s/w419-h279-k/IMG_1899.jpg
-[guitargames.net]:http://guitargames.net
-[Fretboard blog post]:http://developmentality.wordpress.com/2012/02/16/the-best-iphone-guitar-fretboard-app-usability-lessons-learned/
-
-[Guitar Hero pullquote]:https://lh5.googleusercontent.com/-kWsCDEo_KTY/T1182g8xdKI/AAAAAAAABNw/HaWqNSaADIc/s557/Picture+163.png
-[Obvious pullquote]:https://lh4.googleusercontent.com/-g0N26MQa_g4/T1182pFcO8I/AAAAAAAABNo/p2OioBT-G6E/s576/Picture+164.png
-[Wife nuts pullquote]:https://lh4.googleusercontent.com/-QtKVL_D4UKw/T1182gVaf1I/AAAAAAAABNs/utmN0X8I2LE/s531/Picture+165.png
-[80% pullquote]:https://lh6.googleusercontent.com/-0BkZq20wbMg/T1183PPQgAI/AAAAAAAABOA/TJhwRUK1CFE/s518/Picture+166.png
-
-[Don't Make Me Think]:http://www.amazon.com/Dont-Make-Me-Think-Usability/dp/0321344758/ref=sr_1_1?ie=UTF8&qid=1331432204&sr=8-1
-
-[Business of iPhone App Development]:http://www.amazon.com/The-Business-iPhone-App-Development/dp/1430227338/ref=sr_1_2?ie=UTF8&qid=1331432367&sr=8-2
-
-[Purple Cow]:http://www.amazon.com/Purple-Cow-New-Edition-Remarkable--Includes/dp/1591843170/ref=sr_1_2?s=books&ie=UTF8&qid=1331432446&sr=1-2
-[http://masters-of-the-void.com/]:http://masters-of-the-void.com/
-
-[Programming in Objective C]:http://www.amazon.com/Programming-Objective-C-Edition-Developers-Library/dp/0321811909/ref=sr_1_1?s=books&ie=UTF8&qid=1331432528&sr=1-1
-
-[Stage 3D]:http://www.adobe.com/devnet/flashplayer/stage3d.html
-[Starling Framework]:http://gamua.com/starling/
-[The Non-Designer's Design Book]:http://www.amazon.com/Non-Designers-Design-Book-The-Edition/dp/0321534042/ref=sr_1_1?s=books&ie=UTF8&qid=1331432839&sr=1-1
+<p>Thank you to Mr. William Wilson for granting me this interview.  You can find more about him on his website, <a href="http://www.williamwilson.net/">WilliamWilson.net</a>.  See my <a href="https://plus.google.com/photos/110571686519390324685/albums/5718855375476527553?authkey=CKrZ-tmN2L3DbQ">Google+ album</a> for more screenshots of Fret Tester.</p>
