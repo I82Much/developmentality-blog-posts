@@ -16,6 +16,8 @@ HEADER_ROW = ['Subject','Start Date']
 CALENDAR_CSV_FILE_INDEX = 1
 ACTIVITY_FILE_INDEX = 2
 
+CURRENT_YEAR = datetime.date.today().year
+
 def ParseHolidayCalendar(calendar_tuples):
   dates = []
   
@@ -29,13 +31,14 @@ def ParseHolidayCalendar(calendar_tuples):
   date_range_regexp = re.compile('(\d+)-(\d+)-?(.*)')
   single_date_regexp = re.compile('(\d+)-?(.*)')
   
-  
   for row in calendar_tuples:
     # Some rows have extra columns, skip them
     num_columns = min(12, len(row))
         
-    for month in range(num_columns):
-      cell = row[month]
+    for column in range(num_columns):
+      cell = row[column]
+      # 1 based months
+      month = column + 1
       if cell == '':
         continue
       date_range = date_range_regexp.search(cell)
@@ -45,19 +48,28 @@ def ParseHolidayCalendar(calendar_tuples):
         first_day = int(groups[0])
         second_date = int(groups[1])
         description = groups[2]
-        print first_day, second_date, description
+        #print first_day, second_date, description
+        
+        start_date = datetime.date(CURRENT_YEAR, month, first_day)
+        end_date = datetime.date(CURRENT_YEAR, month, second_date)
+        
+        dates.append(tuple[start_date, end_date, description])
+        
         pass
       elif single_date:
         groups = single_date.groups()
         first_day = int(groups[0])
         second_day = first_day
         description = groups[1]
-        print first_day, description
-        pass
+        #print first_day, description
+        start_date = datetime.date(CURRENT_YEAR, month, first_day)
+        end_date = datetime.date(CURRENT_YEAR, month, second_date)
+        
+        dates.append(tuple[start_date, end_date, description])
       else:
         print >> sys.stderr, 'Couldn\'t parse date from %s' %(cell)
   
-  return dates
+  return sorted(dates)
 
 def main():
   
@@ -70,7 +82,7 @@ def main():
   # Skip header
   calendar_rows = [row for row in calendar_reader][1:]
   
-  ParseHolidayCalendar(calendar_rows)
+  print ParseHolidayCalendar(calendar_rows)
   
   sys.exit(1)
     
@@ -79,8 +91,8 @@ def main():
   activity_file.close()
   
   # We have the raw activities; now we need to assign them to days
-  january_1 = datetime.date(datetime.date.today().year, 1, 1)
-  december_31 = datetime.date(datetime.date.today().year, 12, 31)
+  january_1 = datetime.date(CURRENT_YEAR, 1, 1)
+  december_31 = datetime.date(CURRENT_YEAR, 12, 31)
   
   january_1_ordinal = january_1.toordinal()
   december_31_ordinal = december_31.toordinal()
