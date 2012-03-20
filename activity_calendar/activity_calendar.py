@@ -1,5 +1,6 @@
 import csv
 import random
+import re
 import sys
 import datetime
 from collections import defaultdict
@@ -12,13 +13,70 @@ from collections import defaultdict
 
 HEADER_ROW = ['Subject','Start Date']
 
+CALENDAR_CSV_FILE_INDEX = 1
+ACTIVITY_FILE_INDEX = 2
+
+def ParseHolidayCalendar(calendar_tuples):
+  dates = []
+  
+  # 3 tuple - start date, end date, description
+  
+  # general format of the file is one column per month, each row is a separate date or range of days
+  # e.g. 
+  # January,February,March,April,May,June,July ,August,September,October,November,December,,Websites
+  # 1- New Year's Day,2- Crepe Day/Groundhog Day,2- Dr. Seuss Day,1- April Fool's Day,1- Batman Day; Mother Goose Day,1- Donut Day; Dinosaur Day; Oscar the Grouch's Birthday,1- US Postage Stamp Day; Creative Ice Cream Flavors Day,1-7- International Clown Week,2-8- National Waffle Week,1-5- National Newspaper Week,1- All Saints' Day,1-7- Cookie Cutter Week,,http://www.brownielocks.com/month2.html
+  
+  date_range_regexp = re.compile('(\d+)-(\d+)-?(.*)')
+  single_date_regexp = re.compile('(\d+)-?(.*)')
+  
+  
+  for row in calendar_tuples:
+    # Some rows have extra columns, skip them
+    num_columns = min(12, len(row))
+        
+    for month in range(num_columns):
+      cell = row[month]
+      if cell == '':
+        continue
+      date_range = date_range_regexp.search(cell)
+      single_date = single_date_regexp.search(cell)
+      if date_range:
+        groups = date_range.groups()
+        first_day = int(groups[0])
+        second_date = int(groups[1])
+        description = groups[2]
+        print first_day, second_date, description
+        pass
+      elif single_date:
+        groups = single_date.groups()
+        first_day = int(groups[0])
+        second_day = first_day
+        description = groups[1]
+        print first_day, description
+        pass
+      else:
+        print >> sys.stderr, 'Couldn\'t parse date from %s' %(cell)
+  
+  return dates
+
 def main():
-  if len(sys.argv) != 2:
-    print >> sys.stderr, "Usage: python activity_calendar.py /path/to/activities"
+  
+  
+  if len(sys.argv) != 3:
+    print >> sys.stderr, "Usage: python activity_calendar.py /path/to/calendar /path/to/activities"
     sys.exit(1)
   
-  with open(sys.argv[1]) as activity_file:
-    activities = [line.strip() for line in activity_file]
+  calendar_reader = csv.reader(open(sys.argv[CALENDAR_CSV_FILE_INDEX], 'rb'), delimiter=',')
+  # Skip header
+  calendar_rows = [row for row in calendar_reader][1:]
+  
+  ParseHolidayCalendar(calendar_rows)
+  
+  sys.exit(1)
+    
+  activity_file = open(sys.argv[ACTIVITY_FILE_INDEX], 'rb')
+  activities = [line.strip() for line in activity_file]
+  activity_file.close()
   
   # We have the raw activities; now we need to assign them to days
   january_1 = datetime.date(datetime.date.today().year, 1, 1)
