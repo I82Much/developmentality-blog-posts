@@ -16,10 +16,9 @@ def main():
   if len(sys.argv) != 2:
     print >> sys.stderr, "Usage: python activity_calendar.py /path/to/activities"
     sys.exit(1)
-    
-  activity_file = open(sys.argv[1])
-  activities = [line.strip() for line in activity_file]
-  activity_file.close()
+  
+  with open(sys.argv[1]) as activity_file:
+    activities = [line.strip() for line in activity_file]
   
   # We have the raw activities; now we need to assign them to days
   january_1 = datetime.date(datetime.date.today().year, 1, 1)
