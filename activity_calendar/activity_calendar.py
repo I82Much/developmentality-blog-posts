@@ -11,7 +11,7 @@ from collections import defaultdict
 # This script outputs to standard out; output can easily be redirected to a csv file as necessary
 # Google Calendar CSV format described at http://support.google.com/calendar/bin/answer.py?hl=en&answer=45656
 
-HEADER_ROW = ['Subject','Start Date']
+HEADER_ROW = ['Subject','Start Date','End Date']
 
 CALENDAR_CSV_FILE_INDEX = 1
 ACTIVITY_FILE_INDEX = 2
@@ -46,26 +46,26 @@ def ParseHolidayCalendar(calendar_tuples):
       if date_range:
         groups = date_range.groups()
         first_day = int(groups[0])
-        second_date = int(groups[1])
-        description = groups[2]
+        second_day = int(groups[1])
+        description = groups[2].strip()
         #print first_day, second_date, description
         
         start_date = datetime.date(CURRENT_YEAR, month, first_day)
-        end_date = datetime.date(CURRENT_YEAR, month, second_date)
+        end_date = datetime.date(CURRENT_YEAR, month, second_day)
         
-        dates.append(tuple[start_date, end_date, description])
+        dates.append(tuple([start_date, end_date, description]))
         
         pass
       elif single_date:
         groups = single_date.groups()
         first_day = int(groups[0])
         second_day = first_day
-        description = groups[1]
+        description = groups[1].strip()
         #print first_day, description
         start_date = datetime.date(CURRENT_YEAR, month, first_day)
-        end_date = datetime.date(CURRENT_YEAR, month, second_date)
+        end_date = datetime.date(CURRENT_YEAR, month, second_day)
         
-        dates.append(tuple[start_date, end_date, description])
+        dates.append(tuple([start_date, end_date, description]))
       else:
         print >> sys.stderr, 'Couldn\'t parse date from %s' %(cell)
   
@@ -82,10 +82,8 @@ def main():
   # Skip header
   calendar_rows = [row for row in calendar_reader][1:]
   
-  print ParseHolidayCalendar(calendar_rows)
+  holidays = ParseHolidayCalendar(calendar_rows)
   
-  sys.exit(1)
-    
   activity_file = open(sys.argv[ACTIVITY_FILE_INDEX], 'rb')
   activities = [line.strip() for line in activity_file]
   activity_file.close()
@@ -115,10 +113,23 @@ def main():
   writer = csv.writer(sys.stdout)
   writer.writerow(HEADER_ROW)
   
+  for start_date, end_date, description in holidays:
+    # Single day holiday, replace whatever is in the activity list
+    if start_date == end_date:
+      date_to_activity_dict[start_date] = description
+  
   for date, activity in sorted(date_to_activity_dict.items()):
     # Google Docs needs the date in mm/dd/yy format
     date_string = date.strftime("%m/%d/%y") 
-    writer.writerow([activity, date_string])
+    writer.writerow([activity, date_string, ''])
+  
+  # Add the weekly holidays in as extra info
+  for start_date, end_date, description in holidays:
+    # Single day holiday, replace whatever is in the activity list
+    if start_date != end_date:
+      start_date_string = start_date.strftime("%m/%d/%y") 
+      end_date_string = end_date.strftime("%m/%d/%y") 
+      writer.writerow([description, start_date_string, end_date_string])
   
 if __name__ == '__main__':
   main()
