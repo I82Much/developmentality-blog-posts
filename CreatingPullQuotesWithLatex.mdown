@@ -7,8 +7,21 @@
 * LaTeX commonly used in academia
 * Produces beautifully typeset documents
 
+* Install
+* TeXShop + MacTeX
+
+
 ## Description
 
 
 
+Large margins, large font
+
+
 ## Conclusion
+
+
+
+[TeXShop]:http://pages.uoregon.edu/koch/texshop/
+[MacTeX]:http://www.tug.org/mactex/2011/
+[ScribTeX]:http://www.scribtex.com/
