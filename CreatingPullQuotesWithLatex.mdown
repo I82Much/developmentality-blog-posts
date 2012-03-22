@@ -2,6 +2,8 @@
 
 # Creating pull quotes with LaTeX
 
+* WHY should the reader care?
+
 ## Intro
 I recently conducted an [interview][Interview] for this blog and wanted to insert large quotes into the interview to break up the monotony of the text and to catch readers' attentions, especially those just skimming the post.  These sorts of quotes are frequently called pull quotes.  While the correct way to do this would no doubt be through HTML and CSS, I couldn't get them to look the way I wanted with the limited options available to me using the standard Wordpress.com templates.  (I've been meaning for awhile to host my own blog, but it hasn't gotten to the tipping point yet).  As an alternative, I decided to try to create the pull quotes as images (with appropriate alt text, of course) and insert them into the story that way.
 
@@ -11,7 +13,6 @@ I first learned about [LaTeX][] in college, as all of the computer science profe
 
 ## Description
 For the purposes of the pull quotes, I needed to increase the font size and increase the margins.  It wasn't immediately apparent how to do so.  The best solution I found was the following:
-
 
 
 
