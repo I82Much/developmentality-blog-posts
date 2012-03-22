@@ -2,4 +2,13 @@
 
 # Creating pull quotes with LaTeX
 
-Recently 
+## Intro
+
+* LaTeX commonly used in academia
+* Produces beautifully typeset documents
+
+## Description
+
+
+
+## Conclusion
