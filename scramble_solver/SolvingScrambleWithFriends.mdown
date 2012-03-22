@@ -1,4 +1,11 @@
-# Solving Scramble with Friends - Recursion, Stacks, and Tries
+# DAWG or do not.  There is no Trie.
+## Solving Scramble with Friends - Recursion, Stacks, and Tries
+
+Apologies to Yoda, and to you for having to read such a bad pun.  This post aims to illustrate how to solve Scramble With Friends/Boggle and the techniques and data structures necessary.  
+
+# Why does it matter
+# Intro
+
 
 # Problem statement
 Given an N x N board, (4x4 in case of scramble with friends), find the set of all words and the path through the board that makes the words that can be formed from moving in any of 8 adjacent tiles, using each tile at most once.
@@ -19,6 +26,11 @@ Examine square
 	If the word built up so far + the new letter starts at least one word in the dictionary
 		Recursively search all squares around this one, ensuring that we do not 1) go off the board and 2) reuse a square
 		
+## Data structures
+
+The data structure you choose has a huge effect on the runtime of the algorithm.  
+		
+		
 ## Optimization
 This algorithm works but it is extremely inefficient.  Why?  For each square we examine, we need to examine the entire dictionary (all M words) and do a 'startswith' check on all of them
 
@@ -29,22 +41,29 @@ Wouldn't it make more sense to eliminate a large number of words?
 binary search - O(log n) - but we're not searching for a specific entry, but just that one *starts* with a specific substring
 
 
-trie
+## Tries
 
 
 "Looking up a key of length m takes worst case O(m) time. A BST performs O(log(n)) comparisons of keys, where n is the number of elements in the tree, because lookups depend on the depth of the tree, which is logarithmic in the number of keys if the tree is balanced. Hence in the worst case, a BST takes O(m log n) time. Moreover, in the worst case log(n) will approach m. Also, the simple operations tries use during lookup, such as array indexing using a character, are fast on real machines"
 -- [Trie wikipedia][]
 
 
+# Trie results
+
+
+# Can we do better?
+Tries are a huge improvement over a naive list or dict data structure, but they are not optimal for space purposes.
+
+
+# DAWG
 [Directed acyclic word graph][]
 
-[Trie wikipedia]:http://en.wikipedia.org/wiki/Trie
-[Directed acyclic word graph]:http://en.wikipedia.org/wiki/Acyclic_deterministic_finite_automaton
-[fast scrabble solver]:http://www.cs.cmu.edu/afs/cs/academic/class/15451-s06/www/lectures/scrabble.pdf
 
-[Compressiong dictionaries with a DAWG: dawg in python]:http://stevehanov.ca/blog/index.php?id=115
-[wordutils dawg]:http://pypi.python.org/pypi/WordUtils/0.8.0
-[extremely space efficient dawg]:http://www.wutka.com/dawg.html
+"The primary difference between DAWG and trie is the elimination of suffix redundancy in storing strings. The trie eliminates prefix redundancy since all common prefixes are shared between strings, such as between doctors and doctorate the doctor prefix is shared. In a DAWG common suffixes are also shared, such as between desertion and destruction both the prefix des- and suffix -tion are shared. For dictionary sets of common English words, this translates into major memory usage reduction.
+Because the terminal nodes of a DAWG can be reached by multiple paths, a DAWG cannot directly store auxiliary information relating to each path, e.g. a word's frequency in the English language. However, if at each node we store a count of the number of unique paths through the structure from that point, we can use it to retrieve the index of a word, or a word given its index.[1] The auxiliary information can then be stored in an array" -- [Directed acyclic word graph][]
+
+
+
 
 
 
@@ -55,3 +74,12 @@ We have seen how using the correct data structure (trie) makes an enormous diffe
 We have also seen how recursion makes it very succint to express an algorithm that otherwise would be very complicated
 
 We have also seen how to replace a recursive implementation with an explicit stack based, iterative approach.
+
+
+
+[Trie wikipedia]:http://en.wikipedia.org/wiki/Trie
+[Directed acyclic word graph]:http://en.wikipedia.org/wiki/Directed_acyclic_word_graph
+[fast scrabble solver]:http://www.cs.cmu.edu/afs/cs/academic/class/15451-s06/www/lectures/scrabble.pdf
+[Compressiong dictionaries with a DAWG: dawg in python]:http://stevehanov.ca/blog/index.php?id=115
+[wordutils dawg]:http://pypi.python.org/pypi/WordUtils/0.8.0
+[extremely space efficient dawg]:http://www.wutka.com/dawg.html
