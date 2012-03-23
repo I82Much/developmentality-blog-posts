@@ -1,6 +1,3 @@
-# Bashmarks - bookmarks for your terminal
-
-# Intro
 [Bashmarks][] is an invaluable script by [Huy Nguyen][] which allows you to easily navigate to specific directories via the command line.  Borrowing the usage section from The usage section from his website should illustrate its utility nicely:
 
 	$ cd /var/www/
@@ -11,7 +8,7 @@
 	$ g web<tab>
 	$ g webfolder
 
-I have half a dozen or so directories in which I need to get to quickly, so I have created a bashmark for each of them.  This allows me to type `s <1 or 2 letters><tab><enter> to get to the directory, rather than having to tab complete a whole slew of folders.  Over the course of the day, this saves dozens of keystrokes, and generally contributes to the sense of flow when trying to accomplish a task. Combine this with liberal use of `cd -` (jump to previous location), and you can jump back and forth between arbitrary locations extremely easily.
+I have half a dozen or so directories in which I need to get to quickly, so I have created a bashmark for each of them.  This allows me to type `g <1 or 2 letters><tab><enter>` to get to the directory, rather than having to tab complete a whole slew of folders.  Over the course of the day, this saves dozens of keystrokes, and generally contributes to the sense of flow when trying to accomplish a task. Combine this with liberal use of `cd -` (jump to previous location), and you can navigate between arbitrary locations extremely easily.
 
 I highly recommend this script if you do any sort of work in a terminal.
 
