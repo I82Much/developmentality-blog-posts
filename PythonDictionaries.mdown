@@ -1,0 +1,117 @@
+Dictionaries are *the* fundamental data structure in Python, and a key tool in any Python programmer's arsenal.  They allow O(1) lookup speed, and have been heavily optimized for memory overhead and lookup speed efficiency.
+
+Today I'm going to show you three ways of constructing a Python dictionary, as well as some additional tips and tricks.
+
+# Dictionary literals
+Perhaps the most commonly used way of constructing a python dictionary is with curly bracket syntax:
+
+<div>
+[sourcecode language="python"]
+d = {'age':25}
+[/sourcecode]
+</div>
+
+As dictionaries are mutable, you need not know all the entries in advance:
+
+<div>
+[sourcecode language="python"]
+# Empty dict
+d = {}
+# Fill in the entries one by one
+d['age'] = 25
+[/sourcecode]
+</div>
+
+# From a list of tuples
+You can also construct a dictionary from a list (or any iterable) of key, value pairs.  For instance:
+
+<div>
+[sourcecode language="python"]
+d = dict([('age', 25)])
+[/sourcecode]
+</div>
+
+This is perhaps most useful in the context of a list comprehension:
+
+<div>
+[sourcecode language="python"]
+class Person(object):
+	def __init__(self, name, profession):
+		self.name = name
+		self.profession = profession
+		
+people = [Person('Nick', 'Programmer'), Person('Alice','Engineer')]
+professions = dict([ (p.name, p.profession) for p in people ])
+>>> print professions
+{'Nick': 'Programmer', 'Alice': 'Engineer'}
+[/sourcecode]
+</div>
+
+This is equivalent, though a bit shorter, to the following:
+
+<div>
+[sourcecode language="python"]
+people = [Person('Nick', 'Programmer'), Person('Alice','Engineer')]
+professions = {}
+for p in professions:
+	professions[p.name] = p.profession
+[/sourcecode]
+</div>
+
+This form of creating a dictionary is good for when you have a dynamic rather than static list of elements.
+
+# From two parallel lists
+This method of constructing a dictionary is intimately related to the prior example.  Say you have two lists of elements, perhaps pulled from a database table:
+
+<div>
+[sourcecode language="python"]
+# Static lists for purpose of illustration
+names = ['Nick', 'Alice', 'Kitty']
+professions = ['Programmer', 'Engineer', 'Art Therapist']
+[/sourcecode]
+</div>
+
+If you wished to create a dictionary from name to profession, you *could* do the following:
+
+<div>
+[sourcecode language="python"]
+professions_dict = {}
+for i in range(len(names)):
+	professions_dict[names[i]] = professions[i]
+[/sourcecode]
+</div>
+
+This is not ideal, however, as it involves an explicit iterator, and is starting to look like Java.  The more Pythonic way to handle this case would be to use the `zip` method, which combines two iterables:
+
+<div>
+[sourcecode language="python"]
+print zip(range(5), ['a','b','c','d','e'])
+[(0, 'a'), (1, 'b'), (2, 'c'), (3, 'd'), (4, 'e')]
+
+names_and_professions = zip(names, professions)
+print names_and_professions
+[('Nick', 'Programmer'), ('Alice', 'Engineer'), ('Kitty', 'Art Therapist')]
+
+for name, profession in names_and_professions:
+	professions_dict[name] = profession
+[/sourcecode]
+</div>
+	
+As you can see, this is extremely similar to the previous section.  You can dispense the iteration, and instead use the `dict` method:
+
+<div>
+[sourcecode language="python"]
+professions_dict = dict(names_and_professions)
+# You can dispence the extra variable and create an anonymous
+# zipped list:
+professions_dict = dict(zip(names, professions))
+[/sourcecode]
+</div>
+
+# Further reading
+[zip](http://docs.python.org/library/functions.html#zip)
+
+[dict](http://docs.python.org/library/stdtypes.html#dict)
+
+
+
