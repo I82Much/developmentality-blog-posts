@@ -8,13 +8,34 @@ Edward Tufte is a noted proponent of designing data rich visualizations.  His bo
 
 # Does not abuse color
 
+In the hands of less restrained designers, this map would be awash in color.
+
+![Snowfall example][]
+
+You see this most frequently in elevation maps
+
+Lack of ordering of color.  Vary hue or intensity, not saturation
+
 ## 5 shades of gray - easily distinguishable.  Too many more gradations would have been lost
 
 # Data dense
 
+This map conveys two variables, wind speed and wind direction, for thousands of points across the United States.  A chart conveying the same information would take far more space and the viewer would have no way of seeing the patterns that exist.
+
 # No chart junk
+No compass rose
+No lat, longitude lines, or other grid lines separating map from rest of page
 
 
 [The Visual Display of Quantitative Information]:http://www.amazon.com/The-Visual-Display-Quantitative-Information/dp/0961392142/ref=sr_1_1?ie=UTF8&qid=1333081386&sr=8-1
 [Michael Kleber's Google+ post]:https://plus.google.com/114937925666302803969/posts/3zrwLZCijxi
 [Wind map]:http://hint.fm/wind/
+[Snowfall example]:http://www.carrollk12.org/Assets/image/Transportation/Annual_Snowfall1.jpg
+
+[Egregious elevation map]:http://cohp.org/images/records/elevation.gif
+[Egregious elevation map 2]:http://mappery.com/maps/Nova-Scotia-Elevation-Map.mediumthumb.jpg
+
+
+
+[Nova Scotia elevation map]:http://mappery.com/Nova-Scotia-Elevation-Map
+[Nova Scotia elevation map image]:http://mappery.com/maps/Nova-Scotia-Elevation-Map.jpg
