@@ -1,8 +1,14 @@
 If you do any sort of desktop Java programming with JTables and/or JLists, you really owe it to yourself to try Glazed Lists.  It's an actively developed open source project that makes all sorts of complicated list transformations easy.
 
-The library simplifies three common tasks which alone make it worth downloading.
+The library simplifies three common tasks which alone make it worth using:
 
-1) Providing a simplified API for representing objects within a JTable
+1. Representing objects within a JTable
+2. Filtering a table or list
+3. Sorting a table or list
+
+Let's examine each in turn.
+
+## Provides a simplified API for representing objects within a JTable
 
 When using the plain JTable implementation, the most painful part is defining the TableModel implementation, which informs the JTable as to what contents to display within it.  (The JTable is the view, the TableModel serves as the Model, in a standard MVC paradigm). 
 
@@ -39,25 +45,40 @@ The logical way of doing that would be two have two columns, one for the age, on
 <div>
 [sourcecode language="java"]
 public class PersonTableModel extends AbstractTableModel {
-	    String[] columns = {"Name","Age"};
-		
+	private static final String[] columns = {"Name","Age"};
+	private final List<Person> people;
 
+	public PersonTableModel(List<Person> people) {
+		// Make a defensive copy
+		this.people = new ArrayList<Person>(people);
+	}
+	
+	public int getRowCount() {
+		return people.size();
+	}
+	public int getColumnCount() {
+		return columns.length;
+	}
+	public Object getValueAt(int row, int column) {
+		Person p = people.get(row);
+		if (column == 0) {
+			return p.getName();
+		} else {
+			return p.getAge();
+		}
+	}
 }
 [/sourcecode]
 </div>
 
-  
+This certainly works, but it requires a fair bit of boilerplate.  Furthermore, the code above does not provide any way of modifying the list of people after it is copied by the TableModel.
+
+Glazed Lists simplifies your life by treating the table not as an arbitrary two dimensional grid, but instead as a collection of rows.  All you have to do is define how a row is laid out, and Glazed Lists takes care of the rest. 
 
 http://download.oracle.com/javase/tutorial/uiswing/components/table.html#data
 
 
-
-GlazedLists simplifies your life by treating the table not as an arbitrary two dimensional grid, but instead as a collection of rows.  All you have to do is define how a row is laid out, and glazedlists takes care of the rest. 
-
-http://download.oracle.com/javase/tutorial/uiswing/components/table.html#data
-
-
-What glazedlists does is allow you to treat the contents of your table at a higher level of abstraction.  Rather than considering the table as an arbitrary two-dimensional array of cells, each of which is completely disconnected from each other, GlazedLists is designed for the case where you are representing a list of objects, where each column corresponds to some attribute of that object.  For all the uses I've ever had for a JTable, this has been precisely my purpose, so this allows me a much easier time.
+What Glazed Lists does is allow you to treat the contents of your table at a higher level of abstraction.  Rather than considering the table as an arbitrary two-dimensional array of cells, each of which is completely disconnected from each other, GlazedLists is designed for the case where you are representing a list of objects, where each column corresponds to some attribute of that object.  For all the uses I've ever had for a JTable, this has been precisely my purpose, so this allows me a much easier time.
 
 The interface you need to use in order to define how the table looks and which aspects of your model objects are exposed is called TableFormat. 
 
@@ -103,7 +124,7 @@ public class PersonTableFormat implements TableFormat<Person> {
 }
 [/sourcecode]
 
-While this isn't too hard to write, it's still a lot of boilerplate.  GlazedLists makes it even easier than this.  The above can be replaced with one line of code:
+While this isn't too hard to write, it's still a lot of boilerplate (and not significantly different from the previous example).  Glazed Lists makes it even easier than this.  The above can be replaced with one line of code:
 
 [sourcecode language="java"]
 TableFormat<Person> = GlazedLists.tableFormat(Person.class, new String[] {"name","age"}, new String[]{"Name", "Age"});
@@ -131,7 +152,8 @@ String toTitleCase(String camelCase) {
 }
 [/sourcecode]
 
-2) Providing a simplified means of filtering a table or list
+
+## Provides a simplified means of filtering a table or list
 
 Here's where GlazedLists really begins to show off its power.  Once you have an EventList of some sort, it is easy to create a new "view" of that same list, filtering out entries you don't want to see.  You do this by wrapping the list in a FilterList, and then assigning some sort of filter criterion.  For instance,
 
