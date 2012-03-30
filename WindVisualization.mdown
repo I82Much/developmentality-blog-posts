@@ -1,0 +1,20 @@
+2012-03-29
+
+# Wind map - a visualization to make Tufte proud
+
+Edward Tufte is a noted proponent of designing data rich visualizations.  His books, including the seminal [The Visual Display of Quantitative Information][] have influenced countless designers and engineers.  When I first saw the [Wind map][] project via [Michael Kleber's Google+ post][], I immediately became entranced with it.  After studying it for some time, I feel that the designers must have been intimately familiar with Tufte's work.  Let us examine how this triumph of data visualization succeeds.
+
+# Minimalist
+
+# Does not abuse color
+
+## 5 shades of gray - easily distinguishable.  Too many more gradations would have been lost
+
+# Data dense
+
+# No chart junk
+
+
+[The Visual Display of Quantitative Information]:http://www.amazon.com/The-Visual-Display-Quantitative-Information/dp/0961392142/ref=sr_1_1?ie=UTF8&qid=1333081386&sr=8-1
+[Michael Kleber's Google+ post]:https://plus.google.com/114937925666302803969/posts/3zrwLZCijxi
+[Wind map]:http://hint.fm/wind/
