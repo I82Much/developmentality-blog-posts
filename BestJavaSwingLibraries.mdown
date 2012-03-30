@@ -1,0 +1,15 @@
+
+
+jide
+	jide common layer - many widgets http://www.jidesoft.com/
+	
+	
+
+glazedlists
+	glazedlists http://www.glazedlists.com/
+	https://docs.google.com/Doc?docid=0AdoPMoUoEyTvZGhkdjdxNnZfNTY5ZDRncWcyZjY
+	
+	
+
+miglayout
+	http://www.miglayout.com/
