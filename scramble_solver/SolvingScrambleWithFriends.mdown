@@ -64,10 +64,6 @@ Because the terminal nodes of a DAWG can be reached by multiple paths, a DAWG ca
 
 
 
-
-
-
-
 # Conclusion
 We have seen how using the correct data structure (trie) makes an enormous difference when it comes to runtime performance.  
 

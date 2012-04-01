@@ -14,7 +14,7 @@ In the hands of less restrained designers, this map would be awash in color.
 
 You see this most frequently in elevation maps
 
-Lack of ordering of color.  Vary hue or intensity, not saturation
+Lack of ordering of color.  Vary hue or intensity, not saturation,
 
 ## 5 shades of gray - easily distinguishable.  Too many more gradations would have been lost
 
