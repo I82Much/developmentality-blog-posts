@@ -179,3 +179,4 @@ Glazed Lists is one of the best Java Swing libraries I've used.  It simplifies l
 [Model View Controller]:http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller
 [EventList]:http://publicobject.com/glazedlists/glazedlists-1.7.0/api/ca/odell/glazedlists/EventList.html
 [Observer]:http://en.wikipedia.org/wiki/Observer_pattern
+[Tutorial]:http://www.glazedlists.com/documentation/tutorial
