@@ -64,6 +64,18 @@ def ExtractDistributionRequirements(node):
   dist_requirements_nodes = node.findAll('nobr', {'style':DISTRIBUTION_REQUIREMENTS_STYLE_STRING})
   return [dist_node.text.strip() for dist_node in dist_requirements_nodes]
 
+def ExtractDescription(node):
+  nodes = node.findAll('div', {'class':'desc'})
+  if nodes:
+    return nodes[0].text.strip()
+  else:
+    return ''
+
+def ExtractPrerequisites(node):
+  """Given a node, determines all the courses that must have been taken."""
+  
+  return []
+
 def ExtractCourseInfo(tr):
   """Given tr containing course info, returns a Course object"""
   tds = tr.findAll('td')
@@ -76,17 +88,27 @@ def ExtractCourseInfo(tr):
   title = ExtractCourseTitle(tds[1])
   aliases = ExtractAliases(tds[1])
   
+  # This tr contains most data; the next tr in table contains description
+  description = ExtractDescription(tr.findNextSibling('tr'))
+  
   # td 2 has the type of the course - e.g. Social and Behavioral Sciences
   division = ExtractDivision(tds[2])
   distribution_requirements_fulfilled = ExtractDistributionRequirements(tds[2])
   
-  return Course(department, number, title, division, distribution_requirements_fulfilled, aliases)
+  return Course(department=department, 
+                course_number=number,  
+                title=title,
+                description=description,
+                division=division,
+                distribution_requirements_fulfilled=distribution_requirements_fulfilled,
+                alias_list=aliases)
   
 class Course(object):
   def __init__(self, 
               department, 
               course_number,
               title,
+              description,
               division,
               distribution_requirements_fulfilled=None,
               alias_list=None,
@@ -95,6 +117,7 @@ class Course(object):
     self.department = department
     self.course_number = course_number
     self.title = title
+    self.description = description
     self.distribution_requirements_fulfilled = distribution_requirements_fulfilled or []
     self.alias_list = alias_list or []
     self.prerequesites = prerequesites or []
