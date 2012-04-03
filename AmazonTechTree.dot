@@ -1,4 +1,5 @@
 digraph g {
+		graph [rankdir="BT"]
         node [shape=plaintext]
 		
 		Magic_Arrow [label="Magic Arrow"]
@@ -26,13 +27,13 @@ digraph g {
 		Strafe -> Guided_Arrow
 		
 		Freezing_Arrow -> Ice_Arrow
-		
+
+		// I don't think these ranks work correctly
 		{ rank=1; Magic_Arrow Fire_Arrow }
 		{ rank=6; Cold_Arrow Multiple_Shot }
 		{ rank=12; Exploding_Arrow }
 		{ rank=18; Ice_Arrow Guided_Arrow }
 		{ rank=24; Strafe Immolation_Arrow }
 		{ rank=30; Freezing_Arrow }
-
 }
 
