@@ -2,7 +2,8 @@ from BeautifulSoup import BeautifulSoup
 import re
 
 
-
+# Yes it's crazy that these are inline styles rather than classes.
+DISTRIBUTION_REQUIREMENTS_STYLE_STRING = 'color:#990000'
 
 # class name is the next sibling after the bb class
 # <tr valign="top" style="background-color:#F0F0F0">
@@ -51,12 +52,17 @@ def ExtractDepartmentAndNumber(node):
   return department, number
 
 def ExtractDivision(node):
-  """Returns top level division, e.g. Social and Behavioral Sciences."""
-  return ""
+  """Returns top level division, e.g. Social and Behavioral Sciences, or empty string"""
+  nodes = node.findAll('nobr')
+  if nodes:
+    return nodes[0].text.strip()
+  else:
+    return ''
   
 def ExtractDistributionRequirements(node):
-  """Returns the list of distribution requirements this course meets, e.g. Exploring Social Differences""" 
-  return []
+  """Returns the list of distribution requirements this course meets, e.g. Exploring Social Differences"""
+  dist_requirements_nodes = node.findAll('nobr', {'style':DISTRIBUTION_REQUIREMENTS_STYLE_STRING})
+  return [dist_node.text.strip() for dist_node in dist_requirements_nodes]
 
 def ExtractCourseInfo(tr):
   """Given tr containing course info, returns a Course object"""
