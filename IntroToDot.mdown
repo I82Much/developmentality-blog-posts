@@ -1,0 +1,44 @@
+2012-03-31
+
+DOT - an essential tool for dependency visualization
+
+dependencies - naturally described as a directed acyclic graph
+
+tech trees
+
+digraph g {
+        node [shape=plaintext]
+        Magic Arrow
+        Fire Arrow
+        Cold Arrow
+ 
+		Multiple Shot -> Magic Arrow
+		Exploding Arrow -> Magic Arrow
+		Exploding Arrow -> Fire Arrow
+		Exploding Arrow -> Multiple Shot
+		
+		Ice Arrow -> Cold Arrow
+		Guided Arrow -> Magic Arrow
+		Guided Arrow -> Cold Arrow
+		Guided Arrow -> Multiple Shot
+		
+		Immolation Arrow -> Magic Arrow
+		Immolation Arrow -> Fire Arrow
+		Immolation Arrow -> Multiple Shot
+		Immolation Arrow -> Exploding Arrow
+		
+		Strafe -> Magic Arrow
+		Strafe -> Cold Arrow
+		Strafe -> Multiple Shot
+		Strafe -> Guided Arrow
+		
+		Freezing Arrow -> Cold Arrow
+		Freezing Arrow -> Ice Arrow
+	
+	    { rank=same; Magic Arrow Fire Arrow Cold Arrow }
+        { rank=same; B1 B2 B3 } 
+}
+
+
+
+[DOT wikipedia]:http://en.wikipedia.org/wiki/DOT_language
