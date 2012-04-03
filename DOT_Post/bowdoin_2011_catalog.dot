@@ -1,0 +1,6 @@
+digraph catalogue {
+	MUS_227 [label="Protest Music"]
+	MUS_243 [label="Introduction to Composition"]
+	
+	MUS_243 -> MUS_101
+}
