@@ -1,6 +1,6 @@
 from BeautifulSoup import BeautifulSoup
 import re
-
+import sys
 
 # Yes it's crazy that these are inline styles rather than classes.
 DISTRIBUTION_REQUIREMENTS_STYLE_STRING = 'color:#990000'
@@ -70,7 +70,9 @@ def ExtractDescription(node):
     return nodes[0].text.strip()
   else:
     return ''
-def ExtractLocation(tr):
+    
+    
+def ExtractLocationAndTimes(tr):
   # <tr>
   #   <td class="s">&nbsp;
   #     </td>
@@ -88,7 +90,21 @@ def ExtractLocation(tr):
   #                       of 16</td>
   #   </tr>
   #   
-  return ''
+  # First nobr elem within first td contains the location
+  
+  """Returns 2 tuple (location, [list of times])"""
+  class_node = tr.find('td', {'align':'left', 'class': 's'})
+  unknown = ('', [])
+  if not class_node:
+    return unknown
+  no_br_nodes = class_node.findAll('nobr')
+  if len(no_br_nodes) == 2:
+    loc = no_br_nodes[0].text
+    time_string = no_br_nodes[1].text
+    # TODO(ndunn): Fix this
+    return loc, [time_string]
+  return unknown
+    
   
 def ExtractEnrollment(tr):
   return ''
@@ -150,7 +166,7 @@ def ExtractCourseInfo(tr):
   description = ExtractDescription(description_tr)
   # The tr after the description contains location and enrollment
   location_tr = description_tr.findNextSibling('tr')
-  location = ExtractLocation(location_tr)
+  location, times = ExtractLocationAndTimes(location_tr)
   enrollment = ExtractEnrollment(location_tr)
   
   # The tr after location + enrollment contains instructor, instructor email,
@@ -177,9 +193,11 @@ def ExtractCourseInfo(tr):
                 title=title,
                 description=description,
                 division=division,
+                location=location,
                 distribution_requirements_fulfilled=distribution_requirements_fulfilled,
                 alias_list=aliases,
-                prereqs=rules.get('prereqs', [])
+                prereqs=rules.get('prereqs', []),
+                times=times
                 )
   
 class Course(object):
@@ -189,25 +207,62 @@ class Course(object):
               title,
               description,
               division,
+              location,
               distribution_requirements_fulfilled=None,
               alias_list=None,
               prereqs=None,
-              comments=None):
+              comments=None,
+              times=None):
     self.department = department
     self.course_number = course_number
     self.title = title
     self.description = description
+    self.location = location
     self.distribution_requirements_fulfilled = distribution_requirements_fulfilled or []
     self.alias_list = alias_list or []
     self.prereqs = prereqs or []
     self.comments = comments or []
+    self.times = times or []
     
   def __str__(self):
     return "%s %s %s" %(self.department, self.course_number, self.title)
     
+def MakeId(department, course_number):    
+  return department.replace(' ', '_') + '_' + course_number
+    
+def GetCourseId(course):
+  return MakeId(course.department, course.course_number)
+
+def GetCourseLabel(course):
+  return ' '.join([course.department, course.course_number])
+    
+def GetDependencyGraph(courses):
+  graph = """
+digraph Bowdoin2012Spring {
+  graph [rankdir="BT"]
+  node [shape=plaintext]
+  
+  """
+  # Print the course nodes and labels
+  for course in courses:
+    graph += GetCourseId(course) + '[label="%s"]\n' %GetCourseLabel(course)
+    
+  # Print the dependencies
+  for course in courses:
+    for prereq in course.prereqs:
+      if len(prereq) == 2:
+        department = prereq[0]
+        course_number = prereq[1]
+        graph += '%s -> %s\n' %(GetCourseId(course), MakeId(department, course_number))
+      else:
+        print >> sys.stderr, "Couldn't parse '%s'" %(prereq)
+      
+  graph += '}'
+  return graph
+    
 def main():
-  doc = open('CourseCatalog.html').readlines()
-  soup = BeautifulSoup(''.join(doc))
+  #doc = open('CourseCatalog.html').readlines()
+  soup = BeautifulSoup(open('CourseCatalog.html'))
 
   # The class names are held in td elems with class "bb".  The underlying table row has
   # even more metadata
@@ -217,6 +272,10 @@ def main():
   trs = map(lambda bb:bb.parent, bbs)
   
   courses = map(ExtractCourseInfo, trs)
+  
+  # Print the DOT map
+  
+  
   print courses
       
     
