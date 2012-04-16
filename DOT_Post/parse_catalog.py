@@ -176,12 +176,17 @@ def ExtractCourseInfo(tr):
   #class_email = ExtractClassEmail(instructor_tr)
   #final_exam_info = ExtractFinalExamInfo(instructor_tr)
   
+  # OPTIONAL comments section
+  
   # tr after instructor info contains comments
   comments_tr = instructor_tr.findNextSibling('tr')
-  comments = ExtractComments(comments_tr)
+  if 'Comments' in comments_tr.text:
+    comments = ExtractComments(comments_tr)
+  else:
+    comments = ''
   
   # final tr contains rules + prereqs
-  rules_tr = comments_tr.findNextSibling('tr')
+  rules_tr = [tr for tr in tr.findNextSiblings('tr') if 'Rules' in tr.text][0]
   rules = ExtractRules(rules_tr)
   
   # td 2 has the type of the course - e.g. Social and Behavioral Sciences
@@ -261,12 +266,10 @@ digraph Bowdoin2012Spring {
   return graph
     
 def main():
-  #doc = open('CourseCatalog.html').readlines()
   soup = BeautifulSoup(open('CourseCatalog.html'))
 
   # The class names are held in td elems with class "bb".  The underlying table row has
   # even more metadata
-  
   bbs = soup.findAll('td', {'class':'bb'})
   # trs containining class info:
   trs = map(lambda bb:bb.parent, bbs)
