@@ -1,8 +1,8 @@
-If you do any sort of desktop Java programming with JTables and/or JLists, you really owe it to yourself to try Glazed Lists.  It's an open source project that makes all sorts of complicated list transformations easy.
+If you do any sort of desktop Java programming with JTables and/or JLists, you really owe it to yourself to try [Glazed Lists][].  It's an open source project that makes all sorts of complicated list transformations easy.
 
-The library simplifies three common tasks extremely well:
+The library simplifies three common tasks:
 
-1. Representing objects within a JTable or JList
+1. Representing objects within a table or list
 2. Filtering a table or list
 3. Sorting a table or list
 
@@ -45,7 +45,7 @@ The logical way of doing that would be two have two columns, one for the age, on
 <div>
 [sourcecode language="java"]
 public class PersonTableModel extends AbstractTableModel {
-	private static final String[] columns = {"Name","Age"};
+	private static final String[] columns = {"Name", "Age"};
 	private final List<Person> people;
 
 	public PersonTableModel(List<Person> people) {
@@ -73,14 +73,9 @@ public class PersonTableModel extends AbstractTableModel {
 
 This certainly works, but it requires a fair bit of boilerplate.  Furthermore, the code above does not provide any way of modifying the list of people after it is copied by the TableModel.
 
-Glazed Lists simplifies your life by treating the table not as an arbitrary two dimensional grid, but instead as a collection of rows.  All you have to do is define how a row is laid out, and Glazed Lists takes care of the rest. 
+Glazed Lists simplifies your life by treating the table not as an arbitrary two dimensional grid, but instead as a collection of rows, where the rows are kept in sync with changes to the domain models that they represent.  All you have to do is define how a row is laid out, and Glazed Lists takes care of the rest. 
 
-http://download.oracle.com/javase/tutorial/uiswing/components/table.html#data
-
-
-What Glazed Lists does is allow you to treat the contents of your table at a higher level of abstraction.  Rather than considering the table as an arbitrary two-dimensional array of cells, each of which is completely disconnected from each other, Glazed Lists is designed for the case where you are representing a list of objects, where each column corresponds to some attribute of that object.  For all the uses I've ever had for a JTable, this has been precisely my purpose, so this allows me a much easier time.
-
-The interface you need to use in order to define how the table looks and which aspects of your model objects are exposed is called TableFormat. 
+The interface you need to use in order to define how the table looks and which aspects of your model objects are exposed is called [TableFormat][]. 
 
 The interface is as follows:
 
@@ -88,7 +83,7 @@ The interface is as follows:
 * `String getColumnName(int column)` - Gets the title of the specified column.
 * `Object getColumnValue(E baseObject, int column)` - Gets the value of the specified field for the specified object.
 
-OK great, this isn't hard to implement at all. 
+This should remind you of the TableModel interface presented previously, but note how the `getColumnValue` method is different - rather than getting a row and column, and forcing you to look up the object corresponding to that row, you are provided the object directly.  
 
 Here is a `TableFormat` which allows `Person` objects to be easily visible in a JTable:
 
@@ -121,15 +116,21 @@ public class PersonTableFormat implements TableFormat<Person> {
 While this isn't too hard to write, it's still a lot of boilerplate (and not significantly different from the previous example).  Glazed Lists makes it even easier than this.  The above can be replaced with one line of code:
 
 [sourcecode language="java"]
-TableFormat<Person> = GlazedLists.tableFormat(Person.class, new String[] {"name","age"}, new String[]{"Name", "Age"});
+TableFormat<Person> = GlazedLists.tableFormat(Person.class, 
+						// Names of the properties to fetch
+						new String[] {"name","age"}, 
+						// Names for the columns
+						new String[]{"Name", "Age"});
 [/sourcecode]
 
-What's this doing?  And how can it do all that I had previously in one line of code?  Well, it requires and takes advantage of [JavaBeans][] naming convention.  The static function uses reflection to find the methods mapping to properties named "name" and "age".  In this case, it looks for two methods, `getName()` and `getAge()`, both of which it finds.  (If I didn't name my methods appropriately, I would get a runtime exception).  The second array defines the strings that should be used to identify the corresponding entry in the properties array.  In other words, element 0 in the names column is used to identify the property name at index 0. 
+What's this doing?  And how can it do all that I had previously in one line of code?  Well, it requires and takes advantage of [JavaBeans][] naming convention.  The static function uses reflection to find the methods mapping to properties named "name" and "age".  In this case, it looks for two methods, `getName()` and `getAge()`, both of which it finds.  (If I didn't name my methods appropriately, I would get a runtime exception).  The second array defines the strings that should be used to identify the corresponding entry in the properties array.  In other words, element 0 in the names column is used to identify the property name at index 0.
 
 ## Provides a simplified means of filtering a table or list
-The fundamental building block of Glazed Lists is the [EventList][] class.  It is similar to the ArrayList class in Java, except that it has support for observers.  In other words, other objects can register to be notified of changes in the EventList object, and react accordingly.  For instance, when a new item is added to the EventList, the UI element representing it on screen automatically refreshes itself.  This is an example of the [Observer/Observable design pattern][Observer].
-
 Perhaps one of the most important features of any interactive table is the ability to filter out extraneous information.  Glazed Lists makes it very easy to provide this filtering capability.
+
+The fundamental building block of Glazed Lists is the [EventList][] class.  It is similar to the ArrayList class in Java, except that it has support for observers.  If you're not familiar with the [Observer/Observable design pattern][Observer], it allows objects (observers) to register themselves and receive notifications whenever a different object (the observable) is changed.  For instance, when a new item is added to the EventList, the UI element representing it on screen automatically refreshes itself.
+
+# TODO(ndunn): doesn't really flow.  Need a transition
 
 Once you have an EventList, you can create either a TableModel, suitable for display in a JTable, or a ListModel, suitable for display in a JList.
 
@@ -147,34 +148,80 @@ JList list = new JList(personListModel);
 [/sourcecode]
 </div>
 
-Say we want to provide a filter based on people's names.  We hook up 
-
-
-
-
-Here's where Glazed Lists really begins to show off its power.  Once you have an `EventList` of some sort, it is easy to create a new "view" of that same list, filtering out entries you don't want to see.  You do this by wrapping the list in a `FilterList`, and then assigning some sort of filter criterion.  For instance,
+Say we want to provide the ability to filter te list based on people's names.  We will add a listener to a text field which listens for changes (new letters typed or deleted), and filters the list in real time.  Once we have an `EventList` of some sort, it is easy to create a new "view" of that same list, filtering out entries you don't want to see.  You do this by wrapping the list in a `FilterList`, and then assigning some sort of filter criterion.  Let's start simple with a filtered list which only shows those users whose names start with the letter 'A'.
 
 <div>
 [sourcecode language="java"]
-EventList<Person> people = GlazedLists.
+EventList<Person> personList = new BasicEventList<Person>();
+personList.add(new Person("Anthony Hopkins", 74));
+personList.add(new Person("Barack Obama", 50));
+personList.add(new Person("American McGee", 39));
 
+Matcher<Person> personFilter = new Matcher<Person>() {
+	public boolean matches(Person p) {
+		return p.getName().startsWith("A");
+	}
+};
+// Create a filtered list
+FilterList<Person> filteredList = new FilterList(personList, personFilter);
+EventListModel<Person> filteredListModel = new EventListModel<Person>(personList)
+JList list = new JList(filteredListModel);
+// At this point, shows Anthony Hopkins and American McGee
 [/sourcecode]
 </div>
 
+The filter I've defined above is static - once it's instantiated, its filter condition never changes.  Glazed Lists supports dynamic filters as well, through the [MatcherEditor][] interface.  We will see how to use a `MatcherEditor` instance for a text field, but first we need to tell Glazed Lists which strings to use when filtering for a given object.  We do this with the [TextFilterator][] interface.
+
+<div>
+[sourcecode language="java"]
+public class PersonTextFilterator imlements TextFilterator<Person> {
+	public getFilterStrings(List<String> baseList, Person element) {
+		baseList.add(element.getName());
+		// Allow users to filter by age as well
+		baseList.add(String.valueOf(element.getAge()));
+	}
+}
+[/sourcecode]
+</div>
+
+The MatcherEditor class to use in our case is [TextComponentMatcherEditor][].  We provide it with the text field that it will use as the filter source, as well as an instance of the `PersonTextFilterator` class we just defined.
+
+<div>
+[sourcecode language="java"]
+EventList<Person> personList = new BasicEventList<Person>();
+personList.add(new Person("Anthony Hopkins", 74));
+personList.add(new Person("Barack Obama", 50));
+personList.add(new Person("American McGee", 39));
+
+JTextField filterTextField = new JTextField();
+// Add the text field to the UI - add to a JPanel
+
+// Hook the text field up to a filter list
+MatcherEditor<Person> filter = new TextComponentMatcherEditor(filterTextField, new PersonTextFilterator());
+
+// Create a filtered list
+FilterList<Person> filteredList = new FilterList(personList, filter);
+EventListModel<Person> filteredListModel = new EventListModel<Person>(personList)
+JList list = new JList(filteredListModel);
+// List automatically updates in response to typing in the text field
+
+[/sourcecode]
+</div>
 
 
 ## Provides sorting capabilities
 
-<div>
-[sourcecode language="java"]
-
-[/sourcecode]
-</div>
 
 
 ## Conclusion
-Glazed Lists is one of the best Java Swing libraries I've used.  It simplifies life for the programmer as well as the end user of the software project, since tables that allow sorting and filtering are far more useful than those which do not.
+Glazed Lists is one of the best Java Swing libraries I've used.  It simplifies life for the programmer as well as the end user of the software project, since tables that allow sorting and filtering are far more useful than those which do not.  While the popularity of desktop Java applications is declining, there are still some industries, such as within the government, which rely heavily on it.  If you do any sort of Swing programming, you owe it to yourself to try this library out.
 
+[TextComponentMatcherEditor]:http://publicobject.com/glazedlists/glazedlists-1.7.0/api/ca/odell/glazedlists/swing/TextComponentMatcherEditor.html
+[TextFilterator]:http://publicobject.com/glazedlists/glazedlists-1.7.0/api/ca/odell/glazedlists/TextFilterator.html
+[MatcherEditor]:http://publicobject.com/glazedlists/glazedlists-1.7.0/api/ca/odell/glazedlists/matchers/MatcherEditor.html
+[FilterList]:http://publicobject.com/glazedlists/glazedlists-1.7.0/api/ca/odell/glazedlists/FilterList.html
+[Glazed Lists]:http://www.glazedlists.com/
+[Table Format]:http://publicobject.com/glazedlists/glazedlists-1.5.0/api/ca/odell/glazedlists/gui/TableFormat.html
 [JavaBeans]:http://en.wikipedia.org/wiki/JavaBeans
 [Model View Controller]:http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller
 [EventList]:http://publicobject.com/glazedlists/glazedlists-1.7.0/api/ca/odell/glazedlists/EventList.html
