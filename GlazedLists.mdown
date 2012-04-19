@@ -1,12 +1,13 @@
-If you do any sort of desktop Java programming with JTables and/or JLists, you really owe it to yourself to try [Glazed Lists][].  It's an open source project that makes all sorts of complicated list transformations easy.
+Lists and tables are some of the most fundamental ways of providing information to end users.  In standard Java Swing applications, it is difficult, or at least annoying, to do the following three tasks:
 
-The library simplifies three common tasks:
+<!-- TODO(ndunn): Use the StackOverflow swing tab to show it's still relevant http://stackoverflow.com/questions/tagged/swing -->
+<!--TODO(ndunn): What about 'keeping list synced with changes to objects' -->
 
 1. Representing objects within a table or list
 2. Filtering a table or list
 3. Sorting a table or list
 
-Let's examine each in turn.
+[Glazed Lists][] is an open source project that makes all three of these tasks trivial, and more. Let's examine each of these aspects in turn.
 
 ## Provides a simplified API for representing objects within a JTable
 
@@ -207,7 +208,6 @@ JList list = new JList(filteredListModel);
 
 [/sourcecode]
 </div>
-
 
 ## Provides sorting capabilities
 
