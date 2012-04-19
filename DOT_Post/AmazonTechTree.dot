@@ -1,0 +1,39 @@
+digraph g {
+		graph [rankdir="BT"]
+        node [shape=plaintext]
+		
+		Magic_Arrow [label="Magic Arrow"]
+		Fire_Arrow [label="Fire Arrow"]
+		Exploding_Arrow [label="Exploding Arrow"]
+		Multiple_Shot [label="Multiple Shot"]
+		Cold_Arrow [label="Cold Arrow"]
+		Ice_Arrow [label="Ice Arrow"]
+		Guided_Arrow [label="Guided Arrow"]
+		Immolation_Arrow [label="Immolation Arrow"]
+		Strafe [label="Strafe"]
+		Freezing_Arrow [label="Freezing Arrow"]
+
+		Multiple_Shot -> Magic_Arrow
+		Exploding_Arrow -> Magic_Arrow
+		Exploding_Arrow -> Fire_Arrow
+		Exploding_Arrow -> Multiple_Shot
+		
+		Ice_Arrow -> Cold_Arrow
+		Guided_Arrow -> Cold_Arrow
+		Guided_Arrow -> Multiple_Shot
+		
+		Immolation_Arrow -> Multiple_Shot
+		
+		Strafe -> Guided_Arrow
+		
+		Freezing_Arrow -> Ice_Arrow
+
+		// I don't think these ranks work correctly
+		{ rank=1; Magic_Arrow Fire_Arrow }
+		{ rank=6; Cold_Arrow Multiple_Shot }
+		{ rank=12; Exploding_Arrow }
+		{ rank=18; Ice_Arrow Guided_Arrow }
+		{ rank=24; Strafe Immolation_Arrow }
+		{ rank=30; Freezing_Arrow }
+}
+

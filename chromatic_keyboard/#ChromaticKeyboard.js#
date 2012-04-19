@@ -1,0 +1,113 @@
+import java.awt.Color;
+import java.util.Map;
+import java.util.HashMap;
+int rectWidth; 
+int rectHeight;
+
+int column;
+int row;
+static final int NUM_COLUMNS = 30;
+static final int NUM_ROWS = 30;
+
+void setup() {
+    size(500, 500); 
+    rectWidth = width/NUM_COLUMNS;
+    rectHeight = height/NUM_ROWS;
+    noStroke();
+}
+
+static final HashMap COLOR_MAP = new HashMap();
+static {
+    // 1234567890
+    COLOR_MAP.put('1', new Color(63, 31, 55 ));
+    COLOR_MAP.put('2', new Color(88, 37, 44 ));
+    COLOR_MAP.put('3', new Color(85, 34, 30 ));
+    COLOR_MAP.put('4', new Color(121, 43, 33));
+    COLOR_MAP.put('5', new Color(111, 37, 36));
+    COLOR_MAP.put('6', new Color(123, 60, 42));
+    COLOR_MAP.put('7', new Color(58, 52, 40 ));
+    COLOR_MAP.put('8', new Color(66, 86, 84 ));
+    COLOR_MAP.put('9', new Color(42, 59, 103));
+    COLOR_MAP.put('0', new Color(45, 58, 111));
+
+    // qwertyuiop[
+    COLOR_MAP.put('q', new Color(159, 66, 49 ));
+    COLOR_MAP.put('w', new Color(177, 66, 36 ));
+    COLOR_MAP.put('e', new Color(201, 68, 37 ));
+    COLOR_MAP.put('r', new Color(193, 74, 34 ));
+    COLOR_MAP.put('t', new Color(212, 130, 44));
+    COLOR_MAP.put('y', new Color(170, 90, 39 ));
+    COLOR_MAP.put('u', new Color(149, 68, 39 ));
+    COLOR_MAP.put('i', new Color(102, 109, 55));
+    COLOR_MAP.put('o', new Color(52, 71, 65  ));
+    COLOR_MAP.put('p', new Color(46, 78, 127 ));
+    COLOR_MAP.put('[', new Color(51, 76, 131 ));
+
+    // asdfghjkl;'
+    COLOR_MAP.put('a', new Color(199, 67, 65   ));
+    COLOR_MAP.put('s', new Color(194, 72, 48   ));
+    COLOR_MAP.put('d', new Color(181, 56, 24   ));
+    COLOR_MAP.put('f', new Color(219, 187, 110 ));
+    COLOR_MAP.put('g', new Color(227, 218, 77  ));
+    COLOR_MAP.put('h', new Color(189, 201, 75  ));
+    COLOR_MAP.put('j', new Color(174, 192, 92  ));
+    COLOR_MAP.put('k', new Color(58, 124, 88   ));
+    COLOR_MAP.put('l', new Color(63, 136, 142  ));
+    COLOR_MAP.put(';', new Color(54, 88, 152   ));
+    COLOR_MAP.put('\'', new Color(156, 203, 245 ));
+
+    // zxcvbnm,./
+    COLOR_MAP.put('z', new Color(201, 11, 123  ));
+    COLOR_MAP.put('x', new Color(191, 68, 34   ));
+    COLOR_MAP.put('c', new Color(199, 72, 37   ));
+    COLOR_MAP.put('v', new Color(221, 213, 70  ));
+    COLOR_MAP.put('b', new Color(228, 221, 79  ));
+    COLOR_MAP.put('n', new Color(223, 216, 83  ));
+    COLOR_MAP.put('m', new Color(157, 192, 170 ));
+    COLOR_MAP.put(',', new Color(93, 151, 101  ));
+    COLOR_MAP.put('.', new Color(132, 183, 184 ));
+    COLOR_MAP.put('/', new Color(88, 160, 219  ));
+
+
+    // !@#$%^&*()
+    COLOR_MAP.put('!', new Color(117, 41, 67 ));
+    COLOR_MAP.put('@', new Color(146, 49, 43 ));
+    COLOR_MAP.put('#', new Color(168, 57, 37 ));
+    COLOR_MAP.put('$', new Color(161, 53, 40 ));
+    COLOR_MAP.put('%', new Color(188, 64, 28 ));
+    COLOR_MAP.put('^', new Color(197, 114, 44));
+    COLOR_MAP.put('&', new Color(91, 47, 34  ));
+    COLOR_MAP.put('*', new Color(77, 66, 48  ));
+    COLOR_MAP.put('(', new Color(51, 88, 130 ));
+    COLOR_MAP.put(')', new Color(43, 74, 138 ));
+
+    // QWERTYUIOP{
+    COLOR_MAP.put('Q', new Color(197, 70, 51  ));
+    COLOR_MAP.put('W', new Color(193, 79, 42  ));
+    COLOR_MAP.put('E', new Color(199, 76, 32  ));
+    COLOR_MAP.put('R', new Color(182, 93, 27  ));
+    COLOR_MAP.put('T', new Color(226, 178, 70 ));
+    COLOR_MAP.put('Y', new Color(210, 124, 65 ));
+    COLOR_MAP.put('U', new Color(138, 132, 58 ));
+    COLOR_MAP.put('I', new Color(150, 166, 68 ));
+    COLOR_MAP.put('O', new Color(47, 97, 88   ));
+    COLOR_MAP.put('P', new Color(47, 91, 128  ));
+    COLOR_MAP.put('{', new Color(45, 107, 164 ));
+
+    // ASDFGHJKL:"
+    COLOR_MAP.put('A', new Color(195, 78, 94  ));
+    COLOR_MAP.put('S', new Color(196, 71, 77  ));
+    COLOR_MAP.put('D', new Color(207, 144, 93 ));
+    COLOR_MAP.put('F', new Color(220, 202, 58 ));
+    COLOR_MAP.put('G', new Color(213, 204, 67 ));
+    COLOR_MAP.put('H', new Color(228, 221, 79 ));
+    COLOR_MAP.put('J', new Color(207, 207, 75 ));
+    COLOR_MAP.put('K', new Color(85, 146, 88  ));
+    COLOR_MAP.put('L', new Color(133, 186, 194));
+    COLOR_MAP.put(':', new Color(74, 148, 183 ));
+    COLOR_MAP.put('"', new Color(109, 171, 208));
+
+    // ZXCVBNM<>?
+    COLOR_MAP.put('Z', new Color(206, 163, 172));
+    COLOR_MAP.put('X', new Color(196, 159, 140));
+    COLOR_MAP.put('C', new Color(215, 170, 

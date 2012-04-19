@@ -1,0 +1,16 @@
+<tr>
+    <td class="s">&nbsp;
+</td>
+    <td valign="top" align="left" class="s">
+      <nobr>Adams-208</nobr>
+      <br>
+      <nobr>T&nbsp;
+10:00&nbsp;
+11:25<br>TH&nbsp;
+10:00&nbsp;
+11:25<br></nobr>
+    </td>
+    <td align="right" class="s">
+              Current Enrollment: 52
+                of 50</td>
+  </tr>
