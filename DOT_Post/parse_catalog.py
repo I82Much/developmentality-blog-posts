@@ -115,6 +115,7 @@ def ExtractFinalExamInfo(tr):
 def ExtractComments(tr):
   return ''
   
+# TODO(ndunn): How to handle 'any AFR S 100-199'?  Or conjunctions vs disjunctions?
 def ExtractRules(tr):
   """Given a node, determines all the rules which govern the course.
   
