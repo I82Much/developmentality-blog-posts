@@ -214,8 +214,9 @@ JList list = new JList(filteredListModel);
 
 
 ## Conclusion
-Glazed Lists is one of the best Java Swing libraries I've used.  It simplifies life for the programmer as well as the end user of the software project, since tables that allow sorting and filtering are far more useful than those which do not.  While the popularity of desktop Java applications is declining, there are still some industries, such as within the government, which rely heavily on it.  If you do any sort of Swing programming, you owe it to yourself to try this library out.
+Glazed Lists is one of the best Java Swing libraries I've used.  It simplifies life for the programmer as well as the end user of the software project, since tables that allow sorting and filtering are far more useful than those which do not.  While the popularity of desktop Java applications is declining, there are still some industries, such as within the government, which rely heavily on it.  If you do any sort of Swing programming, you owe it to yourself to try this library out.  You can find much more information, including a [detailed tutorial][tutorial], on the website.
 
+[tutorial]:http://www.glazedlists.com/documentation/tutorial
 [TextComponentMatcherEditor]:http://publicobject.com/glazedlists/glazedlists-1.7.0/api/ca/odell/glazedlists/swing/TextComponentMatcherEditor.html
 [TextFilterator]:http://publicobject.com/glazedlists/glazedlists-1.7.0/api/ca/odell/glazedlists/TextFilterator.html
 [MatcherEditor]:http://publicobject.com/glazedlists/glazedlists-1.7.0/api/ca/odell/glazedlists/matchers/MatcherEditor.html
