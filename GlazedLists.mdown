@@ -202,7 +202,7 @@ MatcherEditor<Person> filter = new TextComponentMatcherEditor(filterTextField, n
 
 // Create a filtered list
 FilterList<Person> filteredList = new FilterList(personList, filter);
-EventListModel<Person> filteredListModel = new EventListModel<Person>(personList)
+EventListModel<Person> filteredListModel = new EventListModel<Person>(filteredList)
 JList list = new JList(filteredListModel);
 // List automatically updates in response to typing in the text field
 
@@ -210,11 +210,61 @@ JList list = new JList(filteredListModel);
 </div>
 
 ## Provides sorting capabilities
+Finally, Glazed Lists makes it extremely easy to implement rich sorting capabilities in your tables or lists.  
 
+As we saw in the last example, it is possible to wrap a given EventList to provide a different view.  In this case, we will have a sorted view of the data, which automatically updates whenever the underlying data changes.
+
+To create the SortedList, you need to make your domain object implement Comparable, or create a Comparator.  For instance,
+
+<div>
+[sourcecode language="java"]
+public class PersonNameComparator implements Comparator<Person> {
+	public int compare(Person p1, Person p2) {
+		return p1.getName().compareTo(p2.getName());
+	}
+}
+[/sourcecode]
+</div>
+
+[sourcecode language="java"]
+EventList<Person> personList = new BasicEventList<Person>();
+personList.add(new Person("Anthony Hopkins", 74));
+personList.add(new Person("Barack Obama", 50));
+personList.add(new Person("American McGee", 39));
+
+Comparator<Person> nameComparator = new PersonNameComparator();
+// Create a sorted list decorator
+SortedList<Person> sortedList = new SortedList(personList, nameComparator);
+EventListModel<Person> sortedListModel = new EventListModel<Person>(sortedList)
+JList list = new JList(filteredListModel);
+[/sourcecode]
+
+While the above example works for JLists, it's nice to be able to sort a JTable as well.  This is not too hard, either, as long as you have set up a TableFormat instance as described in the first section of this post.  In essence, the TableFormat defines the type of each column, which is then used to sort the table whenever the corresponding column header is clicked.  This behavior is defined in the [TableComparatorChooser][] class, which exposes a static method to perform the installation on the target JTable. Here's an example:
+
+[sourcecode language="java"]
+Comparator<Person> nameComparator = new PersonNameComparator();
+// Create a sorted list decorator
+SortedList<Person> sortedList = new SortedList(personList, nameComparator);
+EventTableModel<Person> peopleTableModel = new EventTableModel<Person>(sortedList, new PersonTableFormat());
+JTable peopleTable = new JTable(peopleTableModel);
+
+// Use MULTIPLE_COLUMN_MOUSE to allow sorting by multiple columns, or SINGLE_COLUMN
+// to sort by just a single column
+TableComparatorChooser tableSorter = TableComparatorChooser.install(
+    peopleTable, sortedList, TableComparatorChooser.MULTIPLE_COLUMN_MOUSE);
+
+// At this point, clicking on the table headers will sort by this column
+[/sourcecode]
+
+As the more detailed [GlazedLists tutorial][tutorial] warns,
+
+> By default, TableComparatorChooser sorts by casting column values to Comparable. If your column's values are not Comparable, you'll have to manually remove the default Comparator using `TableComparatorChooser.getComparatorsForColumn(column).clear()`.
+
+As long as your columns are represented by Comparable classes such as Number or String, you shouldn't have to worry about this caveat.
 
 
 ## Conclusion
-Glazed Lists is one of the best Java Swing libraries I've used.  It simplifies life for the programmer as well as the end user of the software project, since tables that allow sorting and filtering are far more useful than those which do not.  While the popularity of desktop Java applications is declining, there are still some industries, such as within the government, which rely heavily on it.  If you do any sort of Swing programming, you owe it to yourself to try this library out.  You can find much more information, including a [detailed tutorial][tutorial], on the website.
+Glazed Lists is one of the best Java Swing libraries I've used.  It simplifies life for the programmer as well as the end user of the software project, since tables that allow sorting and filtering are far more useful than those which do not.  While the popularity of desktop Java applications is declining, there are still some industries which rely heavily on it.  If you do any sort of Swing programming, you owe it to yourself to try this library out.  You can find much more information, including the aforementioned [tutorial][], on the website.
 
 [tutorial]:http://www.glazedlists.com/documentation/tutorial
 [TextComponentMatcherEditor]:http://publicobject.com/glazedlists/glazedlists-1.7.0/api/ca/odell/glazedlists/swing/TextComponentMatcherEditor.html
@@ -228,3 +278,4 @@ Glazed Lists is one of the best Java Swing libraries I've used.  It simplifies l
 [EventList]:http://publicobject.com/glazedlists/glazedlists-1.7.0/api/ca/odell/glazedlists/EventList.html
 [Observer]:http://en.wikipedia.org/wiki/Observer_pattern
 [Tutorial]:http://www.glazedlists.com/documentation/tutorial
+[TableComparatorChooser]:http://publicobject.com/glazedlists/glazedlists-1.7.0/api/ca/odell/glazedlists/swing/TableComparatorChooser.html
