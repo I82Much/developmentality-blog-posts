@@ -7,7 +7,7 @@
 2. Filtering
 3. Sorting
 
-[Glazed Lists][] is an open source project that makes all three of these tasks trivial. Let's examine each of these aspects in turn.
+[Glazed Lists][] is an open source project that makes all three of these tasks trivial.  Its primary author, [Jesse Wilson][Jesse Wilson's Profile], is a current Google employee. Let's examine each of these aspects in turn.
 
 ## Provides a simplified API for representing objects within a JTable
 
@@ -25,6 +25,7 @@ public Object getValueAt(int row, int column);
 
 Here's a simple domain model object we might want to visualize in a table:
 
+<div>
 [sourcecode language="java"]
 public class Person {
 	int age;
@@ -40,6 +41,7 @@ public class Person {
 	public String getName() { return name; }
 }
 [/sourcecode]
+</div>
 
 The logical way of doing that would be two have two columns, one for the age, one for the name.  Let's make a table model for this case:
 
@@ -114,8 +116,9 @@ public class PersonTableFormat implements TableFormat<Person> {
 [/sourcecode]
 </div>
 
-While this isn't too hard to write, it's still a lot of boilerplate (and not significantly different from the previous example).  Glazed Lists makes it even easier than this.  The above can be replaced with one line of code:
+While this isn't too hard to write, it's still a lot of boilerplate (and not significantly different from the previous example).  Glazed Lists makes it even easier than this.  The entire class definition above can be replaced with three lines:
 
+<div>
 [sourcecode language="java"]
 TableFormat<Person> personTableFormat = GlazedLists.tableFormat(Person.class, 
 	// Names of the properties to fetch
@@ -123,6 +126,7 @@ TableFormat<Person> personTableFormat = GlazedLists.tableFormat(Person.class,
 	// Names for the columns
 	new String[] {"Name", "Age"});
 [/sourcecode]
+</div>
 
 What's this doing?  And how can it do all that I had previously in one line of code?  Well, it requires and takes advantage of [JavaBeans][] naming convention.  The static function uses reflection to find the methods mapping to properties named "name" and "age".  In this case, it looks for two methods, `getName()` and `getAge()`, both of which it finds.  (If I didn't name my methods appropriately, I would get a runtime exception).  The second array defines the strings that should be used to identify the corresponding entry in the properties array.  In other words, element 0 in the names column is used to identify the property name at index 0.
 
@@ -153,7 +157,7 @@ JTable table = new JTable(tableModel);
 ## Provides a simplified means of filtering a table or list
 Perhaps one of the most important features of any interactive table is the ability to filter out extraneous information.  Glazed Lists makes this possible by chaining together EventList transformations; these transformations provide a different view of the underlying data.  When the original model is modified, the filtered views automatically pick up the changes and update accordingly.
 
-Say we want to provide the ability to filter te list based on people's names.  We will add a listener to a text field which listens for changes (new letters typed or deleted), and filters the list in real time.  Once we have an `EventList` of some sort, it is easy to create a new "view" of that same list, filtering out entries you don't want to see.  You do this by wrapping the list in a `FilterList`, and then assigning some sort of filter criterion.  Let's start simple with a filtered list which only shows those users whose names start with the letter 'A'.
+Say we want to provide the ability to filter the list based on people's names.  We will add a listener to a text field which listens for changes (new letters typed or deleted), and filters the list in real time.  Once we have an `EventList` of some sort, it is easy to create a new "view" of that same list, filtering out entries you don't want to see.  You do this by wrapping the list in a `FilterList`, and then assigning some sort of filter criterion.  Let's start simple with a filtered list which only shows those users whose names start with the letter 'A'.
 
 <div>
 [sourcecode language="java"]
@@ -235,6 +239,7 @@ public class PersonNameComparator implements Comparator<Person> {
 [/sourcecode]
 </div>
 
+<div>
 [sourcecode language="java"]
 EventList<Person> personList = new BasicEventList<Person>();
 personList.add(new Person("Anthony Hopkins", 74));
@@ -247,9 +252,11 @@ SortedList<Person> sortedList = new SortedList(personList, nameComparator);
 EventListModel<Person> sortedListModel = new EventListModel<Person>(sortedList)
 JList list = new JList(filteredListModel);
 [/sourcecode]
+</div>
 
 While the above example works for `JLists`, it's nice to be able to sort a `JTable` as well.  This is not too hard, either, as long as you have set up a TableFormat instance as described in the first section of this post.  In essence, the `TableFormat` defines the type of each column, which is then used to sort the table whenever the corresponding column header is clicked.  This behavior is defined in the [TableComparatorChooser][] class, which exposes a static method to perform the installation on the target JTable. Here's an example:
 
+<div>
 [sourcecode language="java"]
 Comparator<Person> nameComparator = new PersonNameComparator();
 // Create a sorted list decorator
@@ -264,6 +271,7 @@ TableComparatorChooser tableSorter = TableComparatorChooser.install(
 
 // At this point, clicking on the table headers will sort by this column
 [/sourcecode]
+</div>
 
 As the more detailed [Glazed Lists tutorial][tutorial] warns,
 
@@ -294,3 +302,4 @@ Glazed Lists is one of the best Java Swing libraries I've ever used.  It simplif
 [EventTableModel]:http://publicobject.com/glazedlists/glazedlists-1.8.0/api/ca/odell/glazedlists/swing/EventTableModel.html
 [Comparable]:http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html
 [Comparator]:http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html
+[Jesse Wilson Profile]:https://plus.google.com/106557483623231970995
