@@ -1,0 +1,21 @@
+2012-04-30
+
+The Pomodoro Technique is one tool in the arsenal of people trying to get more things done in less time.  It hinges on two premises:
+
+1). Multitasking is inherently inefficient
+2). One cannot maintain consistent performance at tasks for prolonged periods of time.
+
+Work for 25 minutes straight on one task.  If you are interrupted, deal with the interruption, and start over.  (There are no partial pomodoros).
+After a 25 minute work period, take a 5 minute break.  Really - you are not allowed to keep working.  Check email, look over your task list, whatever.
+
+After 4 pomodoro work cycles, you are permitted a longer (~30) minute break.
+
+You should keep track of what you have accomplished.
+
+I like this technique in theory and occasionally find it extremely useful.  My problem with it is that I feel it takes too long to get back into the coding mindset - if each interruption supposedly takes X minutes to get back into it, <!-- TODO(ndunn): site --> then how is 25 minutes enough time to get work done?  I find that I'm usually at an inopportune time to stop when the break comes around
+
+Do you use the pomodoro technique while programming?  If so, do you find the recommended 25/5 breakdown sufficient for getting work done?  Do you increase it, decrease it?  
+
+
+# TODO(ndunn): Fix this
+[Pomodoro technique]:http://path/to/pomomdoro/technique.com
