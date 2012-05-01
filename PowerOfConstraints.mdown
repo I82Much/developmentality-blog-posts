@@ -2,7 +2,7 @@
 
 A treatise on *finishing*.
 
-This blog has no constraints.  I'm free to write anything I want, as long as I don't break NDA, reveal trade secrets, etc.  I'm my own boss.  No one is telling me what to write, nor how often I must publish.  What's the result?  I've only managed an output of X <!-- how many? --> posts total, or about Y <!-- how many? --> per month.  Lack of constraints is probably killing your ability to work on and finish projects that are on your wish list.
+This blog has no constraints.  I'm free to write anything I want (within reason - obviously I can't break NDA, reveal trade secrets, commit libel, etc).  I'm my own boss.  No one is telling me what to write, nor how often I must publish.  What's the result?  I've only managed an output of X <!-- how many? --> posts total, or about Y <!-- how many? --> per month.  Lack of constraints is probably killing your ability to work on and finish projects that are on your wish list.
 
 <!-- Example of scheduling time *on your calendar* to exercise -->
 
@@ -10,9 +10,19 @@ This blog has no constraints.  I'm free to write anything I want, as long as I d
 I have no shortage of ideas for this blog.  My problem is that I jot down dozens of post ideas, starting and skeletoning perhaps a few dozen of them at a time.  Since no one is forcing me to actually finish these posts, and it is 100 times easier to start a new post than it is to finish a work in progress, posts end up languishing on my hard drive or in the cloud somewhere.
 
 
+<!-- Maker's manifesto  -->
+<!-- the fact that I started the glazedlists post over a year or two ago and barely have used swing since then but forced myself to finish it -->
+<!-- Pomodoro technique post started -->
+
 The power of constraints
 
 Constraints are a wonderful thing.  It's better to have an 80% solution in X days than to have a 99% solution in .. never?  Software is never truly finished.  Look at what happened to Duke Nukem Forever when it was allowed to continue development indefinitely.  The tech advances kept outpacing their current work, forcing them to rebuild the game in a new engine on multiple occasions.  The game only ever was completed when a new development house took over.
+
+
+
+
+Feature creep - "Wouldn't it be cool if" problem .  Can lead to great innovation, but also can water down the core idea and add unnecessary complexity
+
 
 
 <!-- Insert the reference to the study of college students who were split into two groups - three papers, due at the end of the semester, or due at specific times throughout the semester.  The students with *less* time to work actually did much better -->
@@ -20,6 +30,14 @@ Constraints are a wonderful thing.  It's better to have an 80% solution in X day
 <!-- Pareto principle 80/20-->
 
 <!-- YAGNI - you ain't gonna need it -->
+
+
+<!-- TODO(ndunn): Conflating constraints with external/intrinsic motivation. -->
+
+Work is like a gas in that it will expand to take up as much time as you give it.  If you have 5 years to create some software, it will take 5 years, even if it could be finished in 2.  Give yourself less time than you think you can to finish
+
+<!-- Game example - limited time forced things to get done and tough decisions to be made.   -->
+
 
 
 
@@ -31,7 +49,7 @@ What is it about human nature that causes us to thrive under pressure and do so 
 * Limit the decision space - decrease the number of decisions that need to be made
 **
 * Engender focus
-
+* Psychic guilt - Allow you to accept imperfections
 
 
 <!-- Is that true?  Lazy decision making can actually be the most efficient.  See e.g. the John Cleese example -->
@@ -42,23 +60,23 @@ Constraints take many forms:
 * Time - hard and fast ship date
 * Money
 * Performance (mission critical software)
-* Availability
-* Hardware
+* Availability - 99.999% (5 nines) for some systems.  Redundancy, etc
+* Hardware - must run both on Intel and PowerPC architectures.  Or must run on an embedded device.  Or must be optimized for GPU (avoid branching)
 * Platforms (webapp must run in IE6)
 
 
-Game industry is well aware of the time constraints
+Game industry is well aware of the time constraints - financial disincentives to missing release dates (penalties for missing dates, as stores allot space for these games)
 
 <!-- Example of the puzzle that guy talked about where the art assets had already been created, leading to a suboptimal puzzle from gameplay perspective -->
 <!-- Example from QA tester for a major video game - heard this from more than one person, but they can't stand to play their own games because they only see the grand vision and how the finished product fell short of it -->
 
-A finished product is infinitely better than a grand idea.  The lessons learned in developing the imperfect *finished* product
+A finished product is infinitely better than a grand idea.  The lessons learned in developing the imperfect *finished* product will allow developer to get closer to the ideal.
 
 <!-- Real people ship - some quote to that effect -->
 
 # Conlusion
 
-The next time you are given a short deadline, use it as an excuse to
+The next time you are given a short deadline, use it as an excuse to make some hard decisions early.
 
 <!-- Perfection is the enemy of ... good enough?  what's that quote -->
 
