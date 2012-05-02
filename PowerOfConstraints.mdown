@@ -55,8 +55,12 @@ What is it about human nature that causes us to thrive under pressure and do so 
 <!-- Is that true?  Lazy decision making can actually be the most efficient.  See e.g. the John Cleese example -->
 
 
+
+
+
 Constraints take many forms:
 
+* Technology - must be written in Java
 * Time - hard and fast ship date
 * Money
 * Performance (mission critical software)
@@ -79,5 +83,15 @@ A finished product is infinitely better than a grand idea.  The lessons learned 
 The next time you are given a short deadline, use it as an excuse to make some hard decisions early.
 
 <!-- Perfection is the enemy of ... good enough?  what's that quote -->
+
+
+What are the constraints I'm giving myself?
+
+* No more than x hours per post (link to pomodoro)
+* will write Y hours per week
+* I can have no more than Z skeletons of posts written at once.  (Forces me to finish existing posts before starting on new ones).
+
+
+What constraints can you give yourself to work with, and how will you use this to your advantage?
 
 [Duke Nukem Forever]
