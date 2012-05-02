@@ -181,6 +181,8 @@ JList list = new JList(filteredListModel);
 [/sourcecode]
 </div>
 
+![Filtered picture][]
+
 The filter I've defined above is static - once it's instantiated, its filter condition never changes.  Glazed Lists supports dynamic filters as well, through the [MatcherEditor][] interface.  We will see how to use a `MatcherEditor` instance for a text field, but first we need to tell Glazed Lists which strings to use when filtering for a given object.  We do this with the [TextFilterator][] interface.
 
 <div>
@@ -254,6 +256,8 @@ JList list = new JList(filteredListModel);
 [/sourcecode]
 </div>
 
+![Sorted picture][]
+
 While the above example works for `JLists`, it's nice to be able to sort a `JTable` as well.  This is not too hard, either, as long as you have set up a TableFormat instance as described in the first section of this post.  In essence, the `TableFormat` defines the type of each column, which is then used to sort the table whenever the corresponding column header is clicked.  This behavior is defined in the [TableComparatorChooser][] class, which exposes a static method to perform the installation on the target JTable. Here's an example:
 
 <div>
@@ -283,6 +287,8 @@ As long as your columns are represented by Comparable classes such as Number or 
 ## Conclusion
 Glazed Lists is one of the best Java Swing libraries I've ever used.  It simplifies life for the programmer as well as the end user of the software project, since tables that allow sorting and filtering are far more useful than those which do not. If you do any sort of Swing programming, you owe it to yourself to try this library out.  You can find much more information, including the aforementioned [tutorial][], on the [Glazed List website][Glazed Lists].
 
+![Chained picture][]
+
 [Glazed Lists]:http://www.glazedlists.com/
 [tutorial]:http://www.glazedlists.com/documentation/tutorial
 [TextComponentMatcherEditor]:http://publicobject.com/glazedlists/glazedlists-1.7.0/api/ca/odell/glazedlists/swing/TextComponentMatcherEditor.html
@@ -303,3 +309,6 @@ Glazed Lists is one of the best Java Swing libraries I've ever used.  It simplif
 [Comparable]:http://docs.oracle.com/javase/6/docs/api/java/lang/Comparable.html
 [Comparator]:http://docs.oracle.com/javase/6/docs/api/java/util/Comparator.html
 [Jesse Wilson Profile]:https://plus.google.com/106557483623231970995
+[Filtered picture]:https://lh6.googleusercontent.com/-8Leq0l3SHDA/T6Cn9RhcM5I/AAAAAAAACIU/E1EkJSqANwU/s371/GlazedListsFilterList.png
+[Sorted picture]:https://lh6.googleusercontent.com/-ZLs9auP_Md0/T6Cn9QX4pHI/AAAAAAAACIc/OCtV2NgZ1xs/s371/GlazedListsSortedList.png
+[Chained picture]:https://lh4.googleusercontent.com/-zA3bV86h6sA/T6Cn9cw-W3I/AAAAAAAACIY/ZzPo3GuVtZk/s571/GlazedListsChained.png
