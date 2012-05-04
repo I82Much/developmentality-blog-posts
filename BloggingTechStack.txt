@@ -1,0 +1,20 @@
+2012-05-03
+
+My blogging technology stack
+
+Ideas stored in Google Doc
+
+Text written in TextMate
+
+Markdown
+
+code snippets - either embedded inline or as github gists
+
+Image hosting - Google+
+
+LaTeX - pull quotes
+
+Skitch - annotate screen shots etc
+
+convert text to HTML
+
