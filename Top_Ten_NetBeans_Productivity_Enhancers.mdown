@@ -1,0 +1,39 @@
+
+1.
+2.
+3.
+4.
+5.
+6.
+7.
+8.
+9.
+10. 
+
+* cntrl + space or meta + \  for code completion options
+* ctrl-shift-meta O = jump to symbol
+* Ctrl-Shift O = jump to the file matching the given title.  Important because search is always faster than navigation [more][1]
+* psfi and other snippet expansion features.
+* Command-Shift F - search in projects for given string.
+* ctrl + shift + arrow - move a line around
+* command + shift + arrow = clone a line above or below
+* command + e - delete entire line 
+* command + / - toggle comment on selection / line
+* command + ; - add a semi colon at the end of the line without moving your caret
+* command + k - cycle through nearest matches before this point, shift command +k - do it forwards
+* shift meta m = bookmark 
+* ctrl + tab - pick from open tabs
+* shift meta m = toggle bookmark, shift meta . - next bookmark, shift meta , - previous bookmark
+* ctrl q - last edit location
+* meta shift 1 - select the currently open file within projects view
+* meta shift p = jump to parent's implementation
+* ctrl i - insert code menu, for constructors, getter/setter pairs
+* ctrl r - rename
+* shift meta i - fix imports
+* meta p - show the parameters required for the method you're in currently
+* meta f9 - evaluate code while debugging - 
+* ctrl shift j -  select the word that the caret is currently in
+
+declaration view - anywhere you have your cursor in a method name, it shows the implementation.  holy shit
+
+[1]:http://developmentality.wordpress.com/2010/12/10/two-shortcuts-for-netbeans-navigation/
