@@ -9,11 +9,6 @@ Solves boggle/scramble with friends
 # q doesn't stand by itself since that would not make for a fun game
 TOKENS = ['a','b','c','d','e','f','g','h','j','k','l','m','n','o','p','qu','r','s','t','u','v','w','x','y','z']
 
-class Direction(object):
-  def __init__(self, row_offset, col_offset):
-    self.row_offset = row_offset
-    self.col_offset = col_offset
-
 class Location(object):
   def __init__(self, row, col):
     self.row = row
@@ -22,10 +17,13 @@ class Location(object):
     return '(%d, %d)' %(self.row, self.col)
   def __repr__(self):
     return '(%d, %d)' %(self.row, self.col)
-
-DIRECTIONS = [ Direction(delta_row, delta_col) for delta_row in [-1,0,1] for delta_col in [-1,0,1] if delta_row != 0 or delta_col != 0 ]
-assert len(DIRECTIONS) == 8
-
+  def Adjacent(self):
+    locs = []
+    for row_offset in [-1, 0, 1]:
+      for col_offset in [-1, 0, 1]:
+        if not (row_offset == 0 and col_offset == 0):
+          locs.append(Location(self.row + row_offset, self.col + col_offset))
+    return locs
 
 class FoundWord(object):
   def __init__(self, word, indices):
@@ -52,12 +50,16 @@ class Board(object):
   def __getitem__(self, key):
     """Allow the board to be indexed."""
     return self.board.__getitem__(key)
+    
+  def IsValidLocation(self, location):
+    row_valid = location.row >= 0 and location.row < self.num_rows
+    col_valid = location.col >= 0 and location.col < self.num_cols
+    return row_valid and col_valid
 
 class BoardSolver(object):
   def __init__(self, board, dictionary):
     self.board = board
     self.dictionary = dictionary
-
 
     self.trie = Trie()
     for index, word in enumerate(dictionary):
@@ -81,33 +83,26 @@ class BoardSolver(object):
     solutions = []
 
     # Start an exhaustive search of the board
-    locations = [Location(row, col) for row in range(self.board.num_rows) for col in range(self.board.num_cols)]
-    for location in locations:
-      marked_up_board = []
-      for row in range(self.board.num_rows):
-        marked_up_board.append( [False] * self.board.num_cols)
-      solutions.extend(self.DoSolve(marked_up_board, [], location, ''))
+    for row in range(self.board.num_rows):
+      for col in range(self.board.num_cols):
+        loc = Location(row, col)
+        previous_locs = []
+        solutions.extend(self.DoSolve(previous_locs, loc, ''))
 
     return solutions
 
-  def IsLegalMove(self, marked_up_board, start_index, direction):
-    """Returns true if the new value is within the board and hasn't already been used"""
-    new_loc = Location(start_index.row + direction.row_offset, start_index.col + direction.col_offset)
-    if new_loc.row >= len(marked_up_board) or new_loc.row < 0:
-      return False
-    elif new_loc.col >= len(marked_up_board[new_loc.row]) or new_loc.col < 0:
-      return False
-    # already used
-    if marked_up_board[new_loc.row][new_loc.col]:
-      return False
-    return True
-
-  def DoSolve(self, marked_up_board, previous_locations, start_index, word_prefix):
-    """Returns all possible words and how to create them as a list."""
+  def DoSolve(self, previous_locations, location, word_prefix):
+    """Returns iterable of FoundWord objects.
+    
+    Args:
+      previous_locations: a list of already visited locations
+      location: the current Location from where to start searching
+      word_prefix: the current word built up so far
+    """
     solutions = []
 
-    new_word = word_prefix + self.board[start_index.row][start_index.col]
-    previous_locations.append(start_index)
+    new_word = word_prefix + self.board[location.row][location.col]
+    previous_locations.append(location)
 
     if not self.HasPrefix(new_word):
       print 'No words found starting with "%s"' %(new_word)
@@ -116,19 +111,13 @@ class BoardSolver(object):
     if self.HasWord(new_word):
       solutions.append( (new_word, previous_locations) )
 
-    board_copy = [ list(row) for row in marked_up_board ]
-    board_copy[start_index.row][start_index.col] = True
-
-
-    # We've used it up
-    #marked_up_board[start_index.row][start_index.col] = True
-
-    # Recursively search in all directions
-    for direction in DIRECTIONS:
-      if self.IsLegalMove(board_copy, start_index, direction):
-        solutions.extend(self.DoSolve(board_copy, list(previous_locations), Location(start_index.row + direction.row_offset, start_index.col + direction.col_offset), new_word))
+    # Recursively search all adjacent tiles
+    for new_loc in location.Adjacent():
+      if self.board.IsValidLocation(new_loc) and new_loc not in previous_locations:
+        # make a copy of the previous locations list so it is not affected by this recursive call.
+        solutions.extend(self.DoSolve(list(previous_locations), new_loc, new_word))
       else:
-        #print 'Illegal move for %s %s %s' %(board_copy, Location(start_index.row + direction.row_offset, start_index.col + direction.col_offset), new_word)
+        #print 'Illegal move for %s %s %s' %(board_copy, Location(location.row + direction.row_offset, location.col + direction.col_offset), new_word)
         pass
 
     return solutions

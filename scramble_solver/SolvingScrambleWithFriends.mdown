@@ -1,30 +1,34 @@
-# DAWG or do not.  There is no Trie.
+# DAWG or DAWG not.  There is no Trie.
+
 ## Solving Scramble with Friends - Recursion, Stacks, and Tries
 
-Apologies to Yoda, and to you for having to read such a bad pun.  This post aims to illustrate how to solve Scramble With Friends/Boggle and the techniques and data structures necessary.  
-
-# Why does it matter
-# Intro
-
+Apologies to Yoda, and to you for having to read such a bad pun.  This post aims to illustrate how to solve Scramble With Friends/Boggle and the techniques and data structures necessary.  It will touch on the naiive solution, as well as more efficient data structures such as the trie and DAWG.
 
 # Problem statement
-Given an N x N board, (4x4 in case of scramble with friends), find the set of all words and the path through the board that makes the words that can be formed from moving in any of 8 adjacent tiles, using each tile at most once.
+Given an N x N board, (4x4 in case of Scramble with Friends), find the set of all words and the path through the board that makes the words that can be formed from moving in any of 8 adjacent tiles, using each tile at most once.
 
-# Problem approach
+![Scramble Screenshot][]
 
-## Dictionary
+# The Naive / Brute Force Solution
 
-## Recursion
-Recursion - method calls itself
+Just for fun, let's imagine the most mind-numbingly stupid way possible of solving it - by enumerating each possible permutation of letters and filtering out the non-word combinations.  What is the approximate running time of that algorithm?
 
-Must have a stopping criteria
+Well, you can imagine a decision tree of possibilities.  At the root would be a tile, under it would be up to 4 possibilities, under it would be up to 3 possibilities, and so on and so forth up to a maximum depth of 16.  This represents all the possible character strings which can be made starting from a given tile.  There would be 16 such trees, one for each starting position.
 
-## Basic strategy
-Start search at a given point on the board
-Examine square
-	If the entire word built up so far is a word, add it to list
-	If the word built up so far + the new letter starts at least one word in the dictionary
-		Recursively search all squares around this one, ensuring that we do not 1) go off the board and 2) reuse a square
+As a very approximate upper bound, this tree would have size 
+
+
+
+
+
+
+I will first illustrate a brute force, recursive solution in Python.  As you probably remember, recursion is simply when a method calls itself.  In order to avoid an infinite loop (and eventual stack overflow), there must be some sort of stopping criteria.  Before moving on to the code, here's the basic strategy:
+
+	Start search at a given point on the board
+	Examine square
+		If the entire word built up so far is a word, add it to list
+		If the word built up so far + the new letter starts at least one word in the dictionary
+			Recursively search all squares around this one, ensuring that we neither go off the board nor reuse a square
 		
 ## Data structures
 
@@ -79,3 +83,4 @@ We have also seen how to replace a recursive implementation with an explicit sta
 [Compressiong dictionaries with a DAWG: dawg in python]:http://stevehanov.ca/blog/index.php?id=115
 [wordutils dawg]:http://pypi.python.org/pypi/WordUtils/0.8.0
 [extremely space efficient dawg]:http://www.wutka.com/dawg.html
+[Scramble screenshot]:
