@@ -13,25 +13,33 @@ class Location(object):
   def __init__(self, row, col):
     self.row = row
     self.col = col
+    
   def __str__(self):
     return '(%d, %d)' %(self.row, self.col)
+  
   def __repr__(self):
     return '(%d, %d)' %(self.row, self.col)
+  
   def Adjacent(self):
+    """Returns the 8 adjacent locations to this one."""
     locs = []
     for row_offset in [-1, 0, 1]:
       for col_offset in [-1, 0, 1]:
+        # 0, 0 would be the current location and that's not adjacent
         if not (row_offset == 0 and col_offset == 0):
           locs.append(Location(self.row + row_offset, self.col + col_offset))
     return locs
 
 class FoundWord(object):
-  def __init__(self, word, indices):
+  """Represents a discovered word on the board, including the path taken to create it"""
+
+  def __init__(self, word, locations):
+    """Initialize object with given string and locations iterable."""
     self.word = word
-    self.indices = indices
+    self.locations = locations
 
   def __repr__(self):
-    return "%s: %s" %(self.word, self.indices)
+    return "%s: %s" %(self.word, self.locations)
 
 class Board(object):
   def __init__(self, num_rows=4, num_cols=4):
