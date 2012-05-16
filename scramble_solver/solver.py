@@ -1,3 +1,4 @@
+import pickle
 import random
 import string
 import sys
@@ -14,6 +15,12 @@ class Location(object):
     self.row = row
     self.col = col
     
+  def __eq__(self, other):
+    return self.row == other.row and self.col == other.col
+  
+  def __hash__(self):
+    return hash((self.row, self.col))  
+    
   def __str__(self):
     return '(%d, %d)' %(self.row, self.col)
   
@@ -28,6 +35,7 @@ class Location(object):
         # 0, 0 would be the current location and that's not adjacent
         if not (row_offset == 0 and col_offset == 0):
           locs.append(Location(self.row + row_offset, self.col + col_offset))
+    assert len(locs) == 8
     return locs
 
 class FoundWord(object):
@@ -58,7 +66,7 @@ class Board(object):
   def __getitem__(self, key):
     """Allow the board to be indexed."""
     return self.board.__getitem__(key)
-    
+
   def IsValidLocation(self, location):
     row_valid = location.row >= 0 and location.row < self.num_rows
     col_valid = location.col >= 0 and location.col < self.num_cols
@@ -95,11 +103,12 @@ class BoardSolver(object):
       for col in range(self.board.num_cols):
         loc = Location(row, col)
         previous_locs = []
-        solutions.extend(self.DoSolve(previous_locs, loc, ''))
+        loc_dict = {}
+        solutions.extend(self.DoSolve(previous_locs, loc_dict, loc, ''))
 
     return solutions
 
-  def DoSolve(self, previous_locations, location, word_prefix):
+  def DoSolve(self, previous_locations, loc_dict, location, word_prefix):
     """Returns iterable of FoundWord objects.
     
     Args:
@@ -111,19 +120,24 @@ class BoardSolver(object):
 
     new_word = word_prefix + self.board[location.row][location.col]
     previous_locations.append(location)
+    
+    loc_dict_copy = dict(loc_dict)
+    loc_dict_copy[location] = True
 
-    if not self.HasPrefix(new_word):
-      print 'No words found starting with "%s"' %(new_word)
-      return solutions
-
-    if self.HasWord(new_word):
-      solutions.append( (new_word, previous_locations) )
+    # if not self.HasPrefix(new_word):
+    #   print 'No words found starting with "%s"' %(new_word)
+    #   return solutions
+    # 
+    # if self.HasWord(new_word):
+    #   solutions.append( (new_word, previous_locations) )
+    #print previous_locations
+    solutions.append( (new_word, previous_locations) )
 
     # Recursively search all adjacent tiles
     for new_loc in location.Adjacent():
-      if self.board.IsValidLocation(new_loc) and new_loc not in previous_locations:
+      if self.board.IsValidLocation(new_loc) and new_loc not in loc_dict_copy:
         # make a copy of the previous locations list so it is not affected by this recursive call.
-        solutions.extend(self.DoSolve(list(previous_locations), new_loc, new_word))
+        solutions.extend(self.DoSolve(list(previous_locations), loc_dict_copy, new_loc, new_word))
       else:
         #print 'Illegal move for %s %s %s' %(board_copy, Location(location.row + direction.row_offset, location.col + direction.col_offset), new_word)
         pass
@@ -206,13 +220,30 @@ class Trie(object) :
         return ret
 
 def main():
-  b = Board()
+  b = Board(4, 4)
+  # b.board = [['A']]
+  # b.board = [
+  #   ['u', 'n', 'o', 'l'],
+  #   ['e', 't', 'a', 'c'],
+  #   ['h', 's', 'r', 'r'],
+  #   ['y', 't', 'o', 'h']
+  # ]
+  # 
   b.board = [
-    ['u', 'n', 'o', 'l'],
-    ['e', 't', 'a', 'c'],
-    ['h', 's', 'r', 'r'],
-    ['y', 't', 'o', 'h']
+        ['A', 'B', 'C', 'D'],
+        ['E', 'F', 'G', 'H'],
+        ['I', 'J', 'K', 'L'],
+        ['M', 'N', 'O', 'P']
   ]
+  
+  output = open("solutions.txt", "wb")
+  
+  
+  # b.board = [
+  #     ['A', 'B', 'C'],
+  #     ['D', 'E', 'F'],
+  #     ['G', 'H', 'I'],    
+  #   ]
    
   words = ReadDictionary(sys.argv[1])
   #words = set(['cranes','crates','crash'])
@@ -222,8 +253,9 @@ def main():
   solutions = solver.Solve() #set(solver.Solve())
   
   print 'Found %d solutions' %len(solutions)
-  for solution in sorted(solutions):
-    print solution
+  pickle.dump(solutions, output)
+  # for solution in sorted(solutions):
+  #     print solution
 
   for word, locs in solutions:
     assert len(word) == len(locs), '%s was length %d; only had locs %s' %(word, len(word), locs)

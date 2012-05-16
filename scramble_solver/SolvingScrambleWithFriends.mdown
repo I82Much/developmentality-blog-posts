@@ -19,6 +19,9 @@ As a very approximate upper bound, this tree would have size
 
 
 
+1 -> 1
+2x2 -> 64
+3x3 -> 10305
 
 
 
