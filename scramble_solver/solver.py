@@ -1,3 +1,5 @@
+from collections import namedtuple
+
 import random
 import string
 import sys
@@ -11,23 +13,10 @@ Solves Boggle/Scramble with Friends.
 TOKENS = ['a','b','c','d','e','f','g','h','j','k','l','m','n','o','p','qu','r','s','t','u','v','w','x','y','z']
 
 DEBUG = False
+USE_TRIE = False
 
-class Location(object):
-  def __init__(self, row, col):
-    self.row = row
-    self.col = col
-    
-  def __eq__(self, other):
-    return self.row == other.row and self.col == other.col
-  
-  def __hash__(self):
-    return hash((self.row, self.col))  
-    
-  def __str__(self):
-    return '(%d, %d)' %(self.row, self.col)
-  
-  def __repr__(self):
-    return str(self)
+class Location(namedtuple('Location', ['row', 'col'])):
+  """Represents a location on the board."""
   
   def Adjacent(self):
     """Returns the 8 adjacent locations to this one."""
@@ -40,21 +29,8 @@ class Location(object):
     assert len(locs) == 8
     return locs
 
-class FoundWord(object):
-  """Represents a discovered word on the board, including the path taken to create it.
-  
-  Attributes:
-    word - the word that was found, as a string
-    locations - a list of Location objects; the path needed to reconstruct this word
-  """
-
-  def __init__(self, word, locations):
-    """Initialize object with given string and locations iterable."""
-    self.word = word
-    self.locations = locations
-
-  def __repr__(self):
-    return "%s: %s" %(self.word, self.locations)
+# Represents a discovered word on the board, including the path taken to create it.
+FoundWord = namedtuple('FoundWord', ['word', 'locations'])
 
 # TODO(ndunn): Is this board class even necessary
 class Board(object):
@@ -91,13 +67,15 @@ class BoardSolver(object):
       # 0 evaluates to False which screws up trie lookups; ensure value is 'truthy'.
       self.trie.add(word, index+1)
 
-  def HasPrefix(self, prefix)
-    return len(self.trie.find_prefix_matches(prefix))
+  def HasPrefix(self, prefix):
+    if USE_TRIE:
+      return len(self.trie.find_prefix_matches(prefix))
     # Naiive implementation
-    #for word in self.valid_words:
-    #  if word.startswith(prefix):
-    #    return True
-    #return False
+    else:
+      for word in self.valid_words:
+        if word.startswith(prefix):
+          return True
+    return False
 
   def HasWord(self, word):
     return word in self.valid_words
@@ -121,7 +99,7 @@ class BoardSolver(object):
     Args:
       previous_locations: a list of already visited locations
       location: the current Location from where to start searching
-      word_prefix: the current word built up so far
+      word_prefix: the current word built up so far, as a string
     """
     solutions = []
 
@@ -129,17 +107,22 @@ class BoardSolver(object):
     previous_locations.append(location)
     
     if not self.HasPrefix(new_word):
-      print 'No words found starting with "%s"' %(new_word)
+      if DEBUG:
+        print 'No words found starting with "%s"' %(new_word)
       return solutions
     
     # This is a valid, complete words.
     if self.HasWord(new_word):
-      solutions.append( (new_word, previous_locations) )
+      new_solution = FoundWord(new_word, previous_locations)
+      if DEBUG:
+        print 'Found new solution: %s' %(str(new_solution))
+      solutions.append(new_solution)
 
     # Recursively search all adjacent tiles
     for new_loc in location.Adjacent():
       if self.board.IsValidLocation(new_loc) and new_loc not in previous_locations:
-        # make a copy of the previous locations list so it is not affected by this recursive call.
+        # make a copy of the previous locations list so our current list
+        # is not affected by this recursive call.
         defensive_copy = list(previous_locations)
         solutions.extend(self.DoSolve(defensive_copy, new_loc, new_word))
       else:
@@ -175,15 +158,6 @@ def main():
         ['I', 'J', 'K', 'L'],
         ['M', 'N', 'O', 'P']
   ]
-  
-  output = open("solutions.txt", "wb")
-  
-  
-  # b.board = [
-  #     ['A', 'B', 'C'],
-  #     ['D', 'E', 'F'],
-  #     ['G', 'H', 'I'],    
-  #   ]
    
   words = ReadDictionary(sys.argv[1])
   #words = set(['cranes','crates','crash'])
