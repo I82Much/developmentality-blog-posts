@@ -13,7 +13,7 @@ Solves Boggle/Scramble with Friends.
 TOKENS = ['a','b','c','d','e','f','g','h','j','k','l','m','n','o','p','qu','r','s','t','u','v','w','x','y','z']
 
 DEBUG = True
-USE_TRIE = False
+USE_TRIE = True
 
 class Location(namedtuple('Location', ['row', 'col'])):
   """Represents a location on the board."""
@@ -58,10 +58,8 @@ class Board(object):
     return row_valid and col_valid
 
 class BoardSolver(object):
-  def __init__(self, board, valid_words):
-    self.board = board
+  def __init__(self, valid_words):
     self.valid_words = valid_words
-
     self.trie = trie.Trie()
     for index, word in enumerate(valid_words):
       # 0 evaluates to False which screws up trie lookups; ensure value is 'truthy'.
@@ -69,7 +67,7 @@ class BoardSolver(object):
 
   def HasPrefix(self, prefix):
     if USE_TRIE:
-      return len(self.trie.find_prefix_matches(prefix))
+      return len(self.trie.find_prefix_matches(prefix)) > 0
     # Naiive implementation
     else:
       for word in self.valid_words:
@@ -78,22 +76,28 @@ class BoardSolver(object):
     return False
 
   def HasWord(self, word):
-    return word in self.valid_words
+    if USE_TRIE:
+      key = self.trie.find_full_match(word, False)
+      return bool(key)
+    # TODO(ndunn): Could use a dict to speed up key membership
+    # test - O(1) as opposed to O(n) for the list
+    else:
+      return word in self.valid_words
 
-  def Solve(self):
+  def Solve(self, board):
     """Returns a list of FoundWord objects."""
     solutions = []
 
     # Start an exhaustive search of the board
-    for row in range(self.board.num_rows):
-      for col in range(self.board.num_cols):
+    for row in range(board.num_rows):
+      for col in range(board.num_cols):
         loc = Location(row, col)
         previous_locs = []
-        solutions.extend(self.DoSolve(previous_locs, loc, ''))
+        solutions.extend(self.DoSolve(board, previous_locs, loc, ''))
 
     return solutions
 
-  def DoSolve(self, previous_locations, location, word_prefix):
+  def DoSolve(self, board, previous_locations, location, word_prefix):
     """Returns iterable of FoundWord objects.
     
     Args:
@@ -103,7 +107,7 @@ class BoardSolver(object):
     """
     solutions = []
 
-    new_word = word_prefix + self.board[location.row][location.col]
+    new_word = word_prefix + board[location.row][location.col]
     previous_locations.append(location)
     
     if not self.HasPrefix(new_word):
@@ -120,11 +124,11 @@ class BoardSolver(object):
 
     # Recursively search all adjacent tiles
     for new_loc in location.Adjacent():
-      if self.board.IsValidLocation(new_loc) and new_loc not in previous_locations:
+      if board.IsValidLocation(new_loc) and new_loc not in previous_locations:
         # make a copy of the previous locations list so our current list
         # is not affected by this recursive call.
         defensive_copy = list(previous_locations)
-        solutions.extend(self.DoSolve(defensive_copy, new_loc, new_word))
+        solutions.extend(self.DoSolve(board, defensive_copy, new_loc, new_word))
       else:
         if DEBUG:
           print 'Ignoring %s as it is invalid or already used.' %(str(new_loc))
@@ -153,10 +157,10 @@ def main():
    
   words = ReadDictionary(sys.argv[1])
   #words = set(['cranes','crates','crash'])
-  solver = BoardSolver(b, words)
+  solver = BoardSolver(words)
   #print words
   print b
-  solutions = solver.Solve() #set(solver.Solve())
+  solutions = solver.Solve(b) #set(solver.Solve())
   
   print 'Found %d solutions' %len(solutions)
   for solution in sorted(solutions):
