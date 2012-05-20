@@ -12,7 +12,7 @@ Solves Boggle/Scramble with Friends.
 
 TOKENS = ['a','b','c','d','e','f','g','h','j','k','l','m','n','o','p','qu','r','s','t','u','v','w','x','y','z']
 
-DEBUG = False
+DEBUG = True
 USE_TRIE = False
 
 class Location(namedtuple('Location', ['row', 'col'])):
@@ -127,7 +127,7 @@ class BoardSolver(object):
         solutions.extend(self.DoSolve(defensive_copy, new_loc, new_word))
       else:
         if DEBUG:
-          print 'Ignoring %s as it is invalid or already used.' %(new_loc)
+          print 'Ignoring %s as it is invalid or already used.' %(str(new_loc))
 
     return solutions
 
@@ -144,19 +144,11 @@ def ReadDictionary(path):
 
 def main():
   b = Board(4, 4)
-  # b.board = [['A']]
-  # b.board = [
-  #   ['u', 'n', 'o', 'l'],
-  #   ['e', 't', 'a', 'c'],
-  #   ['h', 's', 'r', 'r'],
-  #   ['y', 't', 'o', 'h']
-  # ]
-  # 
   b.board = [
-        ['A', 'B', 'C', 'D'],
-        ['E', 'F', 'G', 'H'],
-        ['I', 'J', 'K', 'L'],
-        ['M', 'N', 'O', 'P']
+        ['h', 'b', 'c', 'd'],
+        ['e', 'f', 'G', 'h'],
+        ['i', 'l', 'l', 'l'],
+        ['m', 'n', 'o', 'p']
   ]
    
   words = ReadDictionary(sys.argv[1])
@@ -167,14 +159,14 @@ def main():
   solutions = solver.Solve() #set(solver.Solve())
   
   print 'Found %d solutions' %len(solutions)
-  # for solution in sorted(solutions):
-  #     print solution
+  for solution in sorted(solutions):
+      print solution
 
   for word, locs in solutions:
-    assert len(word) == len(locs), '%s was length %d; only had locs %s' %(word, len(word), locs)
-  #assert 'cranes' in solutions
-  #assert 'crates' in solutions
-  #assert 'crash' in solutions
+    # Every tile takes up one letter, except qu
+    expected_len = len(locs) - word.count('q')
+    assert len(word) == expected_len, '%s was length %d; only had %d tiles' %(
+      word, len(word), len(locs))
 
 
 if __name__ == '__main__':
