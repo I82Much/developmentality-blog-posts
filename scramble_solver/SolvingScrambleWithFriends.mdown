@@ -2,12 +2,189 @@
 
 ## Solving Scramble with Friends - Recursion, Stacks, and Tries
 
-Apologies to Yoda, and to you for having to read such a bad pun.  This post aims to illustrate how to solve Scramble With Friends/Boggle and the techniques and data structures necessary.  It will touch on the naiive solution, as well as more efficient data structures such as the trie and DAWG.
+Apologies to Yoda, and to you for having to read such a bad pun.  This post aims to illustrate how to solve Scramble With Friends/Boggle and the techniques and data structures necessary.  In particular, we will see how to prune an enormous search space, how to use recursion to simplify the task, as well as the relative performance of three different data structures and implementations.
 
 # Problem statement
-Given an N x N board, (4x4 in case of Scramble with Friends), find the set of all words and the path through the board that makes the words that can be formed from moving in any of 8 adjacent tiles, using each tile at most once.
+Given an N x N board, (4x4 in case of Boggle and Scramble with Friends), find all of the paths through the board which create a valid word.  These paths are constrainted to 1) use each tile at most once and 2) be contiguous; tile N must be adjacent to tile N - 1 in any of 8 directions (North, Northeast, East, Southeast, South, Southwest, West, Northwest).
 
 ![Scramble Screenshot][]
+
+In this example, 
+
+# Naivest approach
+
+
+# Pruning the search space
+
+
+
+This problem can be seen as a graph traversal.  The adjacency information can be encoded in a directed graph:
+
+[A][B][C][D]
+[E][F][G][H]
+[I][J][K][L]
+[M][N][O][P]
+
+[
+['a','b','c','d'],
+['e','f','g','h'],
+['i','j','k','l'],
+['m','n','o','p'],
+]
+
+print "digraph boggle {"
+for i in range(0, 4):
+  for j in range(0, 4):
+    for row_offset in (-1, 0, 1):
+	  for col_offset in (-1, 0, 1):
+	    if row_offset != 0 or col_offset != 0:
+		  i2 = i + row_offset
+		  j2 = j + col_offset
+		  if 0 <= i2 < 4 and 0 <= j2 < 4:
+		    print '"%s" -> "%s"' %(b[i][j], b[i2][j2])
+
+print "}"					
+
+# Basic algorithm
+Here is the basic algorithm:
+
+
+<div>
+[sourcecode language="python"]
+
+def Solve(self, board):
+"""Returns a list of FoundWord objects."""
+solutions = []
+
+# Start an exhaustive search of the board
+for row in range(board.num_rows):
+  for col in range(board.num_cols):
+    loc = Location(row, col)
+    previous_locs = []
+    solutions.extend(self.DoSolve(board, previous_locs, loc, ''))
+
+return solutions
+
+def DoSolve(self, board, previous_locations, location, word_prefix):
+	"""Returns iterable of FoundWord objects.
+
+	Args:
+	  previous_locations: a list of already visited locations
+	  location: the current Location from where to start searching
+	  word_prefix: the current word built up so far, as a string
+	"""
+	solutions = []
+
+	new_word = word_prefix + board[location.row][location.col]
+	previous_locations.append(location)
+
+	# Huge optimization - fail fast and prune out a large portion
+	# of the search space
+	if not self.HasPrefix(new_word):
+	  if DEBUG:
+	    print 'No words found starting with "%s"' %(new_word)
+	  return solutions
+
+	# This is a valid, complete words.
+	if self.HasWord(new_word):
+	  new_solution = FoundWord(new_word, previous_locations)
+	  if DEBUG:
+	    print 'Found new solution: %s' %(str(new_solution))
+	  solutions.append(new_solution)
+
+	# Recursively search all adjacent tiles
+	for new_loc in location.Adjacent():
+	  if board.IsValidLocation(new_loc) and new_loc not in previous_locations:
+	    # make a copy of the previous locations list so our current list
+	    # is not affected by this recursive call.
+	    defensive_copy = list(previous_locations)
+	    solutions.extend(self.DoSolve(board, defensive_copy, new_loc, new_word))
+	  else:
+	    if DEBUG:
+	      print 'Ignoring %s as it is invalid or already used.' %(str(new_loc))
+
+	return solutions
+[/sourcecode]
+</div>
+
+The two calls which are reliant on the word storage data structures and algorithms are `if not self.HasPrefix(new_word)` and `self.HasWord(new_word)`.  While the search technically would work without 
+
+
+
+# Naiive solution
+unsorted list
+
+prefix search - for every word, check if it starts with
+linear search
+
+O(n*m) prefix search
+
+Took 6544.000 seconds to solve 10 boards; avg 654.443 with <__main__.UnsortedListBoardSolver object at 0x135add0>
+Took 7246.000 seconds to solve 10 boards; avg 724.652 with <__main__.TrieBoardSolver object at 0x135acf0>
+Took 7710.000 seconds to solve 10 boards; avg 771.001 with <__main__.SortedListBoardSolver object at 0x135adf0>
+
+
+
+# Trie solution
+trie data structure - O(m)
+
+
+# Conclusion
+
+I was very surprised to see how  much more performant the sorted list / bisection approach was than the trie.  Then I remembered the all important constant factors portion of big o notation.  While the trie should be faster as the size of the words increases astronomically,..
+
+with a dictionary of 270k words, the sorted list approach has to examine at most ~20 words to find a math
+
+
+
+Took 182.000 seconds to solve 1 boards; avg 182.711 with <__main__.UnsortedListBoardSolver object at 0x198c870>
+Took 1.000 seconds to solve 1 boards; avg 1.834 with <__main__.TrieBoardSolver object at 0x198c790>
+Took 0.000 seconds to solve 1 boards; avg 0.028 with <__main__.SortedListBoardSolver object at 0x198c890>
+
+
+I was generating huge result sets and then checking if there was at least one entry rather than bypassing all the extra work
+def HasPrefix(self, prefix):
+  # Bug
+  return len(self.trie.find_prefix_matches(prefix)) > 0
+
+
+
+Size of trie solver pickled: 14429374
+Size of list solver pickled: 3878681
+Size of sorted list solver pickled: 3878645
+
+wtf why is the trie one biggest?  I guess the dictionaries take some space
+
+234936 /usr/share/dict/words
+
+Size of trie solver pickled: 14429374
+Size of list solver pickled: 3878681
+Size of sorted list solver pickled: 3878645
+
+
+Took 0.000 seconds to solve 10 boards; avg 0.031 with <__main__.TrieBoardSolver object at 0x135acf0>
+Took 0.000 seconds to solve 10 boards; avg 0.030 with <__main__.SortedListBoardSolver object at 0x135adf0>
+Took 2.000 seconds to solve 100 boards; avg 0.023 with <__main__.TrieBoardSolver object at 0x135acf0>
+Took 2.000 seconds to solve 100 boards; avg 0.024 with <__main__.SortedListBoardSolver object at 0x135adf0>
+Took 33.000 seconds to solve 1000 boards; avg 0.034 with <__main__.TrieBoardSolver object at 0x135acf0>
+Took 24.000 seconds to solve 1000 boards; avg 0.025 with <__main__.SortedListBoardSolver object at 0x135adf0>
+
+$ python2.6 scramble_solver/solver.py scramble_solver/sampled.dict 
+Size of trie solver pickled: 34377
+Size of list solver pickled: 3274
+Size of sorted list solver pickled: 3247
+Took 0.000 seconds to solve 10 boards; avg 0.005 with <__main__.TrieBoardSolver object at 0xfbc90>
+Took 0.000 seconds to solve 10 boards; avg 0.005 with <__main__.SortedListBoardSolver object at 0xfbd30>
+Took 0.000 seconds to solve 100 boards; avg 0.004 with <__main__.TrieBoardSolver object at 0xfbc90>
+Took 0.000 seconds to solve 100 boards; avg 0.004 with <__main__.SortedListBoardSolver object at 0xfbd30>
+Took 3.000 seconds to solve 1000 boards; avg 0.004 with <__main__.TrieBoardSolver object at 0xfbc90>
+Took 3.000 seconds to solve 1000 boards; avg 0.004 with <__main__.SortedListBoardSolver object at 0xfbd30>
+Took 40.000 seconds to solve 10000 boards; avg 0.004 with <__main__.TrieBoardSolver object at 0xfbc90>
+Took 37.000 seconds to solve 10000 boards; avg 0.004 with <__main__.SortedListBoard
+
+awk '{if (NR % 1000 == 0) print $0} ' /usr/share/dict/words > scramble_solver/sampled.dict
+
+
 
 # The Naive / Brute Force Solution
 
@@ -45,7 +222,6 @@ O(n)
 
 Wouldn't it make more sense to eliminate a large number of words?
 
-binary search - O(log n) - but we're not searching for a specific entry, but just that one *starts* with a specific substring
 
 
 ## Tries
@@ -68,6 +244,8 @@ Tries are a huge improvement over a naive list or dict data structure, but they 
 
 "The primary difference between DAWG and trie is the elimination of suffix redundancy in storing strings. The trie eliminates prefix redundancy since all common prefixes are shared between strings, such as between doctors and doctorate the doctor prefix is shared. In a DAWG common suffixes are also shared, such as between desertion and destruction both the prefix des- and suffix -tion are shared. For dictionary sets of common English words, this translates into major memory usage reduction.
 Because the terminal nodes of a DAWG can be reached by multiple paths, a DAWG cannot directly store auxiliary information relating to each path, e.g. a word's frequency in the English language. However, if at each node we store a count of the number of unique paths through the structure from that point, we can use it to retrieve the index of a word, or a word given its index.[1] The auxiliary information can then be stored in an array" -- [Directed acyclic word graph][]
+
+
 
 
 
