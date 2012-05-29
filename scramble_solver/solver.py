@@ -216,18 +216,6 @@ class TrieBoardSolver(BoardSolver):
 
   def HasWord(self, word):
     return word in self.trie
-
-class BloomFilterSortedListSolver(SortedListBoardSolver):
-  def __init__(self, valid_words):
-    SortedListBoardSolver.__init__(self, valid_words)
-    self.bloom_filter = bloom_filter.BloomFilter(1000, 50, valid_words)
-  
-  def HasWord(self, word):
-    bloom_reply = word in self.bloom_filter
-    if not bloom_reply:
-      return False
-    # Bloom filters sometimes have false positives, so we cannot return true here
-    return SortedListBoardSolver.HasWord(self, word)
     
   
 def ReadDictionary(path):
@@ -257,7 +245,6 @@ def main():
   #   set_solver = SetBoardSolver(words)
   #   dict_solver = DictBoardSolver(words)
   sorted_list_solver = SortedListBoardSolver(words)
-  bloom_solver = BloomFilterSortedListSolver(words)
   
   # print 'Size of trie solver pickled: %d' %(len(pickle.dumps(trie_solver, -1)))
   #   print 'Size of list solver pickled: %d' %(len(pickle.dumps(list_solver, -1)))
@@ -270,7 +257,7 @@ def main():
   #solvers = [list_solver,set_solver, dict_solver, trie_solver, sorted_list_solver]
   
   #solvers = [set_solver, dict_solver]
-  solvers = [sorted_list_solver, bloom_solver]
+  solvers = [sorted_list_solver]
   for num_iters in iters:
     random_boards = [Board(4,4) for x in range(num_iters)]
     for solver in solvers:
