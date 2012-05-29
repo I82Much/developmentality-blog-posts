@@ -57,47 +57,59 @@ The problem is that this method will waste an inordinate amount of time exhausti
 
 Those with some algorithms background might recognize the code above as a modified form of a [depth first search][].  As described previously, a depth first search will exhaustively explore every possible path through the board.  We can vastly improve the efficiency of this algorithm by quitting the search early when we know it won't be fruitful.  If we know all of the valid words, we can quit when we know that no  word starts with the current string.  Thus in the previous example, if the current word built up so far were "QuR", the algorithm could determine that no words start with QuR and thus fail fast and early.  This optimization will not affect the correctness of the algorithm because none of the potential paths we eliminate could possibly lead to a valid word; by constraint #1 this means that none of those paths would have ended up in the list of solutions in the first place.
 
-DoSolve(board, tiles_used)
-	solutions = empty list
-
-	current word = empty string
-	for letter in tiles_used:
-		append letter to current word
-
-	# Optimization
-	if no valid word starts with current word:
-		return solutions
-
-	# 1 - ensure that the word is valid
-	if the current word is a valid word:
-		append current word to solutions
-	
-	most recent tile = last tile in tiles_used
-
-	# 2 - ensure that the next tile we use is adjacent to the last one
-	for each tile adjacent to most recent tile:
-	
-		# 3 - ensure that we do not repeat any tiles
-		if tile is on the board and tile hasn't been used previously:
-			new_path = append tile to copy of tiles_used list
-			solutions_starting_from_tile = DoSolve(board, new_path)
-			append solutions_starting_from_tile to solutions
-		
-	return solutions
-
-
 # TODO(ndunn): Include information about how much time this saves
-
 
 # Basic Python implementation
 
-Assume as a black box we have two methods IsWord(string) and WordStartsWith(string).  The pseudocode above can be expressed with python
+Assume as a black box we have two methods IsWord(string) and HasPrefix(string).  The pseudocode above can be expressed with Python (forgive the slightly modified parameter list; I found it easier to write it this way):
 
+<div>
+[sourcecode language="python"]
+def DoSolve(self, board, previous_locations, location, word_prefix):
+"""Returns iterable of FoundWord objects.
+
+Args:
+  previous_locations: a list of already visited locations
+  location: the current Location from where to start searching
+  word_prefix: the current word built up so far, as a string
+"""
+solutions = []
+
+new_word = word_prefix + board[location.row][location.col]
+previous_locations.append(location)
+
+if PREFIX_PRUNE and not self.HasPrefix(new_word):
+  if DEBUG:
+    print 'No words found starting with "%s"' %(new_word)
+  return solutions
+
+# This is a valid, complete words.
+if self.IsWord(new_word):
+  new_solution = FoundWord(new_word, previous_locations)
+  if DEBUG:
+    print 'Found new solution: %s' %(str(new_solution))
+  solutions.append(new_solution)
+
+# Recursively search all adjacent tiles
+for new_loc in location.Adjacent():
+  if board.IsValidLocation(new_loc) and new_loc not in previous_locations:
+    # make a copy of the previous locations list so our current list
+    # is not affected by this recursive call.
+    defensive_copy = list(previous_locations)
+    solutions.extend(self.DoSolve(board, defensive_copy, new_loc, new_word))
+  else:
+    if DEBUG:
+      print 'Ignoring %s as it is invalid or already used.' %(str(new_loc))
+
+return solutions
+
+[/sourcecode]
+</div>
 
 # Data structures
-The data structure and algorithms used to implement the IsWord and WordStartsWith methods are incredibly important.
+The data structure and algorithms used to implement the IsWord and HasPrefix methods are incredibly important.  
 
-I will examine 3 implementations and discuss the performance characteristics of each:
+I will examine three implementations and discuss the performance characteristics of each:
 
 * Unsorted list
 * Sorted list with binary search
@@ -105,7 +117,7 @@ I will examine 3 implementations and discuss the performance characteristics of 
 
 # Unsorted list
 
-An unsorted list is a terrible data structure to use for this task.  Why?  Because it leads to running time proportional to the number of elements in the word list.
+An unsorted list is a terrible data structure to use for this task.  Why?  Because it leads to running time proportional to the number of elements in the word list.  
 
 <div>
 [sourcecode language="python"]
@@ -119,16 +131,14 @@ class UnsortedListBoardSolver(BoardSolver):
         return True
     return False
 
-  def HasWord(self, word):
+  def IsWord(self, word):
     return word in self.valid_words
 [/sourcecode]
 </div>
 
-While this is easy to understand and reason about, it is extremely slow.
+While this is easy to understand and reason about, it is extremely slow, especially for a large dictionary (I used approximately 200k words for testing).
 
 	Took 207.697 seconds to solve 1 boards; avg 207.697 with <__main__.UnsortedListBoardSolver object at 0x135f170>
-
-
 
 # Sorted list
 
@@ -166,7 +176,7 @@ class SortedListBoardSolver(BoardSolver):
     except ValueError:
       return False
     
-  def HasWord(self, word):
+  def IsWord(self, word):
     try:
       self.index(self.valid_words, word)
     except ValueError:
@@ -193,7 +203,9 @@ From Wikipedia:
 
 > In computer science, a trie, or prefix tree, is an ordered tree data structure that is used to store an associative array where the keys are usually strings. Unlike a binary search tree, no node in the tree stores the key associated with that node; instead, its position in the tree defines the key with which it is associated. All the descendants of a node have a common prefix of the string associated with that node, and the root is associated with the empty string. Values are normally not associated with every node, only with leaves and some inner nodes that correspond to keys of interest.
 
-The maximum depth of this tree is the maximum length of any valid string stored in it.  Thus the running itme of a prefix search is proportional not to the number of elements stored in the tree, but instead proportional to the length of the string.
+Snip:
+
+>Looking up a key of length m takes worst case O(m) time. A BST performs O(log(n)) comparisons of keys, where n is the number of elements in the tree, because lookups depend on the depth of the tree, which is logarithmic in the number of keys if the tree is balanced. Hence in the worst case, a BST takes O(m log n) time. Moreover, in the worst case log(n) will approach m. Also, the simple operations tries use during lookup, such as array indexing using a character, are fast on real machines
 
 Again, I don't want to reinvent what's already been done before, so I will be using [Jeethu Rao's implementation][Python trie implementation] of a trie in Python rather than rolling my own.
 
@@ -227,7 +239,7 @@ class TrieBoardSolver(BoardSolver):
   def HasPrefix(self, prefix):
     return len(self.trie.find_prefix_matches(prefix)) > 0
 
-  def HasWord(self, word):
+  def IsWord(self, word):
     return word in self.trie
 [/sourcecode]
 </div>
@@ -280,8 +292,15 @@ With this optmization, the trie becomes competitive with the binary search:
 
 It is still slower, but not nearly as bad as before.
 
+# Conclusion
+
+# TODO(ndunn): fix this busted bs.
+>>> [x.word for x in trie_solutions if x not in sorted_solutions]
+['ll', 'llu', 'lla', 'llan', 'qu', 'qur', 'reu', 'reus', 'reut', 'reuti', 'reutil', 'reuc', 'res', 'resu', 'resul', 'resulta', 'resultan', 'resulti', 'resultin', 'resui', 'resuin', 'resuc', 'resi', 'resil', 'resit', 'resic', 'resine', 'resc', 'rescu', 'resci', 'rescin', 'ru', 'rues', 'rul', 'rula', 'rulan', 'ruli', 'rulin', 'rusi', 'rusc', 'ruti', 'rutil', 'rutila', 'rutilan', 'rute', 'rui', 'ruine', 'ruc', 'ruce', 'rucer', 'erl', 'eru', 'eruci', 'eur', 'eul', 'eula', 'euli', 'eus', 'eusc', 'eut', 'euta', 'eutan', 'eutr', 'eute', 'eutec', 'euter', 'euc', 'euci', 'eucir', 'euce', 'eucn', 'eucne', 'esu', 'esur', 'esi', 'esc', 'escu', 'escul', 'escula', 'esculi', 'escut', 'escute', 'sl', 'squ', 'squu', 'squus', 'sl', 'slu', 'slus', 'slui', 'sluic', 'slati', 'slatis', 'slatin', 'slatine', 'slan', 'slanti', 'slantin', 'slar', 'sli', 'slis', 'slic', 'slir', 'slin', 'sall', 'salu', 'salut', 'saluti', 'saltu', 'salti', 'saltis', 'saltie', 'saltin', 'saltn', 'salte', 'sali', 'salis', 'salit', 'salice', 'salicet', 'salicetu', 'salie', 'salien', 'salienc', 'salin', 'satl', 'satli', 'satu', 'satur', 'sature', 'sati', 'satis', 'satir', 'satie', 'satien', 'satr', 'santi', 'sante', 'santen', 'sarti', 'sartis', 'sarin', 'sarn', 'stu', 'stur', 'stul', 'stus', 'stui', 'stuc', 'sta', 'stal', 'stali', 'stalin', 'stan', 'stari', 'starin', 'sti', 'stil', 'stic', 'stira', 'stin', 'str', 'stran', 'stri', 'stric', 'strin', 'strei', 'strec', 'stren', 'ste', 'stei', 'steir', 'stec', 'ster', 'stera', 'steril', 'sternali', 'steni', 'stenc', 'stenci', 'll', 'lures', 'lus', 'lusi', 'lusit', 'lusita', 'lusitan', 'lusc', 'lusci', 'luscin', 'luta', 'lutan', 'luti', 'lutis', 'lutin', 'lutr', 'lutri', 'lutre', 'lutei', 'lutec', 'luteci', 'lui', 'luis', 'luise', 'luit', 'luc', 'luci', 'lucit', 'lucin', 'lucer', 'lucerna', 'lucen', 'lasqu', 'lasti', 'lastin', 'lastn', 'lastr', 'laste', 'latu', 'lati', 'latis', 'latise', 'latic', 'latice', 'latir', 'latine', 'latr', 'latri', 'latrin', 'latre', 'latec', 'lateri', 'lateric', 'latericu', 'laterin', 'latenc', 'lantu', 'lante', 'lanter', 'larit', 'laric', 'larn', 'lare', 'laren', 'liu', 'liser', 'lisu', 'lits', 'litu', 'litur', 'lita', 'litan', 'litr', 'litera', 'lic', 'licu', 'lice', 'licen', 'lir', 'lirat', 'liern', 'lienc', 'liencu', 'linc', 'linec', 'linecu', 'ures', 'uresi', 'url', 'urla', 'urli', 'urlin', 'urs', 'ursi', 'ursic', 'ursin', 'ue', 'ul', 'ulr', 'uls', 'ulst', 'ulste', 'ulsteri', 'ulsterin', 'ulat', 'ulatr', 'ult', 'ulti', 'ultr', 'ultras', 'ultran', 'ulte', 'ulter', 'ulteri', 'uli', 'ulit', 'usi', 'usit', 'usita', 'usin', 'uts', 'uti', 'util', 'utic', 'utin', 'utr', 'utra', 'utri', 'utric', 'utre', 'utrec', 'uter', 'utera', 'uteral', 'uterin', 'uten', 'ui', 'uil', 'uit', 'uits', 'uir', 'uin', 'uc', 'sr', 'sru', 'srut', 'seru', 'seu', 'su', 'surqu', 'surl', 'surli', 'surlin', 'surline', 'sul', 'sult', 'sulta', 'sultanr', 'sultr', 'sultri', 'sultrin', 'sultrine', 'suli', 'sut', 'sutl', 'suta', 'suti', 'sutil', 'sutr', 'sute', 'suter', 'suil', 'suill', 'suita', 'suic', 'suin', 'suc', 'suci', 'silu', 'silur', 'silure', 'sila', 'silan', 'silta', 'siu', 'situ', 'situl', 'sicu', 'sicul', 'sien', 'sinc', 'sincer', 'sinec', 'sinecu', 'sinecur', 'sc', 'scu', 'scul', 'sculs', 'scuti', 'sci', 'scil', 'scill', 'sciu', 'sciur', 'scit', 'scita', 'scir', 'scirt', 'scire', 'sciren', 'scie', 'scien', 'scin', 'sce', 'scer', 'scern', 'scen', 'sceni', 'scenit', 'asl', 'asqu', 'asl', 'aslu', 'astu', 'astuc', 'astuci', 'asti', 'astil', 'astic', 'astin', 'astr', 'astri', 'astril', 'astric', 'astrie', 'astrin', 'astre', 'aste', 'astei', 'asteis', 'asteri', 'asteris', 'all', 'alls', 'alqu', 'alr', 'alre', 'alru', 'als', 'alst', 'alstr', 'alu', 'alus', 'alut', 'aluc', 'alts', 'altu', 'alti', 'altis', 'altisc', 'altic', 'altinc', 'altr', 'altri', 'altric', 'altrice', 'alte', 'alteri', 'ali', 'aliu', 'alis', 'alise', 'alitu', 'alitur', 'alitr', 'alic', 'alie', 'aliet', 'alienc', 'atl', 'atu', 'atul', 'atil', 'atin', 'atn', 'atr', 'atri', 'atriu', 'atric', 'atrie', 'atrien', 'atre', 'atec', 'ater', 'ateri', 'ateni', 'atenis', 'ants', 'antl', 'antlu', 'antlue', 'antli', 'antlin', 'antil', 'antill', 'antilu', 'antilue', 'antiu', 'antiur', 'antiure', 'antius', 'antis', 'antise', 'antiser', 'antiseru', 'antisu', 'antisur', 'antisc', 'anticu', 'antice', 'anticer', 'anticen', 'anticn', 'anticne', 'antir', 'antire', 'antirec', 'antiren', 'antie', 'antiec', 'antier', 'antien', 'antin', 'antine', 'antr', 'antri', 'antrec', 'antei', 'antein', 'antec', 'antecu', 'antecur', 'anter', 'anteri', 'anten', 'artl', 'artli', 'arti', 'artil', 'artill', 'artis', 'artic', 'articu', 'articul', 'artin', 'artine', 'arte', 'ari', 'arill', 'ariu', 'aris', 'arit', 'aric', 'arie', 'ariet', 'arien', 'aret', 'areti', 'aretin', 'arei', 'areit', 'arec', 'arecu', 'aren', 'areni', 'arenil', 'arenic', 'ts', 'tsa', 'tsan', 'tsari', 'tsarin', 'tsare', 'tl', 'tla', 'tlas', 'tli', 'tlin', 'tuqu', 'turqu', 'ture', 'turl', 'turs', 'tursi', 'tues', 'tul', 'tull', 'tuls', 'tulas', 'tular', 'tuli', 'tulis', 'tus', 'tusc', 'tuil', 'tuill', 'tuis', 'tuc', 'tas', 'tasl', 'tasl', 'talu', 'taluc', 'talie', 'talier', 'talin', 'tanr', 'tanre', 'taris', 'taren', 'tils', 'tila', 'tilas', 'tis', 'ticu', 'tir', 'tira', 'tiral', 'tinc', 'tr', 'tras', 'tral', 'trall', 'trali', 'tran', 'tril', 'trilu', 'trila', 'triu', 'triur', 'tris', 'trise', 'triser', 'trisu', 'trisc', 'trisce', 'tric', 'tricu', 'tricur', 'tricus', 'tricen', 'trie', 'trien', 'tre', 'trei', 'treil', 'treill', 'trec', 'trecu', 'trecul', 'treculi', 'tren', 'trenc', 'tei', 'teic', 'teir', 'tein', 'tecu', 'tecn', 'ter', 'teni', 'tenc', 'il', 'isr', 'ise', 'iser', 'iseu', 'isu', 'isur', 'isure', 'isc', 'itu', 'itur', 'ital', 'ite', 'itera', 'iteran', 'ic', 'icer', 'icen', 'ir', 'iras', 'irat', 'iren', 'ier', 'iern', 'inc', 'incu', 'incurs', 'incul', 'ince', 'incer', 'incera', 'incerat', 'incert', 'ine', 'inet', 'inec', 'iner', 'inera', 'ineras', 'inertl', 'inerta', 'inertan', 'inertn', 'cu', 'curli', 'curlie', 'curlin', 'curline', 'curs', 'cursi', 'cursit', 'cuer', 'cues', 'cul', 'cula', 'culti', 'cultis', 'cultir', 'cultr', 'cultra', 'cultri', 'culte', 'culter', 'cultera', 'culteran', 'culi', 'culin', 'cus', 'cuse', 'cusi', 'cusin', 'cusine', 'cusiner', 'cutl', 'cutla', 'cutlas', 'cutli', 'cutlin', 'cuta', 'cutan', 'cuti', 'cutise', 'cutir', 'cutire', 'cuter', 'cuten', 'cui', 'cuis', 'cuit', 'cuitl', 'cuitla', 'cuira', 'cuiras', 'cuin', 'cs', 'ci', 'cil', 'cill', 'cis', 'cisr', 'citu', 'cita', 'citr', 'citra', 'citran', 'citre', 'citren', 'cir', 'cin', 'ciner', 'cinera', 'cinerat', 'cet', 'cetu', 'ceta', 'cetan', 'cetr', 'cetra', 'cei', 'cer', 'cera', 'cerast', 'cerasti', 'cerastiu', 'cerat', 'cerati', 'ceratiu', 'cert', 'certa', 'certi', 'ceri', 'ceril', 'cerill', 'ceriu', 'ceris', 'cerit', 'cen', 'cn', 'cni', 'cne', 'nas', 'nastu', 'nastur', 'nasti', 'nastil', 'nastin', 'nastine', 'nal', 'nall', 'nali', 'nalit', 'natu', 'natur', 'nati', 'natic', 'natri', 'natriu', 'natric', 'nate', 'nart', 'nari', 'narin', 'nare', 'nt', 'rast', 'rastl', 'rastu', 'rasti', 'raste', 'ral', 'rall', 'rals', 'ralst', 'rats', 'ratl', 'ratli', 'ratlin', 'rati', 'ratic', 'ratin', 'ranti', 'rantin', 'rante', 'ri', 'ril', 'rills', 'rillst', 'rila', 'ris', 'rits', 'ritl', 'ritu', 'ric', 'rin', 'rinc', 'rince', 'retu', 'retur', 'retus', 'retuc', 'reta', 'retas', 'retal', 'retali', 'reti', 'retil', 'retis', 'retic', 'reticu', 'reticul', 'retinc', 'rei', 'reil', 'reill', 'reic', 'reinc', 'reincu', 'reincul', 'rec', 'recu', 'recurs', 'recursi', 'recul', 'recult', 'reculti', 'recus', 'reci', 'recis', 'recit', 'recita', 'ren', 'reni', 'renil', 'renill', 'renis', 'renit', 'renic', 'renc', 'rencu', 'rencul', 'et', 'etu', 'etal', 'eti', 'etn', 'etr', 'ei', 'eil', 'eis', 'eise', 'eit', 'eic', 'eir', 'ein', 'ec', 'ecu', 'ecue', 'ecs', 'eci', 'ecil', 'ecit', 'eras', 'erast', 'erastu', 'erasti', 'eran', 'erant', 'ert', 'eri', 'eris', 'erit', 'erin', 'ern', 'eni', 'enis', 'enic', 'enicu', 'enicur', 'enc', 'encu', 'encur', 'encus', 'encui', 'encuir', 'encuira', 'encuiras', 'enci', 'encis', 'encit', 'encita', 'encir', 'niu', 'nis', 'nise', 'nisu', 'nitr', 'nitra', 'nitran', 'nite', 'nic', 'nicet', 'nir', 'nie', 'niet', 'niec', 'nier', 'nets', 'netl', 'netli', 'neill', 'neis', 'neit', 'nec', 'ner', 'nert', 'neriu', 'nerit']
 
 
+
+One might ask, why is an O(length string) algorithm slower than O(log number of words in dictionary)?  Well, remember that these are the asymptotic running times of the algorithms; there are always constant factors at play which can cause a theoretically faster algorithm to perform worse in actuality.  Log2 of 200k is approximately 20, so the binary search does not have to do much work even in the worst case.  The trie uses nested dicts as opposed to the simple sorted list; this might add to the overhead as well.  Alternate implementations might very well beat out
 
 
 
@@ -359,7 +378,7 @@ def DoSolve(self, board, previous_locations, location, word_prefix):
 	  return solutions
 
 	# This is a valid, complete words.
-	if self.HasWord(new_word):
+	if self.IsWord(new_word):
 	  new_solution = FoundWord(new_word, previous_locations)
 	  if DEBUG:
 	    print 'Found new solution: %s' %(str(new_solution))
@@ -380,7 +399,7 @@ def DoSolve(self, board, previous_locations, location, word_prefix):
 [/sourcecode]
 </div>
 
-The two calls which are reliant on the word storage data structures and algorithms are `if not self.HasPrefix(new_word)` and `self.HasWord(new_word)`.  While the search technically would work without 
+The two calls which are reliant on the word storage data structures and algorithms are `if not self.HasPrefix(new_word)` and `self.IsWord(new_word)`.  While the search technically would work without 
 
 
 
@@ -500,8 +519,6 @@ Wouldn't it make more sense to eliminate a large number of words?
 ## Tries
 
 
-"Looking up a key of length m takes worst case O(m) time. A BST performs O(log(n)) comparisons of keys, where n is the number of elements in the tree, because lookups depend on the depth of the tree, which is logarithmic in the number of keys if the tree is balanced. Hence in the worst case, a BST takes O(m log n) time. Moreover, in the worst case log(n) will approach m. Also, the simple operations tries use during lookup, such as array indexing using a character, are fast on real machines"
--- [Trie wikipedia][]
 
 
 # Trie results

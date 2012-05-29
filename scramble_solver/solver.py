@@ -77,7 +77,7 @@ class BoardSolver(object):
     pass
 
   @abc.abstractmethod
-  def HasWord(self, prefix):
+  def IsWord(self, prefix):
     pass
 
   def Solve(self, board):
@@ -112,7 +112,7 @@ class BoardSolver(object):
       return solutions
 
     # This is a valid, complete words.
-    if self.HasWord(new_word):
+    if self.IsWord(new_word):
       new_solution = FoundWord(new_word, previous_locations)
       if DEBUG:
         print 'Found new solution: %s' %(str(new_solution))
@@ -142,7 +142,7 @@ class UnsortedListBoardSolver(BoardSolver):
         return True
     return False
 
-  def HasWord(self, word):
+  def IsWord(self, word):
     return word in self.valid_words
 
 
@@ -172,7 +172,7 @@ class SortedListBoardSolver(BoardSolver):
     except ValueError:
       return False
     
-  def HasWord(self, word):
+  def IsWord(self, word):
     try:
       self.index(self.valid_words, word)
     except ValueError:
@@ -194,7 +194,7 @@ class TrieBoardSolver(BoardSolver):
     # list of results, only to throw it away.
     #return len(self.trie.find_prefix_matches(prefix)) > 0
 
-  def HasWord(self, word):
+  def IsWord(self, word):
     return word in self.trie
     
   
@@ -216,10 +216,11 @@ def main():
   list_solver = UnsortedListBoardSolver(words)
   sorted_list_solver = SortedListBoardSolver(words)
   
-  if TIMING_TEST:
   # print 'Size of trie solver pickled: %d' %(len(pickle.dumps(trie_solver, -1)))
   # print 'Size of list solver pickled: %d' %(len(pickle.dumps(list_solver, -1)))
   # print 'Size of sorted list solver pickled: %d' %(len(pickle.dumps(sorted_list_solver, -1)))
+  
+  if TIMING_TEST:
     iters = [1, 10, 100, 1000] 
     solvers = [trie_solver, list_solver, sorted_list_solver]
     for num_iters in iters:
@@ -244,12 +245,17 @@ def main():
     ['a', 't', 'i', 'c'],
     ['n', 'r', 'e', 'n']
   ]
-  list_solutions = list_solver.Solve(b)
+  print 'Trying to solve with the unsorted list'
+  #list_solutions = list_solver.Solve(b)
+  print 'Solving with binary search'
   sorted_solutions = sorted_list_solver.Solve(b)
+  print 'Solving with trie'
   trie_solutions = trie_solver.Solve(b)
 
-  assert list_solutions == sorted_solutions and list_solutions == trie_solutions
-  for solution in sorted(list_solutions):
+  # Results should be exactly the same
+  assert sorted_solutions == trie_solutions
+  #assert list_solutions == sorted_solutions and list_solutions == trie_solutions
+  for solution in sorted(sorted_solution):
     print solution  
 
 if __name__ == '__main__':
