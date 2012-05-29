@@ -5,7 +5,7 @@
 Apologies to Yoda, and to you for having to read such a bad pun.  This post aims to illustrate how to solve Scramble With Friends/Boggle and the techniques and data structures necessary.  In particular, we will see how to prune an enormous search space, how to use recursion to simplify the task, as well as the relative performance of three different data structures and implementations.
 
 # Problem statement
-Given an N x N board, (4x4 in case of Boggle and Scramble with Friends), find all of the paths through the board which create a valid word.  These paths are constrainted to 1) use each tile at most once and 2) be contiguous; tile N must be adjacent to tile N - 1 in any of 8 directions (North, Northeast, East, Southeast, South, Southwest, West, Northwest).
+Given an N x N board, (4x4 in case of Boggle and Scramble with Friends), find all of the paths through the board which create a valid word.  These paths are constrained to 1) use each tile at most once and 2) be contiguous; tile N must be adjacent to tile N - 1 in any of 8 directions (North, Northeast, East, Southeast, South, Southwest, West, Northwest).
 
 ![Scramble Screenshot][]
 
@@ -13,8 +13,113 @@ In this example,
 
 # Naivest approach
 
+First, imagine that we have a method that, given a path through the board returns all valid words that starts with that path, called DoSolve.  For instance, DoSolve(['Qu']) would return all the valid words (and their locations) that start with Qu.  DoSolve(['N', 'E']) would return all the valid paths that start with N followed by an E.  With such a method, it is trivial to solve the problem.  In pseudocode:
+
+	Solve(board):
+		solutions = empty list
+		for each location on board:
+			append DoSolve(location) to solutions
+		return solutions
+	
+The tricky part is, how do we make DoSolve work?  Remember that it must 1) return only valid words 2) return only words that are formed from contiguous tiles and 3) must not repeat any tiles.
+
+The easiest way to solve this problem is through recursion. As you probably remember, [recursion][Recursion] is simply when a method calls itself.  In order to avoid an infinite loop (and eventual stack overflow), there must be some sort of stopping criteria.  As it was taught to me, you have to be sure that the problem becomes smaller at each step, until it becomes so small as to be trivially solved.  Here's that basic algorithm:
+
+	DoSolve(board, tiles_used)
+		solutions = empty list
+
+		current word = empty string
+		for letter in tiles_used:
+			append letter to current word
+
+		# 1 - ensure that the word is valid
+		if the current word is a valid word:
+			append current word to solutions
+		
+		most recent tile = last tile in tiles_used
+
+		# 2 - ensure that the next tile we use is adjacent to the last one
+		for each tile adjacent to most recent tile:
+		
+			# 3 - ensure that we do not repeat any tiles
+			if tile is on the board and tile hasn't been used previously:
+				new_path = append tile to copy of tiles_used list
+				solutions_starting_from_tile = DoSolve(board, new_path)
+				append solutions_starting_from_tile to solutions
+			
+		return solutions
+
+This will work, but it suffers from an incredible flaw.  Do you see it?
+
+The problem is that this method will waste an inordinate amount of time exhaustively searching the board for solutions even when the current path is completely useless.  It will continue to search for words starting with QuR, QuRE, etc., etc., even though no words in the English language start with these letters.  The algorithm is still correct, but it can be optimized very simply.
 
 # Pruning the search space
+
+Those with some algorithms background might recognize the code above as a modified form of a [depth first search][].  As described previously, a depth first search will exhaustively explore every possible path through the board.  We can vastly improve the efficiency of this algorithm by quitting the search early when we know it won't be fruitful.  If we know all of the valid words, we can quit when we know that no  word starts with the current string.  Thus in the previous example, if the current word built up so far were "QuR", the algorithm could determine that no words start with QuR and thus fail fast and early.  This optimization will not affect the correctness of the algorithm because none of the potential paths we eliminate could possibly lead to a valid word; by constraint #1 this means that none of those paths would have ended up in the list of solutions in the first place.
+
+DoSolve(board, tiles_used)
+	solutions = empty list
+
+	current word = empty string
+	for letter in tiles_used:
+		append letter to current word
+
+	# Optimization
+	if no valid word starts with current word:
+		return solutions
+
+	# 1 - ensure that the word is valid
+	if the current word is a valid word:
+		append current word to solutions
+	
+	most recent tile = last tile in tiles_used
+
+	# 2 - ensure that the next tile we use is adjacent to the last one
+	for each tile adjacent to most recent tile:
+	
+		# 3 - ensure that we do not repeat any tiles
+		if tile is on the board and tile hasn't been used previously:
+			new_path = append tile to copy of tiles_used list
+			solutions_starting_from_tile = DoSolve(board, new_path)
+			append solutions_starting_from_tile to solutions
+		
+	return solutions
+
+
+# TODO(ndunn): Include information about how much time this saves
+
+
+# Basic Python implementation
+
+Assume as a black box we have two methods IsWord(string) and WordStartsWith(string).  The pseudocode above can be expressed with python
+
+
+# Data structures
+The data structure and algorithms used to implement the IsWord and WordStartsWith methods are incredibly important.
+
+I will examine 3 implementations and discuss the performance characteristics of each:
+
+* Unsorted list
+* Sorted list with binary search
+* Trie
+
+# Unsorted list
+
+
+# Sorted list
+
+## Binary search
+
+# Trie
+
+
+
+
+
+
+
+
+
 
 
 
@@ -264,4 +369,6 @@ We have also seen how to replace a recursive implementation with an explicit sta
 [Compressiong dictionaries with a DAWG: dawg in python]:http://stevehanov.ca/blog/index.php?id=115
 [wordutils dawg]:http://pypi.python.org/pypi/WordUtils/0.8.0
 [extremely space efficient dawg]:http://www.wutka.com/dawg.html
-[Scramble screenshot]:
+[Scramble screenshot]:https://lh4.googleusercontent.com/-3QH0bUh55U0/T78dRCJgbnI/AAAAAAAACVc/ugRCRZjTnSc/s512/scramble_board.jpg
+[Recursion]:http://en.wikipedia.org/wiki/Recursion
+[Depth first search]:http://www.cs.toronto.edu/~heap/270F02/node36.html

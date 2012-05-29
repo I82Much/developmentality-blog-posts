@@ -10,6 +10,7 @@ import random
 import string
 import sys
 
+import bloom_filter
 import trie
 
 """
@@ -19,7 +20,7 @@ Solves Boggle/Scramble with Friends.
 TOKENS = ['a','b','c','d','e','f','g','h','j','k','l','m','n','o','p','qu','r','s','t','u','v','w','x','y','z']
 
 DEBUG = False
-PREFIX_PRUNE = False
+PREFIX_PRUNE = True
 
 class Location(namedtuple('Location', ['row', 'col'])):
   """Represents a location on the board."""
@@ -215,6 +216,19 @@ class TrieBoardSolver(BoardSolver):
 
   def HasWord(self, word):
     return word in self.trie
+
+class BloomFilterSortedListSolver(SortedListBoardSolver):
+  def __init__(self, valid_words):
+    SortedListBoardSolver.__init__(self, valid_words)
+    self.bloom_filter = bloom_filter.BloomFilter(1000, 50, valid_words)
+  
+  def HasWord(self, word):
+    bloom_reply = word in self.bloom_filter
+    if not bloom_reply:
+      return False
+    # Bloom filters sometimes have false positives, so we cannot return true here
+    return SortedListBoardSolver.HasWord(self, word)
+    
   
 def ReadDictionary(path):
   """Returns a set of words found in the file indicated by 'path'."""
@@ -235,24 +249,28 @@ def main():
   
   
   words = ReadDictionary(sys.argv[1])
-  trie_solver = TrieBoardSolver(words)
-  list_solver = UnsortedListBoardSolver(words)
-  set_solver = SetBoardSolver(words)
-  dict_solver = DictBoardSolver(words)
+  
+  print 'Read %d words' %(len(words))
+  
+  # trie_solver = TrieBoardSolver(words)
+  #   list_solver = UnsortedListBoardSolver(words)
+  #   set_solver = SetBoardSolver(words)
+  #   dict_solver = DictBoardSolver(words)
   sorted_list_solver = SortedListBoardSolver(words)
+  bloom_solver = BloomFilterSortedListSolver(words)
   
   # print 'Size of trie solver pickled: %d' %(len(pickle.dumps(trie_solver, -1)))
   #   print 'Size of list solver pickled: %d' %(len(pickle.dumps(list_solver, -1)))
   #   print 'Size of sorted list solver pickled: %d' %(len(pickle.dumps(sorted_list_solver, -1)))
 
-
   import datetime
   
   
-  iters = [1]#, 100] #, 1000, 10000, 100000]
+  iters = [1, 10, 100] #, 1000, 10000, 100000]
   #solvers = [list_solver,set_solver, dict_solver, trie_solver, sorted_list_solver]
   
-  solvers = [set_solver, dict_solver]
+  #solvers = [set_solver, dict_solver]
+  solvers = [sorted_list_solver, bloom_solver]
   for num_iters in iters:
     random_boards = [Board(4,4) for x in range(num_iters)]
     for solver in solvers:
