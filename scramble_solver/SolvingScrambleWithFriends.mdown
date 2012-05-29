@@ -105,12 +105,180 @@ I will examine 3 implementations and discuss the performance characteristics of 
 
 # Unsorted list
 
+An unsorted list is a terrible data structure to use for this task.  Why?  Because it leads to running time proportional to the number of elements in the word list.
+
+<div>
+[sourcecode language="python"]
+class UnsortedListBoardSolver(BoardSolver):
+  def __init__(self, valid_words):
+    self.valid_words = valid_words
+
+  def HasPrefix(self, prefix):
+    for word in self.valid_words:
+      if word.startswith(prefix):
+        return True
+    return False
+
+  def HasWord(self, word):
+    return word in self.valid_words
+[/sourcecode]
+</div>
+
+While this is easy to understand and reason about, it is extremely slow.
+
+	Took 207.697 seconds to solve 1 boards; avg 207.697 with <__main__.UnsortedListBoardSolver object at 0x135f170>
+
+
 
 # Sorted list
 
-## Binary search
+Since we know the valid words ahead of time, we can take advantage of this fact and sort the list.  With a sorted list, we can perform a [binary search][Binary search] and cut our running time from O(n) to O(log n).
+
+Writing a binary search from scratch is very error prone; in his classic work Programming Pearls, Jon Bently claims that fewer than 10% of programmers can implement it correctly.  (See [blog post][binary search blog post] for more).
+
+Fortunately, there's no reason whatsoever to write our own binary search algorithm.  Python's standard library already has an implementation in its [bisect module][].  Following the example given in the module documentation, we get the following implementation:
+
+<div>
+[sourcecode language="python"]
+class SortedListBoardSolver(BoardSolver):
+  def __init__(self, valid_words):
+    self.valid_words = sorted(valid_words)
+
+  # http://docs.python.org/library/bisect.html#searching-sorted-lists
+  def index(self, a, x):
+    'Locate the leftmost value exactly equal to x'
+    i = bisect.bisect_left(a, x)
+    if i != len(a) and a[i] == x:
+      return i
+    raise ValueError
+  
+  def find_ge(self, a, x):
+    'Find leftmost item greater than or equal to x'
+    i = bisect.bisect_left(a, x)
+    if i != len(a):
+      return a[i]
+    raise ValueError  
+
+  def HasPrefix(self, prefix):
+    try:
+      word = self.find_ge(self.valid_words, prefix)
+      return word.startswith(prefix)
+    except ValueError:
+      return False
+    
+  def HasWord(self, word):
+    try:
+      self.index(self.valid_words, word)
+    except ValueError:
+      return False
+    return True
+[/sourcecode]
+</div>
+
+Running the same gauntlet of tests, we see that this data structure performs far better than the naive, unsorted list approach.
+
+	Took 0.094 seconds to solve 1 boards; avg 0.094 with <__main__.SortedListBoardSolver object at 0x135f1d0>
+	Took 0.361 seconds to solve 10 boards; avg 0.036 with <__main__.SortedListBoardSolver object at 0x135f1d0>
+	Took 2.622 seconds to solve 100 boards; avg 0.026 with <__main__.SortedListBoardSolver object at 0x135f1d0>
+	Took 25.065 seconds to solve 1000 boards; avg 0.025 with <__main__.SortedListBoardSolver object at 0x135f1d0>
+
 
 # Trie
+
+The final data structure I want to illustrate is that of the trie.  The [Wikipedia article][Trie wikipedia] has a lot of great information about it.  
+
+![Trie image](http://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Trie_example.svg/400px-Trie_example.svg.png)
+
+From Wikipedia:
+
+> In computer science, a trie, or prefix tree, is an ordered tree data structure that is used to store an associative array where the keys are usually strings. Unlike a binary search tree, no node in the tree stores the key associated with that node; instead, its position in the tree defines the key with which it is associated. All the descendants of a node have a common prefix of the string associated with that node, and the root is associated with the empty string. Values are normally not associated with every node, only with leaves and some inner nodes that correspond to keys of interest.
+
+The maximum depth of this tree is the maximum length of any valid string stored in it.  Thus the running itme of a prefix search is proportional not to the number of elements stored in the tree, but instead proportional to the length of the string.
+
+Again, I don't want to reinvent what's already been done before, so I will be using [Jeethu Rao's implementation][Python trie implementation] of a trie in Python rather than rolling my own.
+
+Here is a demonstration of its API via the interactive prompt:
+
+	>>> import trie
+	>>> t = trie.Trie()
+	>>> t.add('hell', 1)
+	>>> t.add('hello', 2)
+	>>> t.find_full_match('h')
+	>>> t.find_full_match('hell')
+	1
+	>>> t.find_full_match('hello')
+	2
+	>>> t.find_prefix_matches('hello')
+	[2]
+	>>> t.find_prefix_matches('hell')
+	[2, 1]
+
+With that in mind, here's a first pass implementation:
+
+<div>
+[sourcecode language="python"]
+class TrieBoardSolver(BoardSolver):
+  def __init__(self, valid_words):
+    self.trie = trie.Trie()
+    for index, word in enumerate(valid_words):
+      # 0 evaluates to False which screws up trie lookups; ensure value is 'truthy'.
+      self.trie.add(word, index+1)
+  
+  def HasPrefix(self, prefix):
+    return len(self.trie.find_prefix_matches(prefix)) > 0
+
+  def HasWord(self, word):
+    return word in self.trie
+[/sourcecode]
+</div>
+
+Unfortunately, this is slow.  How slow?
+
+	Took 2.626 seconds to solve 1 boards; avg 2.626 with <__main__.TrieBoardSolver object at 0x135f070>
+	Took 22.681 seconds to solve 10 boards; avg 2.268 with <__main__.TrieBoardSolver object at 0x135f070>
+
+While this isn't as bad as the unsorted list, it's still orders of magnitudes slower than the binary search implementation.
+
+
+Why is this slow?  Well, it's doing a whole lot of unnecessary work.  For instance, if we want to determine if 'h' is a valid prefix, this implementation will first construct the list of *all* words that start with h, only to have all that work thrown away when we see that the list is not empty.
+
+A much more efficient approach is to cheat a little and use an internal method `_find_prefix_match` which returns the node in the tree that the search stopped at and how much of the string was unmatched.  
+
+<div>
+[sourcecode language="python"]
+>>> import trie
+>>> t = trie.Trie()
+>>> t.add('hell', 1)
+>>> t.add('hello', 2)
+>>> t._find_prefix_match('h')
+# There is a prefix match, so the unmatched portion is the empty string
+[[None, {'e': [None, {'l': [None, {'l': [1, {'o': [2, {}]}]}]}]}], '']
+>>> t._find_prefix_match('a')
+# No match, so the entire string is unmatched
+[[None, {'h': [None, {'e': [None, {'l': [None, {'l': [1, {'o': [2, {}]}]}]}]}]}], 'a']
+>>> t._find_prefix_match('help')
+# Partial match, so part of the prefix string is returned
+[[None, {'l': [1, {'o': [2, {}]}]}], 'p']
+[/sourcecode]
+</div>
+
+By using this method directly, we can avoid creating the lists of words which we then throw away.  We modify the HasPrefix method to the following:
+
+<div>
+[sourcecode language="python"]
+def HasPrefix(self, prefix):
+  curr_node, remainder = self.trie._find_prefix_match(prefix)
+  return not remainder
+[/sourcecode]
+</div>
+
+With this optmization, the trie becomes competitive with the binary search:
+
+	Took 0.073 seconds to solve 1 boards; avg 0.073 with <__main__.TrieBoardSolver object at 0x135f090>
+	Took 0.243 seconds to solve 10 boards; avg 0.024 with <__main__.TrieBoardSolver object at 0x135f090>
+	Took 3.641 seconds to solve 100 boards; avg 0.036 with <__main__.TrieBoardSolver object at 0x135f090>
+
+It is still slower, but not nearly as bad as before.
 
 
 
@@ -372,3 +540,7 @@ We have also seen how to replace a recursive implementation with an explicit sta
 [Scramble screenshot]:https://lh4.googleusercontent.com/-3QH0bUh55U0/T78dRCJgbnI/AAAAAAAACVc/ugRCRZjTnSc/s512/scramble_board.jpg
 [Recursion]:http://en.wikipedia.org/wiki/Recursion
 [Depth first search]:http://www.cs.toronto.edu/~heap/270F02/node36.html
+[Binary search]:http://en.wikipedia.org/wiki/Binary_search_algorithm
+[binary search blog post]:http://reprog.wordpress.com/2010/04/19/are-you-one-of-the-10-percent/
+[bisect module]:http://docs.python.org/library/bisect.html
+[Python trie implementation]:https://bitbucket.org/woadwarrior/trie/src/6bc187d770ba/python/trie.py

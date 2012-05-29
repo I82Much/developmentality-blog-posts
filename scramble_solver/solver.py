@@ -2,10 +2,9 @@ import abc
 from abc import ABCMeta
 from collections import namedtuple
 
-
-import pickle
-
 import bisect
+import datetime
+import pickle
 import random
 import string
 import sys
@@ -20,6 +19,9 @@ Solves Boggle/Scramble with Friends.
 TOKENS = ['a','b','c','d','e','f','g','h','j','k','l','m','n','o','p','qu','r','s','t','u','v','w','x','y','z']
 
 DEBUG = False
+# If true, will quit the search early when we know that no valid word starts
+# with this prefix.  For instance, the search for 'qr' would be abandoned 
+# immediately because no word starts with 'qr'.
 PREFIX_PRUNE = True
 
 class Location(namedtuple('Location', ['row', 'col'])):
@@ -141,31 +143,6 @@ class UnsortedListBoardSolver(BoardSolver):
   def HasWord(self, word):
     return word in self.valid_words
 
-class SetBoardSolver(BoardSolver):
-  def __init__(self, valid_words):
-    self.valid_words = set(valid_words)
-
-  def HasPrefix(self, prefix):
-    for word in self.valid_words:
-      if word.startswith(prefix):
-        return True
-    return False
-
-  def HasWord(self, word):
-    return word in self.valid_words
-
-class DictBoardSolver(BoardSolver):
-  def __init__(self, valid_words):
-    self.valid_words = dict([(word, True) for word in valid_words])
-
-  def HasPrefix(self, prefix):
-    for word in self.valid_words:
-      if word.startswith(prefix):
-        return True
-    return False
-
-  def HasWord(self, word):
-    return word in self.valid_words
 
 class SortedListBoardSolver(BoardSolver):
   def __init__(self, valid_words):
@@ -211,8 +188,9 @@ class TrieBoardSolver(BoardSolver):
   def HasPrefix(self, prefix):
     curr_node, remainder = self.trie._find_prefix_match(prefix)
     return not remainder
-    # Bug
-    #   return len(self.trie.find_prefix_matches(prefix)) > 0
+    # Extremely slow method - does a lot of extra work creating the
+    # list of results, only to throw it away.
+    #return len(self.trie.find_prefix_matches(prefix)) > 0
 
   def HasWord(self, word):
     return word in self.trie
@@ -229,35 +207,18 @@ def ReadDictionary(path):
 
 
 def main():
-  
-  # Unsorted lists
-  
-  # http://docs.python.org/library/bisect.html
-  # Sorted list with bisect
-  
-  
   words = ReadDictionary(sys.argv[1])
-  
   print 'Read %d words' %(len(words))
   
-  # trie_solver = TrieBoardSolver(words)
-  #   list_solver = UnsortedListBoardSolver(words)
-  #   set_solver = SetBoardSolver(words)
-  #   dict_solver = DictBoardSolver(words)
+  trie_solver = TrieBoardSolver(words)
+  list_solver = UnsortedListBoardSolver(words)
   sorted_list_solver = SortedListBoardSolver(words)
   
   # print 'Size of trie solver pickled: %d' %(len(pickle.dumps(trie_solver, -1)))
-  #   print 'Size of list solver pickled: %d' %(len(pickle.dumps(list_solver, -1)))
-  #   print 'Size of sorted list solver pickled: %d' %(len(pickle.dumps(sorted_list_solver, -1)))
-
-  import datetime
-  
-  
-  iters = [1, 10, 100] #, 1000, 10000, 100000]
-  #solvers = [list_solver,set_solver, dict_solver, trie_solver, sorted_list_solver]
-  
-  #solvers = [set_solver, dict_solver]
-  solvers = [sorted_list_solver]
+  # print 'Size of list solver pickled: %d' %(len(pickle.dumps(list_solver, -1)))
+  # print 'Size of sorted list solver pickled: %d' %(len(pickle.dumps(sorted_list_solver, -1)))
+  iters = [1, 10, 100, 1000] 
+  solvers = [trie_solver, list_solver, sorted_list_solver]
   for num_iters in iters:
     random_boards = [Board(4,4) for x in range(num_iters)]
     for solver in solvers:
@@ -269,19 +230,8 @@ def main():
     
       seconds = elapsed.seconds + (elapsed.microseconds / 1E6)
       avg_time = seconds / num_iters
-      print 'Took %.3f seconds to solve %d boards; avg %.3f with %s' %(elapsed.seconds, 
+      print 'Took %.3f seconds to solve %d boards; avg %.3f with %s' %(seconds, 
         num_iters, avg_time, solver)
-  
-  # Took 23.00 seconds to solve 10 boards; avg 2.36 with <__main__.TrieBoardSolver object at 0x198c770>
-  #   Took 0.00 seconds to solve 10 boards; avg 0.03 with <__main__.SortedListBoardSolver object at 0x198c870>
-  
-  #$ wc -l /usr/share/dict/words
-  #  234936 /usr/share/dict/words
-  # >>> import math
-  #   >>> math.log(234936) / math.log(2)   
-  #   17.841908273534177
-  #   >>> 2**18
-  #   262144
   
   
   # b = Board(4, 4)
