@@ -24,6 +24,8 @@ DEBUG = False
 # immediately because no word starts with 'qr'.
 PREFIX_PRUNE = True
 
+TIMING_TEST = False
+
 class Location(namedtuple('Location', ['row', 'col'])):
   """Represents a location on the board."""
   
@@ -214,57 +216,41 @@ def main():
   list_solver = UnsortedListBoardSolver(words)
   sorted_list_solver = SortedListBoardSolver(words)
   
+  if TIMING_TEST:
   # print 'Size of trie solver pickled: %d' %(len(pickle.dumps(trie_solver, -1)))
   # print 'Size of list solver pickled: %d' %(len(pickle.dumps(list_solver, -1)))
   # print 'Size of sorted list solver pickled: %d' %(len(pickle.dumps(sorted_list_solver, -1)))
-  iters = [1, 10, 100, 1000] 
-  solvers = [trie_solver, list_solver, sorted_list_solver]
-  for num_iters in iters:
-    random_boards = [Board(4,4) for x in range(num_iters)]
-    for solver in solvers:
-      start = datetime.datetime.now()
-      for board in random_boards:
-        solver.Solve(board)
-      end = datetime.datetime.now()
-      elapsed = end - start
+    iters = [1, 10, 100, 1000] 
+    solvers = [trie_solver, list_solver, sorted_list_solver]
+    for num_iters in iters:
+      random_boards = [Board(4,4) for x in range(num_iters)]
+      for solver in solvers:
+        start = datetime.datetime.now()
+        for board in random_boards:
+          solver.Solve(board)
+        end = datetime.datetime.now()
+        elapsed = end - start
     
-      seconds = elapsed.seconds + (elapsed.microseconds / 1E6)
-      avg_time = seconds / num_iters
-      print 'Took %.3f seconds to solve %d boards; avg %.3f with %s' %(seconds, 
-        num_iters, avg_time, solver)
-  
-  
-  # b = Board(4, 4)
-  #   # b.board = [
-  #   #          ['h', 'b', 'c', 'd'],
-  #   #          ['e', 'f', 'G', 'h'],
-  #   #          ['i', 'l', 'l', 'l'],
-  #   #          ['m', 'n', 'o', 'p']
-  #   #   ]
-  #   
-  #   b.board = [
-  #          ['i', 'd', 'w', 'c'],
-  #          ['s', 'n', 'a', 'k'],
-  #          ['t', 'u', 'p', 'e'],
-  #          ['d', 's', 'g', 'e']
-  #   ]
-  #   
-  #   print b
-  #   solutions = sorted_list_solver.Solve(b)
-  #  
-  #print 'Found %d solutions' %len(solutions)
-  #print 'Found %d solutions' %len(list_solver.Solve(b))
-  #print 'Found %d solutions' %len(trie_solver.Solve(b))
-    
-  # for solution in sorted(solutions):
-  #      print solution
-  # 
-  #   for word, locs in solutions:
-  #     # Every tile takes up one letter, except qu
-  #     expected_len = len(locs) - word.count('q')
-  #     assert len(word) == expected_len, '%s was length %d; only had %d tiles' %(
-  #       word, len(word), len(locs))
-  
+        seconds = elapsed.seconds + (elapsed.microseconds / 1E6)
+        avg_time = seconds / num_iters
+        print 'Took %.3f seconds to solve %d boards; avg %.3f with %s' %(seconds, 
+          num_iters, avg_time, solver)
+
+
+  b = Board(4, 4)
+  b.board = [
+    ['l', 'qu', 'r', 'e'],
+    ['s', 'l', 'u', 's'],
+    ['a', 't', 'i', 'c'],
+    ['n', 'r', 'e', 'n']
+  ]
+  list_solutions = list_solver.Solve(b)
+  sorted_solutions = sorted_list_solver.Solve(b)
+  trie_solutions = trie_solver.Solve(b)
+
+  assert list_solutions == sorted_solutions and list_solutions == trie_solutions
+  for solution in sorted(list_solutions):
+    print solution  
 
 if __name__ == '__main__':
   main()
