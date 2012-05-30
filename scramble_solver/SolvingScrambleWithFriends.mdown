@@ -1,6 +1,6 @@
 ## Solving Scramble with Friends - A tale of three data structures
 
-This post aims to illustrate how to solve Scramble With Friends/Boggle and the techniques and data structures necessary.  In particular, we will see how to prune an enormous search space, how to use recursion to simplify the task, as well as the relative performance of three different data structures and implementations.
+This post aims to illustrate how to solve Scramble With Friends/Boggle and the techniques and data structures necessary.  In particular, we will see how to prune an enormous search space, how to use recursion to simplify the task, and  the relative performance of three different data structures: an unsorted list, a sorted list with binary search, and a trie.
 
 # Problem statement
 Given an N x N board, (4x4 in case of Boggle and Scramble with Friends), find all of the paths through the board which create a valid word.  These paths must use each tile at most once and be contiguous; tile N must be adjacent to tile N - 1 in any of 8 directions (North, Northeast, East, Southeast, South, Southwest, West, Northwest).
@@ -59,7 +59,7 @@ The problem is that this method will waste an inordinate amount of time exhausti
 
 Those with some algorithms background might recognize the code above as a modified form of a [depth first search][].  As described previously, a depth first search will exhaustively explore every possible path through the board.  We can vastly improve the efficiency of this algorithm by quitting the search early when we know it won't be fruitful.  If we know all of the valid words, we can quit when we know that no  word starts with the current string.  Thus in the previous example, if the current word built up so far were "QuR", the algorithm could determine that no words start with QuR and thus fail fast and early.  This optimization will not affect the correctness of the algorithm because none of the potential paths we eliminate could possibly lead to a valid word; by constraint #1 this means that none of those paths would have ended up in the list of solutions in the first place.
 
-How much does this save?  On random 3x3 boards, The fastest implementation I have is sped up by a factor of 75.  Doing 4x4 boards without pruning is infeasible.
+How much does this save?  On random 3x3 boards, The fastest implementation I have is sped up by a factor of 75.  Solving 4x4 boards without pruning is infeasible.
 
 # Basic Python implementation
 
@@ -215,100 +215,133 @@ Again, I don't want to reinvent what's already been done before, so I will be us
 
 Here is a demonstration of its API via the interactive prompt:
 
-	>>> import trie
-	>>> t = trie.Trie()
-	>>> t.add('hell', 1)
-	>>> t.add('hello', 2)
-	>>> t.find_full_match('h')
-	>>> t.find_full_match('hell')
-	1
-	>>> t.find_full_match('hello')
-	2
-	>>> t.find_prefix_matches('hello')
-	[2]
-	>>> t.find_prefix_matches('hell')
-	[2, 1]
+<div>
+[sourcecode language="python"]
+>>> import trie
+>>> t = trie.Trie()
+>>> t.add('hell', 1)
+>>> t.add('hello', 2)
+>>> t.find_full_match('h')
+>>> t.find_full_match('hell')
+1
+>>> t.find_full_match('hello')
+2
+>>> t.find_prefix_matches('hello')
+[2]
+>>> t.find_prefix_matches('hell')
+[2, 1]
+[/sourcecode]
+</div>
 	
 Unfortunately, there's a bug in his code:
 
-	>>> t = trie.Trie()
-	>>> t.add('hello', 0)
-	>>> 'fail' in t
-	False
-	>>> 'hello' in t
-	True
-	# Should be false; 'h' starts a string but
-	# it is not contained in data structure
-	>>> 'h' in t
-	True
+<div>
+[sourcecode language="python"]
+>>> t = trie.Trie()
+>>> t.add('hello', 0)
+>>> 'fail' in t
+False
+>>> 'hello' in t
+True
+# Should be false; 'h' starts a string but
+# it is not contained in data structure
+>>> 'h' in t
+True
+[/sourcecode]
+</div>
 	
 His `__contains__` method is as follows:
 
-	def __contains__( self, s ) :
-	  if self.find_full_match(s,_SENTINEL) is _SENTINEL :
-	      return False
-	  return True
+<div>
+[sourcecode language="python"]
+def __contains__( self, s ) :
+  if self.find_full_match(s,_SENTINEL) is _SENTINEL :
+      return False
+  return True
+[/sourcecode]
+</div>
 
 The `find_full_match` is where the problem lies.
 
-	def find_full_match( self, key, fallback=None ) :
-      '''
-      Returns the value associated with the key if found else, returns fallback
-      '''
-      r = self._find_prefix_match( key )
-      if not r[1] and r[0]:
-        return r[0][0]
-      return fallback
+<div>
+[sourcecode language="python"]
+def find_full_match( self, key, fallback=None ) :
+  '''
+  Returns the value associated with the key if found else, returns fallback
+  '''
+  r = self._find_prefix_match( key )
+  if not r[1] and r[0]:
+    return r[0][0]
+  return fallback
+[/sourcecode]
+</div>
 	
 `_find_prefix_match` returns a tuple of node that the search terminated on, remainder of the string left to be matched.  For instance,
 
-	>>> t._find_prefix_match('f')
-	[[None, {'h': [None, {'e': [None, {'l': [None, {'l': [None, {'o': [0, {}]}]}]}]}]}], 'f']
-	>>> t.root
-	[None, {'h': [None, {'e': [None, {'l': [None, {'l': [None, {'o': [0, {}]}]}]}]}]}]
+<div>
+[sourcecode language="python"]
+>>> t._find_prefix_match('f')
+[[None, {'h': [None, {'e': [None, {'l': [None, {'l': [None, {'o': [0, {}]}]}]}]}]}], 'f']
+>>> t.root
+[None, {'h': [None, {'e': [None, {'l': [None, {'l': [None, {'o': [0, {}]}]}]}]}]}]
+[/sourcecode]
+</div>
+
 
 This makes sense, 'f' doesn't start any words in the trie containing just the word 'hello', so the root is returned with the 'f' string that doesn't match.  `find_full_match` correctly handles this case, since r[1] = 'f', not r[1] = False, and the fallback is returned.  That fallback is used by contains to signify that the given string is *not* in the trie.
 
 The problem is when the string in question starts a valid string but is itself not contained in the trie.  As we saw previously, 'h' is considered to be in the trie.
 
-	>>> r = t._find_prefix_match('h')
-	>>> r
-	[[None, {'e': [None, {'l': [None, {'l': [None, {'o': [0, {}]}]}]}]}], '']
-	>>> r[0]
-	[None, {'e': [None, {'l': [None, {'l': [None, {'o': [0, {}]}]}]}]}]
-	>>> r[1]
-	''
-	>>> bool(not r[1] and r[0])
-	True
-	>>> r[0][0]
-	# None
+<div>
+[sourcecode language="python"]
+>>> r = t._find_prefix_match('h')
+>>> r
+[[None, {'e': [None, {'l': [None, {'l': [None, {'o': [0, {}]}]}]}]}], '']
+>>> r[0]
+[None, {'e': [None, {'l': [None, {'l': [None, {'o': [0, {}]}]}]}]}]
+>>> r[1]
+''
+>>> bool(not r[1] and r[0])
+True
+>>> r[0][0]
+# None
+[/sourcecode]
+</div>
 	
 The issue is that his code does not check that there is a value stored in the given node.  Since no such value has been stored, the code returns None, which is not equal to the SENTINEL_ value that his `__contains__` method expects.  We can either change find_full_match to handle this case correctly, or change the `__contains__` method to handle the None result as a failure.  Let's modify the `find_full_match` method to obey it's implied contract (and be easier to understand):
+
+<div>
+[sourcecode language="python"]
+def find_full_match( self, key, fallback=None ) :
+  '''
+  Returns the value associated with the key if found else, returns fallback
+  '''
+  curr_node, remainder = self._find_prefix_match(key)
+  stored_value = curr_node[0]
+  has_stored_value = stored_value is not None
+  if not remainder and has_stored_value:
+	return stored_value
+  return fallback
+[/sourcecode]
+</div>
 	
-	def find_full_match( self, key, fallback=None ) :
-      '''
-      Returns the value associated with the key if found else, returns fallback
-      '''
-      curr_node, remainder = self._find_prefix_match(key)
-	  stored_value = curr_node[0]
-	  has_stored_value = stored_value is not None
-	  if not remainder and has_stored_value:
-		return stored_value
-	  return fallback
 
 Let's make sure this works:
 
-	>>> reload(trie)
-	<module 'trie' from 'trie.py'>
-	>>> t = trie.Trie()
-	>>> t.add('hello', 2)
-	>>> 'f' in t
-	False
-	>>> 'hell' in t
-	False
-	>>> 'hello' in t
-	True
-
+<div>
+[sourcecode language="python"]
+>>> reload(trie)
+<module 'trie' from 'trie.py'>
+>>> t = trie.Trie()
+>>> t.add('hello', 2)
+>>> 'f' in t
+False
+>>> 'hell' in t
+False
+>>> 'hello' in t
+True
+[/sourcecode]
+</div>
 
 OK, with that minor patch, here's a first pass implementation of the solution using the trie:
 
@@ -394,25 +427,16 @@ print words
 [/sourcecode]
 </div>
 
-Result:
-
-https://gist.github.com/2833942#file_scramble+solver+output.txt
-
+The results appear after the conclusion.
 
 # Conclusion
 I have presented both pseudocode and Python implementations of an algorithm for solving the classic Boggle/Scramble With Friends game.  In the process, we saw such concepts as recursion, depth first search, optimizing code through pruning unfruitful search branches, and the importance of using the right data structure.  This post does not aim to be exhaustive; I hope I have piqued your interest for learning more about tries and other lesser known data structures.
 
-My patched trie implementation is:
+For results, the patched trie implementation, and the driver program, see below.  To run the driver program, pass it a path to a list of valid words, one per line.  e.g.
 
+	python2.6 solver.py /usr/share/dict/words
+	
 https://gist.github.com/2833942#file_trie.py
-
-The driver program is below:
-
-https://gist.github.com/2833942#file_solver.py
-
-To run it, pass it the path to a list of valid words.  e.g.
-
-    python2.6 solver.py /usr/share/dict/words
 
 
 [Trie wikipedia]:http://en.wikipedia.org/wiki/Trie
