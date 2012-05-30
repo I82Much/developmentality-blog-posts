@@ -1,19 +1,15 @@
-# DAWG or DAWG not.  There is no Trie.
+## Solving Scramble with Friends - A tale of three data structures
 
-## Solving Scramble with Friends - Recursion, Stacks, and Tries
-
-Apologies to Yoda, and to you for having to read such a bad pun.  This post aims to illustrate how to solve Scramble With Friends/Boggle and the techniques and data structures necessary.  In particular, we will see how to prune an enormous search space, how to use recursion to simplify the task, as well as the relative performance of three different data structures and implementations.
+This post aims to illustrate how to solve Scramble With Friends/Boggle and the techniques and data structures necessary.  In particular, we will see how to prune an enormous search space, how to use recursion to simplify the task, as well as the relative performance of three different data structures and implementations.
 
 # Problem statement
 Given an N x N board, (4x4 in case of Boggle and Scramble with Friends), find all of the paths through the board which create a valid word.  These paths are constrained to 1) use each tile at most once and 2) be contiguous; tile N must be adjacent to tile N - 1 in any of 8 directions (North, Northeast, East, Southeast, South, Southwest, West, Northwest).
 
 ![Scramble Screenshot][]
 
-In this example, 
-
 # Naivest approach
 
-First, imagine that we have a method that, given a path through the board returns all valid words that starts with that path, called DoSolve.  For instance, DoSolve(['Qu']) would return all the valid words (and their locations) that start with Qu.  DoSolve(['N', 'E']) would return all the valid paths that start with N followed by an E.  With such a method, it is trivial to solve the problem.  In pseudocode:
+First, imagine that we have a method that, given a path through the board returns all valid words that starts with that path, called `DoSolve`.  For instance, `DoSolve(['Qu'])` would return all the valid words (and their locations) that start with Qu.  `DoSolve(['N', 'E'])` would return all the valid paths that start with N followed by an E.  With such a method, it is trivial to solve the problem.  In pseudocode:
 
 	Solve(board):
 		solutions = empty list
@@ -21,7 +17,11 @@ First, imagine that we have a method that, given a path through the board return
 			append DoSolve(location) to solutions
 		return solutions
 	
-The tricky part is, how do we make DoSolve work?  Remember that it must 1) return only valid words 2) return only words that are formed from contiguous tiles and 3) must not repeat any tiles.
+The tricky part is, how do we make DoSolve work?  Remember that it must 
+
+1. return only valid words 
+2. return only words that are formed from contiguous tiles
+3. must not repeat any tiles.
 
 The easiest way to solve this problem is through recursion. As you probably remember, [recursion][Recursion] is simply when a method calls itself.  In order to avoid an infinite loop (and eventual stack overflow), there must be some sort of stopping criteria.  As it was taught to me, you have to be sure that the problem becomes smaller at each step, until it becomes so small as to be trivially solved.  Here's that basic algorithm:
 
@@ -332,28 +332,9 @@ Unfortunately, this is slow.  How slow?
 
 While this isn't as bad as the unsorted list, it's still orders of magnitudes slower than the binary search implementation.
 
-
 Why is this slow?  Well, it's doing a whole lot of unnecessary work.  For instance, if we want to determine if 'h' is a valid prefix, this implementation will first construct the list of *all* words that start with h, only to have all that work thrown away when we see that the list is not empty.
 
-A much more efficient approach is to cheat a little and use an internal method `_find_prefix_match` which returns the node in the tree that the search stopped at and how much of the string was unmatched.  
-
-<div>
-[sourcecode language="python"]
->>> import trie
->>> t = trie.Trie()
->>> t.add('hell', 1)
->>> t.add('hello', 2)
->>> t._find_prefix_match('h')
-# There is a prefix match, so the unmatched portion is the empty string
-[[None, {'e': [None, {'l': [None, {'l': [1, {'o': [2, {}]}]}]}]}], '']
->>> t._find_prefix_match('a')
-# No match, so the entire string is unmatched
-[[None, {'h': [None, {'e': [None, {'l': [None, {'l': [1, {'o': [2, {}]}]}]}]}]}], 'a']
->>> t._find_prefix_match('help')
-# Partial match, so part of the prefix string is returned
-[[None, {'l': [1, {'o': [2, {}]}]}], 'p']
-[/sourcecode]
-</div>
+A much more efficient approach is to cheat a little and use the previously discussed method `_find_prefix_match` which returns the node in the tree that the search stopped at and how much of the search string was unmatched.
 
 By using this method directly, we can avoid creating the lists of words which we then throw away.  We modify the HasPrefix method to the following:
 
@@ -365,19 +346,69 @@ def HasPrefix(self, prefix):
 [/sourcecode]
 </div>
 
-With this optmization, the trie becomes competitive with the binary search:
+With this optmization, the trie performance becomes competitive with the binary search:
 
-	Took 0.073 seconds to solve 1 boards; avg 0.073 with <__main__.TrieBoardSolver object at 0x135f090>
-	Took 0.243 seconds to solve 10 boards; avg 0.024 with <__main__.TrieBoardSolver object at 0x135f090>
-	Took 3.641 seconds to solve 100 boards; avg 0.036 with <__main__.TrieBoardSolver object at 0x135f090>
-
+	Took 0.027 seconds to solve 1 boards; avg 0.027 with <__main__.TrieBoardSolver object at 0x135f230>
+	Took 0.019 seconds to solve 1 boards; avg 0.019 with <__main__.SortedListBoardSolver object at 0x135f330>
+	Took 0.199 seconds to solve 10 boards; avg 0.020 with <__main__.TrieBoardSolver object at 0x135f230>
+	Took 0.198 seconds to solve 10 boards; avg 0.020 with <__main__.SortedListBoardSolver object at 0x135f330>
+	Took 2.531 seconds to solve 100 boards; avg 0.025 with <__main__.TrieBoardSolver object at 0x135f230>
+	Took 2.453 seconds to solve 100 boards; avg 0.025 with <__main__.SortedListBoardSolver object at 0x135f330>
+	
 It is still slower, but not nearly as bad as before.
 
-# Conclusion
+# Solving the board in the screenshot
+With all this machinery in place, we can run the original board in the screenshot through the algorithms:
 
-# TODO(ndunn): fix this busted bs.
->>> [x.word for x in trie_solutions if x not in sorted_solutions]
-['ll', 'llu', 'lla', 'llan', 'qu', 'qur', 'reu', 'reus', 'reut', 'reuti', 'reutil', 'reuc', 'res', 'resu', 'resul', 'resulta', 'resultan', 'resulti', 'resultin', 'resui', 'resuin', 'resuc', 'resi', 'resil', 'resit', 'resic', 'resine', 'resc', 'rescu', 'resci', 'rescin', 'ru', 'rues', 'rul', 'rula', 'rulan', 'ruli', 'rulin', 'rusi', 'rusc', 'ruti', 'rutil', 'rutila', 'rutilan', 'rute', 'rui', 'ruine', 'ruc', 'ruce', 'rucer', 'erl', 'eru', 'eruci', 'eur', 'eul', 'eula', 'euli', 'eus', 'eusc', 'eut', 'euta', 'eutan', 'eutr', 'eute', 'eutec', 'euter', 'euc', 'euci', 'eucir', 'euce', 'eucn', 'eucne', 'esu', 'esur', 'esi', 'esc', 'escu', 'escul', 'escula', 'esculi', 'escut', 'escute', 'sl', 'squ', 'squu', 'squus', 'sl', 'slu', 'slus', 'slui', 'sluic', 'slati', 'slatis', 'slatin', 'slatine', 'slan', 'slanti', 'slantin', 'slar', 'sli', 'slis', 'slic', 'slir', 'slin', 'sall', 'salu', 'salut', 'saluti', 'saltu', 'salti', 'saltis', 'saltie', 'saltin', 'saltn', 'salte', 'sali', 'salis', 'salit', 'salice', 'salicet', 'salicetu', 'salie', 'salien', 'salienc', 'salin', 'satl', 'satli', 'satu', 'satur', 'sature', 'sati', 'satis', 'satir', 'satie', 'satien', 'satr', 'santi', 'sante', 'santen', 'sarti', 'sartis', 'sarin', 'sarn', 'stu', 'stur', 'stul', 'stus', 'stui', 'stuc', 'sta', 'stal', 'stali', 'stalin', 'stan', 'stari', 'starin', 'sti', 'stil', 'stic', 'stira', 'stin', 'str', 'stran', 'stri', 'stric', 'strin', 'strei', 'strec', 'stren', 'ste', 'stei', 'steir', 'stec', 'ster', 'stera', 'steril', 'sternali', 'steni', 'stenc', 'stenci', 'll', 'lures', 'lus', 'lusi', 'lusit', 'lusita', 'lusitan', 'lusc', 'lusci', 'luscin', 'luta', 'lutan', 'luti', 'lutis', 'lutin', 'lutr', 'lutri', 'lutre', 'lutei', 'lutec', 'luteci', 'lui', 'luis', 'luise', 'luit', 'luc', 'luci', 'lucit', 'lucin', 'lucer', 'lucerna', 'lucen', 'lasqu', 'lasti', 'lastin', 'lastn', 'lastr', 'laste', 'latu', 'lati', 'latis', 'latise', 'latic', 'latice', 'latir', 'latine', 'latr', 'latri', 'latrin', 'latre', 'latec', 'lateri', 'lateric', 'latericu', 'laterin', 'latenc', 'lantu', 'lante', 'lanter', 'larit', 'laric', 'larn', 'lare', 'laren', 'liu', 'liser', 'lisu', 'lits', 'litu', 'litur', 'lita', 'litan', 'litr', 'litera', 'lic', 'licu', 'lice', 'licen', 'lir', 'lirat', 'liern', 'lienc', 'liencu', 'linc', 'linec', 'linecu', 'ures', 'uresi', 'url', 'urla', 'urli', 'urlin', 'urs', 'ursi', 'ursic', 'ursin', 'ue', 'ul', 'ulr', 'uls', 'ulst', 'ulste', 'ulsteri', 'ulsterin', 'ulat', 'ulatr', 'ult', 'ulti', 'ultr', 'ultras', 'ultran', 'ulte', 'ulter', 'ulteri', 'uli', 'ulit', 'usi', 'usit', 'usita', 'usin', 'uts', 'uti', 'util', 'utic', 'utin', 'utr', 'utra', 'utri', 'utric', 'utre', 'utrec', 'uter', 'utera', 'uteral', 'uterin', 'uten', 'ui', 'uil', 'uit', 'uits', 'uir', 'uin', 'uc', 'sr', 'sru', 'srut', 'seru', 'seu', 'su', 'surqu', 'surl', 'surli', 'surlin', 'surline', 'sul', 'sult', 'sulta', 'sultanr', 'sultr', 'sultri', 'sultrin', 'sultrine', 'suli', 'sut', 'sutl', 'suta', 'suti', 'sutil', 'sutr', 'sute', 'suter', 'suil', 'suill', 'suita', 'suic', 'suin', 'suc', 'suci', 'silu', 'silur', 'silure', 'sila', 'silan', 'silta', 'siu', 'situ', 'situl', 'sicu', 'sicul', 'sien', 'sinc', 'sincer', 'sinec', 'sinecu', 'sinecur', 'sc', 'scu', 'scul', 'sculs', 'scuti', 'sci', 'scil', 'scill', 'sciu', 'sciur', 'scit', 'scita', 'scir', 'scirt', 'scire', 'sciren', 'scie', 'scien', 'scin', 'sce', 'scer', 'scern', 'scen', 'sceni', 'scenit', 'asl', 'asqu', 'asl', 'aslu', 'astu', 'astuc', 'astuci', 'asti', 'astil', 'astic', 'astin', 'astr', 'astri', 'astril', 'astric', 'astrie', 'astrin', 'astre', 'aste', 'astei', 'asteis', 'asteri', 'asteris', 'all', 'alls', 'alqu', 'alr', 'alre', 'alru', 'als', 'alst', 'alstr', 'alu', 'alus', 'alut', 'aluc', 'alts', 'altu', 'alti', 'altis', 'altisc', 'altic', 'altinc', 'altr', 'altri', 'altric', 'altrice', 'alte', 'alteri', 'ali', 'aliu', 'alis', 'alise', 'alitu', 'alitur', 'alitr', 'alic', 'alie', 'aliet', 'alienc', 'atl', 'atu', 'atul', 'atil', 'atin', 'atn', 'atr', 'atri', 'atriu', 'atric', 'atrie', 'atrien', 'atre', 'atec', 'ater', 'ateri', 'ateni', 'atenis', 'ants', 'antl', 'antlu', 'antlue', 'antli', 'antlin', 'antil', 'antill', 'antilu', 'antilue', 'antiu', 'antiur', 'antiure', 'antius', 'antis', 'antise', 'antiser', 'antiseru', 'antisu', 'antisur', 'antisc', 'anticu', 'antice', 'anticer', 'anticen', 'anticn', 'anticne', 'antir', 'antire', 'antirec', 'antiren', 'antie', 'antiec', 'antier', 'antien', 'antin', 'antine', 'antr', 'antri', 'antrec', 'antei', 'antein', 'antec', 'antecu', 'antecur', 'anter', 'anteri', 'anten', 'artl', 'artli', 'arti', 'artil', 'artill', 'artis', 'artic', 'articu', 'articul', 'artin', 'artine', 'arte', 'ari', 'arill', 'ariu', 'aris', 'arit', 'aric', 'arie', 'ariet', 'arien', 'aret', 'areti', 'aretin', 'arei', 'areit', 'arec', 'arecu', 'aren', 'areni', 'arenil', 'arenic', 'ts', 'tsa', 'tsan', 'tsari', 'tsarin', 'tsare', 'tl', 'tla', 'tlas', 'tli', 'tlin', 'tuqu', 'turqu', 'ture', 'turl', 'turs', 'tursi', 'tues', 'tul', 'tull', 'tuls', 'tulas', 'tular', 'tuli', 'tulis', 'tus', 'tusc', 'tuil', 'tuill', 'tuis', 'tuc', 'tas', 'tasl', 'tasl', 'talu', 'taluc', 'talie', 'talier', 'talin', 'tanr', 'tanre', 'taris', 'taren', 'tils', 'tila', 'tilas', 'tis', 'ticu', 'tir', 'tira', 'tiral', 'tinc', 'tr', 'tras', 'tral', 'trall', 'trali', 'tran', 'tril', 'trilu', 'trila', 'triu', 'triur', 'tris', 'trise', 'triser', 'trisu', 'trisc', 'trisce', 'tric', 'tricu', 'tricur', 'tricus', 'tricen', 'trie', 'trien', 'tre', 'trei', 'treil', 'treill', 'trec', 'trecu', 'trecul', 'treculi', 'tren', 'trenc', 'tei', 'teic', 'teir', 'tein', 'tecu', 'tecn', 'ter', 'teni', 'tenc', 'il', 'isr', 'ise', 'iser', 'iseu', 'isu', 'isur', 'isure', 'isc', 'itu', 'itur', 'ital', 'ite', 'itera', 'iteran', 'ic', 'icer', 'icen', 'ir', 'iras', 'irat', 'iren', 'ier', 'iern', 'inc', 'incu', 'incurs', 'incul', 'ince', 'incer', 'incera', 'incerat', 'incert', 'ine', 'inet', 'inec', 'iner', 'inera', 'ineras', 'inertl', 'inerta', 'inertan', 'inertn', 'cu', 'curli', 'curlie', 'curlin', 'curline', 'curs', 'cursi', 'cursit', 'cuer', 'cues', 'cul', 'cula', 'culti', 'cultis', 'cultir', 'cultr', 'cultra', 'cultri', 'culte', 'culter', 'cultera', 'culteran', 'culi', 'culin', 'cus', 'cuse', 'cusi', 'cusin', 'cusine', 'cusiner', 'cutl', 'cutla', 'cutlas', 'cutli', 'cutlin', 'cuta', 'cutan', 'cuti', 'cutise', 'cutir', 'cutire', 'cuter', 'cuten', 'cui', 'cuis', 'cuit', 'cuitl', 'cuitla', 'cuira', 'cuiras', 'cuin', 'cs', 'ci', 'cil', 'cill', 'cis', 'cisr', 'citu', 'cita', 'citr', 'citra', 'citran', 'citre', 'citren', 'cir', 'cin', 'ciner', 'cinera', 'cinerat', 'cet', 'cetu', 'ceta', 'cetan', 'cetr', 'cetra', 'cei', 'cer', 'cera', 'cerast', 'cerasti', 'cerastiu', 'cerat', 'cerati', 'ceratiu', 'cert', 'certa', 'certi', 'ceri', 'ceril', 'cerill', 'ceriu', 'ceris', 'cerit', 'cen', 'cn', 'cni', 'cne', 'nas', 'nastu', 'nastur', 'nasti', 'nastil', 'nastin', 'nastine', 'nal', 'nall', 'nali', 'nalit', 'natu', 'natur', 'nati', 'natic', 'natri', 'natriu', 'natric', 'nate', 'nart', 'nari', 'narin', 'nare', 'nt', 'rast', 'rastl', 'rastu', 'rasti', 'raste', 'ral', 'rall', 'rals', 'ralst', 'rats', 'ratl', 'ratli', 'ratlin', 'rati', 'ratic', 'ratin', 'ranti', 'rantin', 'rante', 'ri', 'ril', 'rills', 'rillst', 'rila', 'ris', 'rits', 'ritl', 'ritu', 'ric', 'rin', 'rinc', 'rince', 'retu', 'retur', 'retus', 'retuc', 'reta', 'retas', 'retal', 'retali', 'reti', 'retil', 'retis', 'retic', 'reticu', 'reticul', 'retinc', 'rei', 'reil', 'reill', 'reic', 'reinc', 'reincu', 'reincul', 'rec', 'recu', 'recurs', 'recursi', 'recul', 'recult', 'reculti', 'recus', 'reci', 'recis', 'recit', 'recita', 'ren', 'reni', 'renil', 'renill', 'renis', 'renit', 'renic', 'renc', 'rencu', 'rencul', 'et', 'etu', 'etal', 'eti', 'etn', 'etr', 'ei', 'eil', 'eis', 'eise', 'eit', 'eic', 'eir', 'ein', 'ec', 'ecu', 'ecue', 'ecs', 'eci', 'ecil', 'ecit', 'eras', 'erast', 'erastu', 'erasti', 'eran', 'erant', 'ert', 'eri', 'eris', 'erit', 'erin', 'ern', 'eni', 'enis', 'enic', 'enicu', 'enicur', 'enc', 'encu', 'encur', 'encus', 'encui', 'encuir', 'encuira', 'encuiras', 'enci', 'encis', 'encit', 'encita', 'encir', 'niu', 'nis', 'nise', 'nisu', 'nitr', 'nitra', 'nitran', 'nite', 'nic', 'nicet', 'nir', 'nie', 'niet', 'niec', 'nier', 'nets', 'netl', 'netli', 'neill', 'neis', 'neit', 'nec', 'ner', 'nert', 'neriu', 'nerit']
+<div>
+[sourcecode language="python"]
+words = ReadDictionary(sys.argv[1])
+print 'Read %d words' %(len(words))
+
+trie_solver = TrieBoardSolver(words)
+sorted_list_solver = SortedListBoardSolver(words)
+b = Board(4, 4)
+b.board = [
+	['l', 'qu', 'r', 'e'],
+	['s', 'l', 'u', 's'],
+	['a', 't', 'i', 'c'],
+	['n', 'r', 'e', 'n']
+]
+print 'Solving with binary search'
+sorted_solutions = sorted_list_solver.Solve(b)
+print 'Solving with trie'
+trie_solutions = trie_solver.Solve(b)
+
+# Results should be exactly the same
+assert sorted_solutions == trie_solutions
+
+for solution in sorted(sorted_solutions):
+	print solution
+words = sorted(set([s.word for s in sorted_solutions]))
+print words
+[/sourcecode]
+</div>
+
+Result:
+
+https://gist.github.com/2833942
+
+
+# Conclusion
+I have presented both pseudocode and Python implementations of an algorithm for solving the classic Boggle/Scramble With Friends game.  In the process, we saw such concepts as recursion, depth first search, optimizing code through pruning unfruitful search branches, and the importance of using the right data structure.  This post does not aim to be exhaustive; I hope I have piqued your interest for learning more about tries and other lesser known data structures.
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

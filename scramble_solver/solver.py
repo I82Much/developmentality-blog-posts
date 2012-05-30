@@ -24,7 +24,7 @@ DEBUG = False
 # immediately because no word starts with 'qr'.
 PREFIX_PRUNE = True
 
-TIMING_TEST = False
+TIMING_TEST = True
 
 class Location(namedtuple('Location', ['row', 'col'])):
   """Represents a location on the board."""
@@ -216,13 +216,9 @@ def main():
   list_solver = UnsortedListBoardSolver(words)
   sorted_list_solver = SortedListBoardSolver(words)
   
-  # print 'Size of trie solver pickled: %d' %(len(pickle.dumps(trie_solver, -1)))
-  # print 'Size of list solver pickled: %d' %(len(pickle.dumps(list_solver, -1)))
-  # print 'Size of sorted list solver pickled: %d' %(len(pickle.dumps(sorted_list_solver, -1)))
-  
   if TIMING_TEST:
-    iters = [1, 10, 100, 1000] 
-    solvers = [trie_solver, list_solver, sorted_list_solver]
+    iters = [1, 10, 100]
+    solvers = [trie_solver, sorted_list_solver] #, list_solver, sorted_list_solver]
     for num_iters in iters:
       random_boards = [Board(4,4) for x in range(num_iters)]
       for solver in solvers:
@@ -245,8 +241,6 @@ def main():
     ['a', 't', 'i', 'c'],
     ['n', 'r', 'e', 'n']
   ]
-  print 'Trying to solve with the unsorted list'
-  #list_solutions = list_solver.Solve(b)
   print 'Solving with binary search'
   sorted_solutions = sorted_list_solver.Solve(b)
   print 'Solving with trie'
@@ -254,9 +248,11 @@ def main():
 
   # Results should be exactly the same
   assert sorted_solutions == trie_solutions
-  #assert list_solutions == sorted_solutions and list_solutions == trie_solutions
-  for solution in sorted(sorted_solution):
-    print solution  
+
+  for solution in sorted(sorted_solutions):
+    print solution
+  words = sorted(set([s.word for s in sorted_solutions]))
+  print '\n'.join(words)
 
 if __name__ == '__main__':
   main()
