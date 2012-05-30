@@ -1,5 +1,6 @@
 # From https://bitbucket.org/woadwarrior/trie/src/6bc187d770ba/python/trie.py
-
+# ndunn patched the find_full_match method to handle prefix strings correctly,
+# as well as adding comments.
 
 _SENTINEL = ()
 
@@ -7,7 +8,6 @@ class Trie(object) :
   __slots__ = ['root']
 
   def __init__( self ) :
-      # what does the dict map from
       self.root = [None,{}]
 
   def __getstate__( self ) :
@@ -47,13 +47,16 @@ class Trie(object) :
       return [curr_node,remainder]
 
   def find_full_match( self, key, fallback=None ) :
-      '''
-      Returns the value associated with the key if found else, returns fallback
-      '''
-      r = self._find_prefix_match( key )
-      if not r[1] and r[0] :
-          return r[0][0]
-      return fallback
+    '''
+    Returns the value associated with the key if found else, returns fallback
+    '''
+    curr_node, remainder = self._find_prefix_match(key)
+    stored_value = curr_node[0]
+    has_stored_value = stored_value is not None
+
+    if not remainder and has_stored_value:
+      return stored_value
+    return fallback
 
   def find_prefix_matches( self, prefix ) :
       l = self._find_prefix_match( prefix )

@@ -224,8 +224,89 @@ Here is a demonstration of its API via the interactive prompt:
 	[2]
 	>>> t.find_prefix_matches('hell')
 	[2, 1]
+	
+Unfortunately, there's a bug in his code:
 
-With that in mind, here's a first pass implementation:
+	>>> t = trie.Trie()
+	>>> t.add('hello', 0)
+	>>> 'fail' in t
+	False
+	>>> 'hello' in t
+	True
+	# Should be false; 'h' starts a string but
+	# it is not contained in data structure
+	>>> 'h' in t
+	True
+	
+His `__contains__` method is as follows:
+
+	def __contains__( self, s ) :
+	  if self.find_full_match(s,_SENTINEL) is _SENTINEL :
+	      return False
+	  return True
+
+The `find_full_match` is where the problem lies.
+
+	def find_full_match( self, key, fallback=None ) :
+      '''
+      Returns the value associated with the key if found else, returns fallback
+      '''
+      r = self._find_prefix_match( key )
+      if not r[1] and r[0]:
+        return r[0][0]
+      return fallback
+	
+`_find_prefix_match` returns a tuple of node that the search terminated on, remainder of the string left to be matched.  For instance,
+
+	>>> t._find_prefix_match('f')
+	[[None, {'h': [None, {'e': [None, {'l': [None, {'l': [None, {'o': [0, {}]}]}]}]}]}], 'f']
+	>>> t.root
+	[None, {'h': [None, {'e': [None, {'l': [None, {'l': [None, {'o': [0, {}]}]}]}]}]}]
+
+This makes sense, 'f' doesn't start any words in the trie containing just the word 'hello', so the root is returned with the 'f' string that doesn't match.  `find_full_match` correctly handles this case, since r[1] = 'f', not r[1] = False, and the fallback is returned.  That fallback is used by contains to signify that the given string is *not* in the trie.
+
+The problem is when the string in question starts a valid string but is itself not contained in the trie.  As we saw previously, 'h' is considered to be in the trie.
+
+	>>> r = t._find_prefix_match('h')
+	>>> r
+	[[None, {'e': [None, {'l': [None, {'l': [None, {'o': [0, {}]}]}]}]}], '']
+	>>> r[0]
+	[None, {'e': [None, {'l': [None, {'l': [None, {'o': [0, {}]}]}]}]}]
+	>>> r[1]
+	''
+	>>> bool(not r[1] and r[0])
+	True
+	>>> r[0][0]
+	# None
+	
+	The issue is that his code does not check that there is a value stored in the given node.  Since no such value has been stored, the code returns None, which is not equal to the SENTINEL_ value that his `__contains__` method expects.  We can either change find_full_match to handle this case correctly, or change the `__contains__` method to handle the None result as a failure.  Let's modify the `find_full_match` method to obey it's implied contract (and be easier to understand):
+	
+	def find_full_match( self, key, fallback=None ) :
+      '''
+      Returns the value associated with the key if found else, returns fallback
+      '''
+      curr_node, remainder = self._find_prefix_match(key)
+	  stored_value = curr_node[0]
+	  has_stored_value = stored_value is not None
+	  if not remainder and has_stored_value:
+		return stored_value
+	  return fallback
+
+Let's make sure this works:
+
+	>>> reload(trie)
+	<module 'trie' from 'trie.py'>
+	>>> t = trie.Trie()
+	>>> t.add('hello', 2)
+	>>> 'f' in t
+	False
+	>>> 'hell' in t
+	False
+	>>> 'hello' in t
+	True
+
+
+OK, with that minor patch, here's a first pass implementation of the solution using the trie:
 
 <div>
 [sourcecode language="python"]
