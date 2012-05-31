@@ -1,0 +1,39 @@
+If you walked past my desk a few months ago, you would have found it strewn with Post-It notes detailing things I needed to remember and/or do.  I am a fan of the [Workflowy webapp][Workflowy blog post] for keeping track of TODOs etc., but there are security concerns involved with storing propriertary data on an external company's servers (not a great idea).  Hence the forest of sticky notes on my desk.
+
+This was not a sustainable solution.  For one, it was extremely distracting.  The physical presence of a horde of things to do makes it hard to focus on any one thing.  Second, it's not suitable for search/recall.  Unless there is some external order imposed on the notes, you're limited to a linear search to find what you're looking for.  Third, I have awful hand-writing and this low-tech solution just wasn't cutting it.
+
+Fortunately, somewhere along the way I had heard of [Org mode][OrgMode] for Emacs, and gave it a shot.  There's a steep learning curve involved, but after learning a few commands, I know enough to store and manage my TODOs and notes without too much trouble.  There are plenty of [more detailed walkthroughs][Orgmode walkthrough pdf], but I want to present the bare minimum you need to know to get started.
+
+First, install org mode as per [these instructions.][Orgmode installation].  Next, associate Org mode with all files ending in .org.
+
+Add the following lines to your .emacs file:
+
+	;; Load org-mode
+	(require 'org-install)
+
+	;; Associate .org files with org-mode inside of Emacs
+	(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
+
+(Instructions courtesy of [gloryisasilentthing.com][]).
+
+
+Once you've done that, open a file named TODO.org.  You should be in org mode automatically.
+
+Prefix list items with an asterisk.  
+
+
+
+
+
+
+Where have all the Post-its gone - A brief intro to Emacs Org-Mode
+	used to cover my desk w/ post it notes.  switched to org-mode
+	posted previously about https://workflowy.com/
+		works well, but sensitive data etc probably shouldn't go to an external company's servers
+		
+		
+[Workflowy blog post]:http://developmentality.wordpress.com/2011/01/25/workflowy-free-minimalist-list-webapp/
+[OrgMode]:http://orgmode.org/
+[Orgmode walkthrough pdf]:http://orgmode.org/orgguide.pdf
+[Orgmode installation]:http://orgmode.org/manual/Installation.html
+[glortyisasilentthing.com]:http://www.gloryisasilentthing.com/glory/org-mode-os-x-series-installation/
