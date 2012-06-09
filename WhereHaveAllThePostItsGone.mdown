@@ -21,7 +21,11 @@ Once you've done that, open a file named TODO.org.  You should be in org mode au
 
 Prefix list items with an asterisk.  
 
-
+"Your productivity resolution
+Do more, read less 
+(Use org-mode to manage it all)
+Stay Focused 
+(C-x n s will narrow the file to only show current subtree)"
 
 
 
@@ -37,3 +41,4 @@ Where have all the Post-its gone - A brief intro to Emacs Org-Mode
 [Orgmode walkthrough pdf]:http://orgmode.org/orgguide.pdf
 [Orgmode installation]:http://orgmode.org/manual/Installation.html
 [glortyisasilentthing.com]:http://www.gloryisasilentthing.com/glory/org-mode-os-x-series-installation/
+[Org-Mode your work]:http://jonebird.com/org/colug_orgmode.html
