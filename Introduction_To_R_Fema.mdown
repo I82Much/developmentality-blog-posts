@@ -1,37 +1,27 @@
 # Introduction
 
-[R][] is an excellent language for doing statistical programming and analysis.  It is a free and open-source project, used in some big name companies like Google.  
-
-The article "[Making Government Transparent Using R][]"
-
+[R][] is an excellent language for doing statistical programming and analysis.  It is a free and open-source project, used in academia as well as industry.  The article "[Making Government Transparent Using R][]" is a good introduction as well.
 
 I decided to use one of the data sets provided by [Data.gov](http://explore.data.gov/Other/FEMA-Disaster-Declarations-Summary/uihf-be6u), namely a CSV document detailing all of the Federal Disasters ever declared by FEMA.  I will illustrate how to do some basic tasks such as loading the data into R, exploring the data, and ultimately making charts and graphs of interesting facets of the data.
-
 
 # Acquiring the data
 
 The first step in any data analysis task is to acquire the data and ingest it into R.  The data set in question is available in CSV (comma separated value) format, an incredibly ubiquitous plain text data format that R can read very easily.  The data can be found at [http://explore.data.gov/download/uihf-be6u/CSV](http://explore.data.gov/download/uihf-be6u/CSV).
 
+In R, tabular data can be read in via either the `read.csv` or `read.table` commands.  `read.csv` is basically the same thing as `read.table` except that it defaults to using a comma as the separator character.  
 
-
-Contributing Agency Information
-Citation
-FEMA Disaster Declaration Summary (http://www.fema.gov/hazard/index.shtm)
-Agency Program Page
-http://www.fema.gov
-Agency Data Series Page
-http://www.fema.gov/hazard/index.shtm
-
-
-In R, tabular data can be read in via either the `read.csv` or `read.table` commands.  `read.csv` is basically the same thing as `read.table` except that it defaults to using a comma as the separator character.  You can either download the csv file and read it in locally, or read the data directly from a URL.  The choice is yours.
-
-
-	# The first two lines are immaterial to the dataset; skip them.
-	> disasters = read.csv("http://explore.data.gov/download/uihf-be6u/CSV", skip=2)
+	# You can also download the data locally and use that
+	> disasters = reac.csv("/path/to/Data.gov.FEMADeclarations.csv", skip=2)
 	
+	# ...or from a url.  Note that this used to work when I first started this post a few months ago;
+	# something must have changed since then.  But this technique does work for some data sets
+	> disasters = read.csv(url("http://explore.data.gov/download/uihf-be6u/CSV"), skip=2)
+	
+# Exploratory data analysis
+Next, we can explore what our data set looks like	
+
 	> class(disasters)
 	[1] "data.frame"
-	
 
 	# Number of columns
 	> length(disasters)
@@ -109,7 +99,7 @@ In R, tabular data can be read in via either the `read.csv` or `read.table` comm
 	
 	# As you can see, each column of the data set is analyzed individually.  You can choose each 
 	# column manually to get much more detail
-	> summary(d$State)
+	> summary(disasters$State)
 	       AK   AL   AR   AS   AZ   CA   CO   CT   DC   DE   FL   FM   GA   GU   HI   IA   ID   IL   IN   KS   KY   LA   MA   MD 
 	   1  128 1002 1089   50  201  955  419  116   13   32 1380   31 1110   12   55 1259  196  888 1163 1086 1730 1158  253  270 
 	  ME   MH   MI   MN   MO   MP   MS   MT   NC   ND   NE   NH   NJ   NM   NV   NY   OH   OK   OR   PA   PR   PW   RI   SC   SD 
@@ -120,10 +110,12 @@ In R, tabular data can be read in via either the `read.csv` or `read.table` comm
 	
 	# We can plot this easily with the plot command.  To see all of the options
 	# available for plot, enter ?plot
-	plot(summary(d$State), main="Number of disasters per state", ylab="Number of disasters")
+	plot(summary(disasters$State), main="Number of disasters per state", ylab="Number of disasters")
+	
+[!Unsorted scatterplot][]
 	
 	# To save as a png instead,
-	> png('unsorted_first_draft.png')
+	> png('unsorted_scatterplot.png')
 	> plot(summary(d$State), main="Number of disasters per state", ylab="Number of disasters")
 	> dev.off()
 	
@@ -133,7 +125,6 @@ In R, tabular data can be read in via either the `read.csv` or `read.table` comm
 2. plot the name of the state instead of a dot
 
 The first can be accomplished by using the `table` command instead of `summary`.  Table gives us a similar output, but with additional information, namely the name of the state mapping to each count.
-
 	
 	> table(d$State)
 
@@ -155,11 +146,6 @@ The first can be accomplished by using the `table` command instead of `summary`.
 	[25] "MD" "ME" "MH" "MI" "MN" "MO" "MP" "MS" "MT" "NC" "ND" "NE" "NH" "NJ" "NM" "NV" "NY" "OH" "OK" "OR" "PA" "PR" "PW" "RI"
 	[49] "SC" "SD" "TN" "TX" "UT" "VA" "VI" "VT" "WA" "WI" "WV" "WY"
 
-
-
-	
-	
-	
 	# That's interesting to see but not entirely useful - the states are sorted alphabetically, making
 	# it hard to see which states have more or less disasters.  Let's sort them.
 	> sort(summary(d$State))
@@ -171,13 +157,17 @@ The first can be accomplished by using the `table` command instead of `summary`.
 	1110 1158 1163 1259 1380 1540 1610 1730 1738 3293 
 	
 	
-	
-
-
-
-# Exploring the columns / rows of data
 
 
 [R]:http://www.r-project.org/
 [Making Government Transparent Using R]:http://radar.oreilly.com/2009/07/making-government-transparent.html
 [Google and Facebook use R]:http://www.dataspora.com/2009/02/predictive-analytics-using-r/
+[Unsorted scatterplot]:
+
+<!-- Contributing Agency Information
+Citation
+FEMA Disaster Declaration Summary (http://www.fema.gov/hazard/index.shtm)
+Agency Program Page
+http://www.fema.gov
+Agency Data Series Page
+http://www.fema.gov/hazard/index.shtm -->
