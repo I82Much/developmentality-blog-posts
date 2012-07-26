@@ -1,4 +1,4 @@
-I recently took a course on [Human Computer Interaction][hci] on Coursera, taught by Scott Klemmer from Stanford University.  According to its [About][about] page, Coursera is a 
+I recently took a course on [Human-Computer Interaction][hci] on Coursera, taught by Scott Klemmer from Stanford University.  According to its [About][about] page, Coursera is a 
 
 > social entrepreneurship company that partners with the top universities in the world to offer courses online for anyone to take, for free. We envision a future where the top universities are educating not only thousands of students, but millions. Our technology enables the best professors to teach tens or hundreds of thousands of students.
 
@@ -30,7 +30,7 @@ The course had four main components each week:
 * projects
 * peer assessment
 
-
+## Lectures
 The lectures were presented as a series of videos broken into approximately ten minute chunks.  Each video had the same slides that the professor presented as downloadable attachments.  Most of the videos also had subtitles for a few different languages; I heard complaints on the forums that some of the later videos were without subtitles but as I am a native English speaker, it did not affect me.  
 
 There were two nice touches I liked in the lectures: embedded quizzes and video playback speed.  
@@ -39,8 +39,10 @@ In almost every video, there would be a break in the video where an interactive 
 
 I found the default pace of the lectures a little slow, but the embedded video player allowed me to speed up the videos.  I found the lectures were comfortable to watch at 1.75x speed.
 
+## Quizzes
 In addition to the mini quizzes embedded in the videos, there were multiple choice quizzes each week based off of the lectures.  These quizzes gave instant feedback after submission, which I appreciated.  Students could retake the quizzes a few times until they pass; in general I found that the quizzes were easy if you paid attention to the video lectures.
 
+## Projects
 The course hammered home the point that designers and implementers are the worst people to judge their own work.  They have too much knowledge, and their mental model is nothing like that of the 'average' user.  Furthermore, they are too close to the system to provide an objective evaluation - if they labored weeks on a particular feature, they're going to inflate its importance, even if the design as a whole would improve without it.  The meat of the course, namely the assignments and peer evaluations, were imbued with this idea.  We were tasked with building a software prototype and enlisting the help of users to test it and improve its design.
 
 At the start of the course, we were presented with three options for themes our design projects could take on.  From the [design briefs][] page:
