@@ -1,4 +1,4 @@
-I recently took a course on [Human Computer Interaction][] on Coursera, taught by Scott Klemer from Stanford University.  According to its [About][about] page, Coursera is a 
+I recently took a course on [Human Computer Interaction][hci] on Coursera, taught by Scott Klemmer from Stanford University.  According to its [About][about] page, Coursera is a 
 
 > social entrepreneurship company that partners with the top universities in the world to offer courses online for anyone to take, for free. We envision a future where the top universities are educating not only thousands of students, but millions. Our technology enables the best professors to teach tens or hundreds of thousands of students.
 
@@ -28,12 +28,16 @@ The course had four main components each week:
 * lectures
 * quizzes
 * projects
-* peer review
+* peer assessment
 
 
 The lectures were presented as a series of videos broken into approximately ten minute chunks.  Each video had the same slides that the professor presented as downloadable attachments.  Most of the videos also had subtitles for a few different languages; I heard complaints on the forums that some of the later videos were without subtitles but as I am a native English speaker, it did not affect me.  
 
-There were two nice touches I liked in the lectures: embedded quizzes and video playback speed.  In almost every video, there would be a break in the video where an interactive quiz was presented based off of what Professor Klemer had just presented.  It's a nice pedagogical trick to make sure you're paying attention and understanding the material.  I found the default pace of the lectures a little slow, but the embedded video player allowed me to speed up the videos.  I found the lectures were comfortable to watch at 1.75x speed.
+There were two nice touches I liked in the lectures: embedded quizzes and video playback speed.  
+
+In almost every video, there would be a break in the video where an interactive quiz was presented based off of what Professor Klemmer had just presented.  It's a nice pedagogical trick to make sure you're paying attention and understanding the material. 
+
+I found the default pace of the lectures a little slow, but the embedded video player allowed me to speed up the videos.  I found the lectures were comfortable to watch at 1.75x speed.
 
 In addition to the mini quizzes embedded in the videos, there were multiple choice quizzes each week based off of the lectures.  These quizzes gave instant feedback after submission, which I appreciated.  Students could retake the quizzes a few times until they pass; in general I found that the quizzes were easy if you paid attention to the video lectures.
 
@@ -49,7 +53,12 @@ I chose the Glance design brief.  My inspiration was a hideously complicated boa
 
 ![index](https://lh5.googleusercontent.com/-pJndi90Zx_Q/UBDPDgvOENI/AAAAAAAACbg/4tDoQxAmSw4/s630/Index.jpg "The index of the game")
 
-It takes an incredibly long time to learn the rules, and an even longer time to play.  (Our first game took, literally, 16 hours over the course of a few days).  The fastest we've ever completed a game is 5 hours.  Two aspects of the game struck me as particularly frustrating - making sense of the technology tree (there are 24 technologies grouped into four categories, spread across two massive pages in the instruction manual), and combat (each of the ~6 ship types has a different base attack rate, which can be modified by your race, action cards, and political cards in effect).  In every game I've played, choosing technologies to buy and the combat bring the game to a screeching halt.  I decided that my project would be to build an application of some sort to help make one of these aspects more intuitive and fun.
+It takes an incredibly long time to learn the rules, and an even longer time to play.  The first game I played took literally 16 hours over the course of a few days, and the fastest game I've ever completed took 5 hours.  Two aspects of the game struck me as particularly frustrating:
+
+* The technology tree (there are 24 technologies grouped into four categories, spread across two massive pages in the instruction manual)
+* Combat (each of the ~6 ship types has a different base attack rate, which can be modified by your race, action cards, and political cards in effect)
+
+In every game I've played, choosing technologies to buy and the combat bring the game to a screeching halt.  I decided that my project would be to build an application of some sort to help make one of these aspects more intuitive and fun.
 
 I designed two storyboards, one for the combat app and one for the tech tree app idea, in order to solidify who the app was for (board gamers who play TI), where it would be used (wherever they play), and the problems it solved (takes too long to pick technologies and/or fight, too much has to be kept in players' heads)
 
@@ -62,15 +71,28 @@ One of my designs was inspired by the slick UI of Diablo 3 for crafting items:
 ![Diablo 3 crafting](https://lh5.googleusercontent.com/-dRS4wZ9gENk/UBDTRZs3L4I/AAAAAAAACb0/L9O9xDGPRT0/s512/Picture%2520193.png "Screenshot from Diablo 3 cropped from http://www.diablo3professions.com/wp-content/uploads/2011/08/diablo_3_apprentice_blacksmith_crafting_legs.jpg").
 
 Here's the Balsamiq wireframe for that design:
+
 ![Linear prototype](https://lh5.googleusercontent.com/-d16TgFIItvo/UBDTReUvj3I/AAAAAAAACb8/aSf55aMz2M8/s512/Picture%2520192.png "Screenshot of linear design")
 [Interactive PDF](https://coursera-uploads.s3.amazonaws.com/user-44f17e4c52acc354bba9e768/18/asst-2/18-4fd8220bb6b649.94590312.pdf)
 
 The second design I created was a grid layout:
+
 ![Grid prototype](https://lh5.googleusercontent.com/-rZyV2HtUP28/UBDTdTtjpjI/AAAAAAAACcI/mBu7NcRPWHc/s512/Picture%2520194.png "Screenshot of grid design")
 [Interactive PDF](https://coursera-uploads.s3.amazonaws.com/user-44f17e4c52acc354bba9e768/18/asst-2/18-4fd821dba6d482.12381697.pdf)
 
+After receiving (and performing) a 'heuristic evaluation' of the prototype, I decided to actually implement the grid layout after making a few modifications.  In the final few weeks, I implemented an interactive version using d3.js and HTML tables.  I am no web designer, and I'm embarrassed by some of the hacks and nonfunctioning pieces of the prototype, but overall I am pleased with how it came out.  The final assignment was to perform an honest to goodness usability test with at least three participants.  The feedback I received from them will be invaluable for improving the prototype in the coming weeks.  You can [play with the same version of the prototype that my testers did][final mock] if you'd like.
+
+![Final prototye](https://lh4.googleusercontent.com/-rKeksy0Xu5w/UBDVQApvnGI/AAAAAAAACcc/g_lYXXcTsPI/s800/Picture%2520195.png "Screenshot of final prototype")
 
 
+# Conclusion
+
+Coursera aims to allow tens or hundreds of thousands of people to be taught in one class, and this course proves that it can be done.  According to Professor Klemmer, almost 30,000 students from watched the lecture material, and about 800 completed all of the coursework.  
+![Usage stats](https://lh4.googleusercontent.com/-y9TvqyGZ9g4/UBDW3FwjOxI/AAAAAAAACc0/cQfCjMAD9FY/s788/Picture%2520190.png "")
+
+I alluded to it earlier, but the only way that this many students can be graded in a timely manner is through the use of peer evaluations.  Before you complete each assignment, you are given exactly the same rubric as your peer assessors will have to grade your work.  After the deadline for submission is up, you must go through a training exercise, grading five sample assignments in order to calibrate your scores with that of the professor.  After this, you must grade at least five other students' assignments; failure to do so results in a penalty to your grade.  After you have seen these ten examples of other students' assignments, you grade yourself using that same rubric.  While this peer evaluation process was time consuming, it was an invaluable feedback tool, as it allowed me to measure myself relative to my classmates.  In a traditional class, it's rare to ever see others' completed work, and in some cases it's even against the honor code.  In this online form, it is an absolutely crucial aspect of the course, as it allows the class to scale to a size unimaginable in physical classrooms.
+
+I was extremely satisfied with the course, especially considering this was the first time it was offered through Coursera.  Compared to my prior experience of using [P2PU's School of Webcraft to learn JavaScript][p2pu], the quality of this course was much higher.  It was a large time commitment, but I learned a lot and it forced me to actually implement an idea that I'd been kicking around in my head. There were a few hiccups and bugs in the Coursera system, including somewhat vague assignments, but Professor Klemmer noted in his farewell video that they are actively working to resolve these issues.  If you get the chance to take this course, I highly recommend it.  
 
 
 [p2pu]:http://developmentality.wordpress.com/2011/01/13/p2pu-world-of-webcraft/
@@ -82,3 +104,4 @@ The second design I created was a grid layout:
 [Twilight Imperium]:http://boardgamegeek.com/boardgame/12493/twilight-imperium-third-edition
 [final mock]:http://dl.dropbox.com/u/14587208/TITechTreev2/h5bp-html5-boilerplate/techtree.html
 [listview]:http://developmentality.wordpress.com/2010/11/05/of-rubber-stamps-and-checkboxes-why-your-listview-is-broken/
+[Balsamiq]:http://www.balsamiq.com/
