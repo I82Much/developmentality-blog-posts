@@ -18,20 +18,12 @@ This is a somewhat trivial example, but design can have incredible safety implic
 
 (Emphasis mine)
 
-
-
-
+When I heard from a coworker that Coursera was offering a course on Human Computer Interaction, I knew I had to take it.
 
 # Structure
-The course I took focused on Computer Human Interaction.  
+The course was slated to last 5 weeks though it actually took 6 due to an extension in one of the assignments.  Some of the topics included needfinding (determining what actual people need in an interface and how they make do with the status quo), paper prototyping techniques, storyboarding techniques, heuristic evaluation, lab usability studies.  
 
-I am very interested in design, not just of software interfaces but of physical elements in the world as well, which is what drew me to this course.  There are so many things that designers and programmers could do 
-
-This is a very broad subject, and the course covered a variety of related topics, including needfinding, heuristic evaluation, design, fonts, affordances, usability tests, 
-
-
-
-There were four main parts to the course:
+The course had four main components each week:
 
 * lectures
 * quizzes
@@ -39,15 +31,45 @@ There were four main parts to the course:
 * peer review
 
 
+The lectures were presented as a series of videos broken into approximately ten minute chunks.  Each video had the same slides that the professor presented as downloadable attachments.  Most of the videos also had subtitles for a few different languages; I heard complaints on the forums that some of the later videos were without subtitles but as I am a native English speaker, it did not affect me.  
 
-a lot of good material was covered in this course.  very relevant to any programmer, not just proefssional ux designers.  
+There were two nice touches I liked in the lectures: embedded quizzes and video playback speed.  In almost every video, there would be a break in the video where an interactive quiz was presented based off of what Professor Klemer had just presented.  It's a nice pedagogical trick to make sure you're paying attention and understanding the material.  I found the default pace of the lectures a little slow, but the embedded video player allowed me to speed up the videos.  I found the lectures were comfortable to watch at 1.75x speed.
 
-heuristic evaluations
+In addition to the mini quizzes embedded in the videos, there were multiple choice quizzes each week based off of the lectures.  These quizzes gave instant feedback after submission, which I appreciated.  Students could retake the quizzes a few times until they pass; in general I found that the quizzes were easy if you paid attention to the video lectures.
 
-# project
-tiny interstitial quizzes uponreaching a reevant challenge.  e.g. if voice is in background and oo
+The course hammered home the point that designers and implementers are the worst people to judge their own work.  They have too much knowledge, and their mental model is nothing like that of the 'average' user.  Furthermore, they are too close to the system to provide an objective evaluation - if they labored weeks on a particular feature, they're going to inflate its importance, even if the design as a whole would improve without it.  The meat of the course, namely the assignments and peer evaluations, were imbued with this idea.  We were tasked with building a software prototype and enlisting the help of users to test it and improve its design.
 
-I recently finished my first ever course on Coursera.org, the nonprofit site for education classes.  I took Human Computer Interaction with Scott Klemer
+At the start of the course, we were presented with three options for themes our design projects could take on.  From the [design briefs][] page:
+
+* Change - "Use the power of new technology to create an application or service that facilitates personal or social behavior change"
+* Glance - "Find people and design a personal dashboard tailored to their needs"
+* Time - "Redesign the way we experience or interact with time"
+
+I chose the Glance design brief.  My inspiration was a hideously complicated board game named [Twilight Imperium][].  It's a fun turn based conquer-the-galaxy board game, but it has some serious usability issues.  
+
+![index](https://lh5.googleusercontent.com/-pJndi90Zx_Q/UBDPDgvOENI/AAAAAAAACbg/4tDoQxAmSw4/s630/Index.jpg "The index of the game")
+
+It takes an incredibly long time to learn the rules, and an even longer time to play.  (Our first game took, literally, 16 hours over the course of a few days).  The fastest we've ever completed a game is 5 hours.  Two aspects of the game struck me as particularly frustrating - making sense of the technology tree (there are 24 technologies grouped into four categories, spread across two massive pages in the instruction manual), and combat (each of the ~6 ship types has a different base attack rate, which can be modified by your race, action cards, and political cards in effect).  In every game I've played, choosing technologies to buy and the combat bring the game to a screeching halt.  I decided that my project would be to build an application of some sort to help make one of these aspects more intuitive and fun.
+
+I designed two storyboards, one for the combat app and one for the tech tree app idea, in order to solidify who the app was for (board gamers who play TI), where it would be used (wherever they play), and the problems it solved (takes too long to pick technologies and/or fight, too much has to be kept in players' heads)
+
+![storyboard](https://coursera-uploads.s3.amazonaws.com/user-44f17e4c52acc354bba9e768/18/asst-2/18-4fd8212d843ea9.39117312.jpg "One page of my storyboard describing the tech tree problem")
+
+Next I decided to focus on the technology tree idea and came up with two mockups of divergent designs of this application using the wireframing software [Balsamiq][]. (Longtime readers of this blog might remember that I used Balsamiq to make the illustrations for my post explaining [how ListView works in Android][listview]).  I decided that I wanted to drastically simplify the tree structure as laid out in the instruction manual and instead only display the prerequisites when necessary.  (Technology X cannot be purchased until you purchase A AND B or C...).
+
+One of my designs was inspired by the slick UI of Diablo 3 for crafting items:
+
+![Diablo 3 crafting](https://lh5.googleusercontent.com/-dRS4wZ9gENk/UBDTRZs3L4I/AAAAAAAACb0/L9O9xDGPRT0/s512/Picture%2520193.png "Screenshot from Diablo 3 cropped from http://www.diablo3professions.com/wp-content/uploads/2011/08/diablo_3_apprentice_blacksmith_crafting_legs.jpg").
+
+Here's the Balsamiq wireframe for that design:
+![Linear prototype](https://lh5.googleusercontent.com/-d16TgFIItvo/UBDTReUvj3I/AAAAAAAACb8/aSf55aMz2M8/s512/Picture%2520192.png "Screenshot of linear design")
+[Interactive PDF](https://coursera-uploads.s3.amazonaws.com/user-44f17e4c52acc354bba9e768/18/asst-2/18-4fd8220bb6b649.94590312.pdf)
+
+The second design I created was a grid layout:
+![Grid prototype](https://lh5.googleusercontent.com/-rZyV2HtUP28/UBDTdTtjpjI/AAAAAAAACcI/mBu7NcRPWHc/s512/Picture%2520194.png "Screenshot of grid design")
+[Interactive PDF](https://coursera-uploads.s3.amazonaws.com/user-44f17e4c52acc354bba9e768/18/asst-2/18-4fd821dba6d482.12381697.pdf)
+
+
 
 
 
@@ -56,3 +78,7 @@ I recently finished my first ever course on Coursera.org, the nonprofit site for
 [about]:https://www.coursera.org/about
 [The Design Of Everyday Things]:http://www.amazon.com/Design-Everyday-Things-Donald-Norman/dp/0385267746
 [air crash]:http://www.telegraph.co.uk/technology/9231855/Air-France-Flight-447-Damn-it-were-going-to-crash.html
+[design briefs]:https://class.coursera.org/hci/wiki/view?page=DesignBriefs
+[Twilight Imperium]:http://boardgamegeek.com/boardgame/12493/twilight-imperium-third-edition
+[final mock]:http://dl.dropbox.com/u/14587208/TITechTreev2/h5bp-html5-boilerplate/techtree.html
+[listview]:http://developmentality.wordpress.com/2010/11/05/of-rubber-stamps-and-checkboxes-why-your-listview-is-broken/
