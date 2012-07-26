@@ -1,0 +1,58 @@
+I recently took a course on [Human Computer Interaction][] on Coursera, taught by Scott Klemer from Stanford University.  According to its [About][about] page, Coursera is a 
+
+> social entrepreneurship company that partners with the top universities in the world to offer courses online for anyone to take, for free. We envision a future where the top universities are educating not only thousands of students, but millions. Our technology enables the best professors to teach tens or hundreds of thousands of students.
+
+After having completed this course, I feel that Coursera provides an amazing service.  It's not perfect, but it is far superior to any online courses I've taken so far.
+
+# Motivation
+I have been fascinated with design and making things 'user friendly' ever since reading Donald Norman's [The Design of Everyday Things][] in college.  This book details why certain designs fail while others are intuitive and obvious.  One of the things that stuck with me is the concept of affordances - buttons 'afford' being pressed, dials 'afford' being turned, handles 'afford' being pulled.  To this day, it is one of my biggest pet peeves to find doors that open the wrong way.  During a recent trip to Paris, I took pictures of some of the design failures I saw, including this particularly nasty door in the hotel.
+
+![Push](https://lh5.googleusercontent.com/-vZKEU7Nxe6c/UBDEWqoKLkI/AAAAAAAACbE/CoVdbtC5Pps/s640/small_1.jpg "Translation: Push")
+![Pull](https://lh5.googleusercontent.com/-Bz3jZmJLViI/UBDEWkyWrLI/AAAAAAAACbA/erTPLwKf1OI/s640/small_2.jpg "Translation: Pull")
+
+It's the exact same handle on both sides of the door, but it is designed to swing in only one direction.  We walked through that door at least 10 times but each and every time we had to *think* about how to open it; we had to push an interface that was clearly designed to be pulled.
+
+This is a somewhat trivial example, but design can have incredible safety implications as well.  A recent article claims that poor design contributed to the 2009 Air France Flight 447 crash:
+
+>In the next 40 seconds AF447 fell 3,000 feet, losing more and more speed as the angle of attack increased to 40 degrees. The wings were now like bulldozer blades against the sky. Bonin failed to grasp this fact, and though angle of attack readings are sent to onboard computers, <strong>there are no displays in modern jets to convey this critical information to the crews. One of the provisional recommendations of the BEA inquiry has been to challenge this absence</strong>.
+
+(Emphasis mine)
+
+
+
+
+
+# Structure
+The course I took focused on Computer Human Interaction.  
+
+I am very interested in design, not just of software interfaces but of physical elements in the world as well, which is what drew me to this course.  There are so many things that designers and programmers could do 
+
+This is a very broad subject, and the course covered a variety of related topics, including needfinding, heuristic evaluation, design, fonts, affordances, usability tests, 
+
+
+
+There were four main parts to the course:
+
+* lectures
+* quizzes
+* projects
+* peer review
+
+
+
+a lot of good material was covered in this course.  very relevant to any programmer, not just proefssional ux designers.  
+
+heuristic evaluations
+
+# project
+tiny interstitial quizzes uponreaching a reevant challenge.  e.g. if voice is in background and oo
+
+I recently finished my first ever course on Coursera.org, the nonprofit site for education classes.  I took Human Computer Interaction with Scott Klemer
+
+
+
+[p2pu]:http://developmentality.wordpress.com/2011/01/13/p2pu-world-of-webcraft/
+[hci]:https://www.coursera.org/course/hci
+[about]:https://www.coursera.org/about
+[The Design Of Everyday Things]:http://www.amazon.com/Design-Everyday-Things-Donald-Norman/dp/0385267746
+[air crash]:http://www.telegraph.co.uk/technology/9231855/Air-France-Flight-447-Damn-it-were-going-to-crash.html
