@@ -1,0 +1,55 @@
+# Lessons in email etiquette from E.B. White
+
+[Letters of Note][] recently published an incredibly well-written letter by E.B. White explaining how the amount of fan mail he gets has become his enemy, as it saps all of his time and prevents him from performing the creative endeavour which got him fame in the first place.  What's amazing is how relevant this letter written in 1961 is today, particularly to those making their living as knowledge workers.
+
+> I would like to write another book for children but I spend all my spare time just answering the letters I get from children about the books I have already written.
+
+White talks about the inadvertant harm that results from teachers encouraging their students to write him and other authors letters; each thinks of the class in isolation without thinking of all the other people having the exact same idea.  This leads to far more mail than he can possibly deal with:
+
+> The result is the author swamped with mail. Letters now come to me faster than I can answer them. Many of the letters contain requests—for an autograph, for a dust jacket, for an explanation, for a photograph. This to me presents a real problem. I have no secretary here at home, and if I am to deal with my mail I must do it myself; if I am to mail a book I must find the wrapping paper, the string, the energy, the right amount of stamps, and take the parcel to the post office up the road. This can occupy a whole morning, and often does. 
+
+This problem still exists, as message senders do not consider all the other requests vying for the attention of the recipient. I've heard of a few ideas to combat this, like the now defunct [Smoke Signal][Smoke signal hacker news discussion], and [Courteous.ly][], which both aim to indicate to the sender how much email the recipient has in his inbox. 
+
+each request in and of itself is doable but in aggregate it's too much - 'straw that broke the camel's back' e.g. 
+
+
+
+> About four years ago, I had an idea for a story for children. It seemed like such a pleasant idea that I spent my spare time for several weeks doing research and making notes—the raw material of a book. I put everything in a folder and there it still lies, awaiting a spell when I feel enough caught up with life to tackle the writing. Every once in a while I take this folder out and examine it, hungrily. But then I look at my desk where the unanswered letters and the undone things lie in accusing piles, and I stick the folder back in its corner. 
+
+
+
+
+How much email can you *avoid* sending today? Email is too easy to create, too easy to flood peoples' inboxes (hello reply all). 
+
+
+
+
+how much of our days is spent reading and responding to emails instead of actually working?  A distressing amount of time.  
+
+For most of us we're not receiving fan mail but it's still stuff that seems to require a response.
+
+urgent but not important
+
+another blog post mentioned some ways I personally try to deal with the overload, including shutting off any sort of email alerts  (sounds, growl notifications, etc).  Why should you let someone else dictate your attention?  It's the most important thing you have
+
+Why is email so dangerous?  Just a few things I find
+
+1) it is distracting.  The messages are liable to be about many different topics, causing massive amounts of context shifts and causing you to run around looking for different info
+2) if you answer quickly, causes people to expect you to answer quickly in the future.  If you answer slowly, can be perceived as obstructing progress
+3) answering it leads to more of it
+4) weighs at back of mind
+5) it's easy to get trapped into feeling productive by answering a few emails when it's not actually that important.  the thing you're being paid to do 
+
+
+setting up some filters helps but it's not sufficient
+
+
+Obviously I'm not the only one with these sorts of ideas; Merlin Mann's 43 folders has a lot to say about managing email overload.
+
+
+[Smoke signal]:http://www.getsmokesignal.com/
+
+[Smoke signal hacker news discussion]:http://news.ycombinator.com/item?id=3131611
+[Courteous.ly]:http://courteous.ly/
+
+[Letters of Note]:www.lettersofnote.com/2012/08/the-morning-mail-is-my-enemy.html
