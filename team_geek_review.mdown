@@ -1,6 +1,7 @@
 A review of Team Geek, A look at the softer side of programming
 
 Team Geek: A Software Developer's Guide to Working Well with Others, by Ben Collins-Sussman, Brian W. Fitzpatrick
+[Available from O'Reilly](http://shop.oreilly.com/product/0636920018025.do)
 
 Disclaimers: I received a free copy of this book to review from O'Reilly. I work at Google, as do the authors, but this review reflects my views only and not necessarily those of Google.
 
