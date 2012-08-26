@@ -1,13 +1,20 @@
-team geek review
+Title: Team Geek - FIXME
 
-disclaimer: work at google
+subtitle: A Software Developer's Guide to Working Well with Others
 
-read on my flight to switzerland - 
-devoured it in one plane ride.  constantly found things throughout that relate to teams I've worked on in the past or in my current job
+Ben Collins-Sussman, Brian W. Fitzpatrick
 
-very entertaining, thought provoking
-lots of books about improving yourself, becoming better technical etc
-very little written about the 'softer' side of things, working well in team. 
+Disclaimer: I work at Google, as do the authors, but this review reflects my views only and not necessarily those of Google.
+
+Ben Collins-Sussman and Brian W. Fitzpatrick, two of the engineers behind the SVN version control system, and two Google engineers, have created a book about the softer side of software engineering - working with people.  
+
+
+I found this book utterly engrossing; I read it from cover to cover during two legs of a long trans-continental flight. It is written in an informal style, with illustrations sprinkled throughout.
+
+The authors lay out a compelling case for the importance of this book. Programmers tend to lionize the lone programmer, like Linus Torvalds of Linux fame or John Carmack of id. In some rare cases, geniuses do manage to accomplish incredible things on their own. But the majority of the time, great software is a collaborative effort performed by a team of people of varying skills, backgrounds, and communication styles. While there are many books which help improve your technical proficiency, this is one of the few I've encountered that aims to help you create better software through better people skills.
+
+
+
 
 
 foster team prideincrease "bus" factor
