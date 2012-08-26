@@ -1,0 +1,78 @@
+team geek review
+
+disclaimer: work at google
+
+read on my flight to switzerland - 
+devoured it in one plane ride.  constantly found things throughout that relate to teams I've worked on in the past or in my current job
+
+very entertaining, thought provoking
+lots of books about improving yourself, becoming better technical etc
+very little written about the 'softer' side of things, working well in team. 
+
+
+foster team prideincrease "bus" factor
+post mortems
+
+engineers will want to have some say in the direction of the product
+
+what is the mission statement of the team?
+
+"Saying no to all the distractions is what keeps you focused"
+
+Large emphasis on the importance of focus and saying no, explicitly stating 'nongoals' of the team and of the software they create
+
+Talks a lot about meetings and how they can be a huge time suck - crucial to have agenda, and invite bare minimum of people.  Also try not to schedule meetings during 'make time' but instead towards end of day or near lunch, or other natural 'interrupt' time
+
+importance of asking questions in public so that they're easily found in future - document things through discussion on intermal forums, mailing lists, etc rather than strictly in one on one email or chats.  This helps increase the 'bus factor' as well
+
+they recommend group chat/irc
+
+importance of using bug tracker
+should be updating bugs as progress is made
+
+talk about best practices to avoid ego etc in code -
+recommmend against including name at top of file
+(similar to how revision history doesn't belong in the file itself, but in the source control system)
+
+tech lead vs tech lead manager
+
+"Say yes to things that can be undone"
+
+sharpening the knife
+
+# poisonous people
+refuse to tolerate negative behaviors
+
+"doument all history"
+"overentitlement"
+
+perfect is the enemy of good
+"Never attribute to malice that which is aequately explained by stupidity
+
+ch. 5
+two levels - manager, engineers
+"Pursue extra responsibility"
+"Over deliver on what's expected of you"
+
+rather than eliminate bad habits (extra meetings) ,replace w/ good one (replace bad meeting that's useless with a good one)
+
+"try to avoid promising things that you can't deliver even if it means saying no more often than you'd like"
+
+*** be careful of spending too much time cleaning code - shipping is more important
+
+***offensive vs defensive work
+
+never spend more than 1/3 to 1/2 time on defensive tasks - 
+
+gray market exchange of favors
+when emailing execc or someone higher up, keep it extremely short
+"Three bullets and a call to action"
+
+"software doesn't end w/ throwing product over a wall"
+
+importance of first impressions
+first minute is crucial
+
+"speed is a feature"
+Don't be all things
+hide complexity
