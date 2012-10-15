@@ -1,0 +1,59 @@
+# Steve Krug
+Don't Make Me Think
+
+slightly dated (many examples from dot-com bust) but many things are still relevant
+
+Don't make me think - first chapter, title. Number one rule. True of all software, not just on the web. Endless dialog boxes, asking for junk that the user doens't care about, shouldn't have to
+* Jargon (forces user to try to map back into his own mental model)
+* buttons that don't look like buttons. 
+
+today this might be sites where many things are exposed only on hover/rollover, forcing user to play detective to find what he's looking for.
+
+
+users scan, don't read. this is inevitable. Write with that in mind - cut 1/2 the words out, then 1/2 again.
+
+choices are OK if they're mindless. but choices are often confusing when, again, there's jargon involved, or the options reflect the org chart of the company rather than what the user would expect.
+
+importance of following established conventions on the web - site id in upper left corner, use navigation in the same way.
+
+don't design navigation that's too deeply nested
+
+breadcrumbs, tabs
+
+nice case studies of a few sites, identify site ID, page name, sections + subsections, local navigation, "you are here" indicator, search
+
+trouble with pulldowns
+
+usability testing - important. (cue hci class )
+
+"do usability testing one morning a month"
+
+reservoir of goodwill
+* hiding info
+    * e.g. phone number for customer service
+* requiring info in certain format
+    * ssn
+    * phone number
+* asking for extraneous info
+* sizzle stuff (flash, etc)
+* amateur
+
+two great emails - one about what to do for asking too much data, one for adding 'sizzle'
+
+
+information architecture
+
+http://www.amazon.com/Information-Architecture-World-Wide-Web/dp/0596527349/ref=sr_1_1?ie=UTF8&qid=1350279077&sr=8-1&keywords=information+architecture+for+the+worldwide+web
+
+why we buy
+http://www.amazon.com/Why-We-Buy-Science-Shopping/dp/B001OW5NXM/ref=sr_1_1?ie=UTF8&qid=1350279035&sr=8-1&keywords=why+we+buy%3A+the+science+of+shopping
+
+sources of power
+http://www.amazon.com/Sources-Power-People-Make-Decisions/dp/0262611465/ref=sr_1_1?ie=UTF8&qid=1350279115&sr=8-1&keywords=sources+of+power%3A+how+people+make+decision
+
+the practice of creativity
+http://www.amazon.com/Practice-Creativity-Manual-Dynamic-Problem-Solving/dp/0963878484/ref=sr_1_1?s=books&ie=UTF8&qid=1350279174&sr=1-1&keywords=the+practice+of+creativity%3A+a+manual+for+dynamic+group+problem+solving
+
+
+
+
