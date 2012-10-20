@@ -16,7 +16,7 @@ The language support in TextMate is extremely powerful, but it's a little compli
 
 As an aside, you might wonder why the scope is called `source.java` as opposed to `java.scope`.  The reason is that some scope selectors can target the more general case (`scope`), whereas those concerned with java can target the more specific scope (`java.scope`).  
 
-Since someone has already done the hard work of creating a language definition for Java and for creating all of the snippets that support it, we want to leverage this body of work.  All we need to do is ensure that text between the `[sou<span>rcecode language="java"][/sourc</span>ecode]` tags is considered to be part of the source.java scope, and everything will just work.
+Since someone has already done the hard work of creating a language definition for Java and for creating all of the snippets that support it, we want to leverage this body of work.  All we need to do is ensure that text between the `[sourcecode language="java"][/sourcecode]` tags is considered to be part of the source.java scope, and everything will just work.
 
 First, let us look at a sample grammar file.  Open up the HTML language definition file by going to Bundles -> Bundle Editor -> Edit Languages, or via the shortcut ⌃ ⌥ ⌘L, and choose the HTML option.  You'll be presented with a rather inscrutable, unstyled document to the right.  The first thing you should do, and which I found out the hard way, is copy all that text and paste it into a new document.  
 
