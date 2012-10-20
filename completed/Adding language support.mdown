@@ -3,7 +3,7 @@
 # TextMate: How to have code syntax highlighting within an html view
 I've blogged about [TextMate][1] a few times in the past, and with good reason - it's an extremely versatile, light weight, powerful text editor for the Mac.  One great feature of TextMate is its extreme customizability.  Today I'm going to show how to modify one of the TextMate language files in order to add support for Java code within HTML text.
 
-Why is this useful?  My workflow for producing blog posts is often to write the post in TextMate using the [Markdown][5] markup language, which I then convert to HTML.  [WordPress has the ability to syntax highlight][2] and provide a nice monospaced version of sourcecode within a post if it's delimited by `[sou<span>rcecode language="language"][/sourc</span>ecode]` tags.  While the sourcecode comes out fine in the final post, it would be nice to have the syntax highlighting show up from within the Markdown view (i.e. while I am composing a blog post).  Let's get started by looking at how language grammars work in TextMate.
+Why is this useful?  My workflow for producing blog posts is often to write the post in TextMate using the [Markdown][5] markup language, which I then convert to HTML.  [WordPress has the ability to syntax highlight][2] and provide a nice monospaced version of sourcecode within a post if it's delimited by `[sourcecode language="language"][/sourcecode]` tags.  While the sourcecode comes out fine in the final post, it would be nice to have the syntax highlighting show up from within the Markdown view (i.e. while I am composing a blog post).  Let's get started by looking at how language grammars work in TextMate.
 
 ## Introduction to Language Grammar Editing
 The language support in TextMate is extremely powerful, but it's a little complicated to get started.  In essence, a language defines a series of rules mapping patterns to scopes.  For instance, the Java language grammar defines a scope for comments, a scope for control characters, and so on and so forth.  The scope is extremely important for many reasons.  A few of them are
@@ -94,7 +94,7 @@ The basic pattern is pretty simple:
 </pre>
 </div>
 
-I look for the literal string `[sourc<span>ecode language="java"</span>]` to start the pattern, and then the literal string `[/so<span>urcecod</span>e]` to end it.  I have to escape the brackets due to the fact that they have a special meaning within regular expressions (`[aeiou]` matches any vowel, while `\[aeiou\]` matches the literal string `[aeiou]`).
+I look for the literal string `[sourcecode language="java"]` to start the pattern, and then the literal string `[/sourcecode]` to end it.  I have to escape the brackets due to the fact that they have a special meaning within regular expressions (`[aeiou]` matches any vowel, while `\[aeiou\]` matches the literal string `[aeiou]`).
 
 By adding this line to the top of the patterns, it is run before any of the others.  (Remember, we have to actually add it to the HTML grammar within the Bundle Editor, not just the TextMate window with the grammar inside of it).  Once the line is added and you press Test, the Java highlighting beings to work.
 
