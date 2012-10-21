@@ -1,0 +1,28 @@
+The Kindle has come a long way from the original version I saw in college a few years ago. I've owned three copies of the gray Kindle with keyboard (two died in warranty, one after), and I just recently got a Paperhhite to replace the last one. Here are my initial thoughts.
+
+# Good
+* Refresh rate is *noticeably* faster
+* Resolution is better - text is very crisp
+* Getting definitions of a word is much easier - takes one long press on the word rather than navigating through the whole page with the directional pad
+* Extremely small; I can fit it in some shirt pockets
+* Light - just about the same weight as the last gen model with keyboard
+* Light works very well and does not strain my eyes
+* UI has improved - navigating through books stored on the cloud vs on the device is very straightforward
+* Highlighting is very intuitive and easy to do
+* High quality virtual keyboard - very responsive
+* All the games I tried have been updated to support virtual keyboard - including the New York TImes crossword puzzles
+* Much easier to find the books to borrow in this version - use the same unified Kindle store to search, then if it's available, will show up as a download/borrow option
+* Nice option to see how much time is left in the chapter vs book - tap in lower left corner or access from the menu
+* Really great walkthrough of the different tap zones and what they do when you first turn on the device
+
+
+# Bad
+* For both the highlight and define gesture, you need to hold your finger on the start word for a fraction of a second longer than I'd like. If you move your finger or remove it before that time, you'll turn the page. I've accidentally turned the page a few times.
+* Since the only way to turn the page is by tapping the screen, it's easy to accidentally click on a link. When the link is external, it's easy to undo - hit back on the browser. If it's internal, to a later chapter, you get dumped later in the book with no way to get back. This is extremely confusing and disorienting. If you only read novels, this is a non-issue, but for tech books it can be a problem.
+
+
+# Ugly
+* Light is uneven at the bottom; more evident in a dark room
+
+
+This is a leap forward from my last Kindle. I hope this one lasts significantly longer than my last three.
