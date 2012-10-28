@@ -1,0 +1,7 @@
+Don't repeat yourself. DRY. I've had this principle hammered into my head by so many books and speakers, and it is absolutely true.
+
+You cannot expect people to follow directions in comments.  e.g. "This enum must be kept in sync with another one in another filed"
+People don't read. People are fallible. If duplication is impossible to avoid, you *must* put in place automated tests to catch these problems.
+
+e.g. keeping two lists in synch, have an automated test which pulls in each list and ensures that they're exactly the same
+
