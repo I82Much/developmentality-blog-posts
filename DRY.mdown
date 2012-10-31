@@ -1,7 +1,100 @@
-Don't repeat yourself. DRY. I've had this principle hammered into my head by so many books and speakers, and it is absolutely true.
+1. Don't repeat yourself
+2. Unless you have to
+3. Add tests
 
-You cannot expect people to follow directions in comments.  e.g. "This enum must be kept in sync with another one in another filed"
+Don't repeat yourself/DRY is a very commonly uphelp principle. In general, I agree. The logic goes that the logic should be expressed in one place and one place only so that if it has to change, it only has to be changed in one place.
+
+Unfortunately, life is not so easy. There are many reasons why repeating yourself can be a necessary evil.
+
+# Code clarity
+
+Consider the following example. 
+
+boolean hasMobileProduct(products: array of products) {
+    for (i := 0; i < len(products); i++) {
+        if (products[i] == "ANDROID" ||
+            products[i] == "IPHONE") {
+            return true;
+        }
+    }
+    return false;
+}
+
+
+boolean hasPhotosProduct(products: array of products) {
+
+}
+
+you might be tempted to reduce the duplication by factoring out the common logic into a helper method
+
+boolean contains(products: array of products, targets: array of products) {
+    for (i := 0; i < len(products); i++) {
+        for (j := 0; j <len(targets); j++) {
+            if (products[i] == targets[j]) {
+                return true;
+            }
+        } 
+    }
+    return false;
+}
+
+boolean hasMobileProduct(products: array of products) {
+    return contains(products, {"ANDROID", "IPHONE" });
+}
+
+
+
+
+One of the most valuable things I've learned at Google is that sometimes these refactorings actually make the code less comprehensible and less maintainable. There's really no harm in repeating very simple logic that's not lkely to change.
+
+
+
+# 2 dependency management - or the UtilsLib problem
+
+It's easy to go overboard throwing static functions / methods into utility classes so that they can be used in multiple libraries.
+
+This can be problematic because 
+1) it takes time
+2) it can cause other libraries to pull in more dependencies than they would otherwise need if they duplicated the function
+
+
+The Go language uses this idea judiciously. In his presentation, [Go at Google][], Rob Pike explains this succinctly:
+
+[Go at Google]:http://talks.golang.org/2012/splash.slide#1
+example of Go 
+
+http://talks.golang.org/2012/splash.slide#28
+> Through the design of the standard library, great effort spent on controlling dependencies.
+> It can be better to copy a little code than to pull in a big library for one function.
+> (A test in the system build complains if new core dependencies arise.)
+> Dependency hygiene trumps code reuse.
+> Example:
+> The (low-level) net package has own itoa to avoid dependency on the big formatted I/O package.
+
+
+I love that phrase - "Dependency hygiene trumps code reuse".
+
+
+# Enumerations
+enumerations are frequently duplicated, usually with a comment along the lines of "this must be kept in synch with xyz". These comments are usually useless -
 People don't read. People are fallible. If duplication is impossible to avoid, you *must* put in place automated tests to catch these problems.
 
-e.g. keeping two lists in synch, have an automated test which pulls in each list and ensures that they're exactly the same
 
+e.g. enum A and B, have a test in package A, B, or C which pulls in the enums from A and B and ensures the two are identical (or a strict subset, or whatever property you expect)
+
+
+# premature refactorization
+easy to imagine that other libraries are going to need some utility functions, so you split out into a utils package. this complicates the design speculatively
+
+# crawshaw's rule - don't worry about making something general until you've had to do it ~3 times
+
+
+
+
+# conclusion
+This is not to say you should copy and paste at will. The point of this is to point out that, like many things in life, there are shades of gray - it's not absolute.
+
+While some of these examples are specific to Google, I hope they are applicable to the wider audience
+
+
+comments are a form of duplication
