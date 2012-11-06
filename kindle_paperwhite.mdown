@@ -1,4 +1,6 @@
-The Kindle has come a long way from the original version I saw in college a few years ago. I've owned three copies of the gray Kindle with keyboard (two died in warranty, one after), and I just recently got a Paperhhite to replace the last one. Here are my initial thoughts.
+When I was in college, one of the students auditing the class had the original version of the Kindle. It was big, clunky, and slow. I've since owned three copies of the gray Kindle with keyboard, and that was a huge advance in terms of form factor, speed, and resolution.
+
+I recently bought a Paperwhite to replace my most recently broken Kindle.  Here are my initial thoughts after having used it for about 2 weeks.
 
 # Good
 * Refresh rate is *noticeably* faster
@@ -10,7 +12,7 @@ The Kindle has come a long way from the original version I saw in college a few 
 * UI has improved - navigating through books stored on the cloud vs on the device is very straightforward
 * Highlighting is very intuitive and easy to do
 * High quality virtual keyboard - very responsive
-* All the games I tried have been updated to support virtual keyboard - including the New York TImes crossword puzzles
+* All the games I tried have been updated to support virtual keyboard - including the New York Times crossword puzzles
 * Much easier to find the books to borrow in this version - use the same unified Kindle store to search, then if it's available, will show up as a download/borrow option
 * Nice option to see how much time is left in the chapter vs book - tap in lower left corner or access from the menu
 * Really great walkthrough of the different tap zones and what they do when you first turn on the device
@@ -24,5 +26,7 @@ The Kindle has come a long way from the original version I saw in college a few 
 # Ugly
 * Light is uneven at the bottom; more evident in a dark room
 
+# Conclusion
+This device is amazing, and any negatives I've highlighted are far outweighed by the positives. Everyone I've shown it to has loved it, and even those who were concerned about a touch screen on an e-reader have appreciated its responsiveness and UI.
 
-This is a leap forward from my last Kindle. I hope this one lasts significantly longer than my last three.
+This is by far the best e-reader I've ever used. Here's hoping I have better luck with this version than the last three.

@@ -2,7 +2,7 @@
 2. Unless you have to
 3. Add tests
 
-Don't repeat yourself/DRY is a very commonly uphelp principle. In general, I agree. The logic goes that the logic should be expressed in one place and one place only so that if it has to change, it only has to be changed in one place.
+Don't repeat yourself/DRY is a very commonly upheld principle. In general, I agree. The logic goes that the logic should be expressed in one place and one place only so that if it has to change, it only has to be changed in one place.
 
 Unfortunately, life is not so easy. There are many reasons why repeating yourself can be a necessary evil.
 
