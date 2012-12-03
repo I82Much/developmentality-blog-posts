@@ -1,387 +1,41 @@
 2012-12-02
 
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-No Starch Press
+# Book Review: Unofficial LEGO Technic Builder's Guide by Pawel "Sariel" Kmiec
 
-Received free review copy from O'Reilly.
+Unofficial LEGO Technic Builder's Guide by Pawel "Sariel" Kmiec, published by No Starch Press. 
+![Cover][]
 
-# Background
-## Love LEGO
-## Never really had many technic sets growing up
-## Got one for last Christmas that really impressed me - clever details (like working doors), modular construction (the large crane snapped into place onto the bottom section)
 
-# the book
-## expectations
-I thought this would be about modeling real life objects, and tips and tricks. I did not expect such a thorough explanation of all the physics and mechanical engineering principles
+Disclaimer: I received a free copy of this book to review from [O’Reilly][O'Reilly Listing].
 
-Extremely informative - learned more from this than any book I've read recently.
+I have a deep and abiding love for all things LEGO. Growing up, I assembled a few Technic sets but never really tried to make any creations on my own with that system. I received a great set last Christmas, the [well-loved][] 8421 crane model.
 
-Took about 6 hours or so to read
-333 pages
+![Crane Model][]
 
-# basics
-** speed
-** torque
+I enjoyed the process of assembling it tremendously, as it had great small details like working doors on the cab and a brilliant modular design. When I got the chance to review this book, I jumped at the opportunity, as Technic is interesting to me but I know so little about it.
 
-"High torque creates stress that can damage and destroy LEGO pieces."
+Bottom line up front - this is one of the best, most informative books I have read in recent memory. It exceeded my expectations, both in terms of the wonderful illustrations and the breadth and depth of the topics covered. It is divided into five sections - basics, mechanics, motors, advanced mechanics, and modeling.
 
+I did not expect such a thorough explanation of all the physic and mechanical engineering principles that are necessary to make working models. The first Basics section covers such concepts as speed, torque, power, friction, traction, and backlash. The author proceeds to cover more specific concepts related to vehicles, such as drive trains, front wheel vs real wheel drive, turning radius, and center of gravity. I was familiar with some of these terms but not others (for instance, "Backlash describes the gaps between mating components, such as two gears").
 
-*** destroys models
-*** measured in Newton centimeters
-*** large variety of motors producing different torques
-** power - torque  rotational speed (watts)
-** friction
-** traction
-** backlash
-"Backlash describes the gaps between mating components, such as two gears,"
+Only after exhaustively covering these basic mechanical principles does the author tackle Technic specific elements, such as pins, axle holes, units of measure in the LEGO system, important ratios (3 plates = 1 brick in height), and the difference between beams and bricks (studless vs studfull). This section was very interesting to me as it gives precise terms and names to the pieces that are hard to describe otherwise.
 
+The second section of the book covers mechanics, with in depth looks at gears, chains and pulleys, levers and linkages, pneumatics, and reinforcing models to avoid being pulled apart by the stresses of the system. Almost all of these concepts were new to me, with the exception of gear ratios. The author introduces real world mechanical devices/techniques (such as the [Chebyshev][] linkage), describes what it's used for (converting rotational motion into a straight line), and includes a fully realized Technic version of each system. Some of the systems are laid out in multiple steps of details, while others have just a single image of the completed structure. Still images allow you to get a sense of how the systems work, but the author also includes links to videos of some of the systems, which are much easier for me to understand.
 
+The third section of the book is an exhaustive look at all of the LEGO motors and their stats (torque + speed), as well as examples of what each is particularly well suited for (or not, as he has clear disdain for some of the models).
 
-concepts specific to vehicles, drive train, drive shaft, front wheel vs rear wheel drive, steering lock, turning radius, center of gravity
+Advanced mechanics covers steering, suspensions, tracked vehicles, transmissions, and the use of adders and subtractors. I found this section particularly interesting because I've never bothered to take the time to understand how a real world car works. After reading through the explanations and visualizing in my head how the gears would turn in each instance, I have a much better understanding of what happens when gears shift in a car, or how suspensions help to keep vehicles in contact with the ground (not just to provide a smoother ride and act as shock absorbers, which I erroneously thought).
 
-technic/lego basics - pins, axle holes, units of measure in lego world, ratios, etc, difference between beams and bricks (studless vs studfull) 
+The book concludes with a section on creating models, and the tradeoffs involved with using Technic to mimic real life objects. There is a natural trade off between form vs function, and the author encourages prospective builders to decide which one they're willing to sacrifice before beginning to build. He discusses how to use blueprints to determine at which scale the model should be built, based on the fact that certain Technic elements are only available in a small range of sizes. For instance, if you're modeling a car, you are limited by the size of the wheels - you could not build a 1/4 scale model, for instance, with off the shelf Technic components.
 
-axles bushes joints
+# Conclusion
+As I said up front, this book blew me away with the amount of technical details it presented in a clear, easy to comprehend format. I found the figures in the book absolutely crucial to my understanding; I estimate there are at least 200 such figures in the book. Some are photographs (usually of his finished creations), but most are high quality 3D renders. The author makes consistent use of color throughout a section, and details what the color scheme means (for instance, a red axle might always be the one that is connected to the motor, while a green one is on the output side of the equation). My one nitpick is that it's very hard to make out some of the figures on a monochrome display (i.e. the Kindle), but I was able to consult the beautiful PDF version if I needed clarification.
 
-# mechanics
+This could have been a dry textbook, but instead it's fun and eminently readable. The author's quirky sense of humor manifests itself in some of the photographs, in which a hampster appears, ostensibly for scale. I'm inspired to try my hand at building my own Technic creations, and that's about the highest compliment I can pay this book.
 
-gears
-chains + pulleys
-levers + linkages
-pneumatic
-building strong
 
-# motors
-all the lego motors and their stats (torque + speed), examples of what they are good for
-# advanced mechanics
-steering
-suspension
-tracked vehicles
-transmissions
-adders + subtractors
-
-# models
-form vs function
-scaling models
-modeling proces
-
-
-Incredibly useful figures - I'd estimate over 200 in total
-
-some are photographs (of the finished creations), but most are high quality 3d renders
-consistent use of color e.g. axles being driven in one color, driving another color
-nit pick - very hard to make out some of the figures on a monochrome display i.e. kindle; the PDF on the other hand is beautiful
-
-
-fun - quirky sense of humor (hampster included in some of the pictures, ostensibly for scale)
-
-
-# comprehensive index
-
-
-# conclusion
-Even if I don't build a single technic model as a result of reading this book, it would be worth it for the amount of knowledge I gained about physics and the way mechanical creations in the world work.
-
-
-
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 207-208 | Added on Friday, November 23, 2012 10:51:25 PM
-
-three core concepts behind LEGO Technic — Authenticity, Functionality, and Challenging building (which the LEGO Group calls its AFC strategy)
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 234-234 | Added on Friday, November 23, 2012 10:52:53 PM
-
-teach you everything I’ve learned about building with LEGO Technic over the last 20 years.
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 241-243 | Added on Friday, November 23, 2012 10:53:24 PM
-
-introducing the principles that make LEGO constructions work, and by showing you component mechanisms, such as transmissions or suspension systems, which you can then incorporate into your own unique creations.
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 283-283 | Added on Friday, November 23, 2012 10:55:10 PM
-
-linear speed,
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 285-285 | Added on Friday, November 23, 2012 10:55:17 PM
-
-rotational speed,
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 286-286 | Added on Friday, November 23, 2012 10:55:24 PM
-
-most LEGO mechanisms are powered by spinning axles,
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 287-288 | Added on Friday, November 23, 2012 10:55:37 PM
-
-LEGO motors deliver different RPM, from less than 20 RPM to more than 1,000 RPM.
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 289-290 | Added on Friday, November 23, 2012 10:55:43 PM
-
-Torque describes the turning force applied to an object.
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 293-293 | Added on Friday, November 23, 2012 10:56:02 PM
-
-measured in units called Newton centimeters (N•cm).
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 297-297 | Added on Friday, November 23, 2012 10:56:22 PM
-
-
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 300-301 | Added on Friday, November 23, 2012 10:56:40 PM
-
-power refers to mechanical power, which is the product of torque and rotational speed. So torque multiplied by speed gives mechanical power, which is normally measured in watts (W).
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 309-310 | Added on Friday, November 23, 2012 10:57:13 PM
-
-Friction dissipates some of the input force we’ve applied to the system, thus reducing both torque and speed.
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 317-318 | Added on Friday, November 23, 2012 10:57:46 PM
-
-Traction, also called grip, describes the maximum frictional force that can be produced between two surfaces before they slip.
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 332-332 | Added on Friday, November 23, 2012 10:58:37 PM
-
-you want your tires to provide as much traction as possible.
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 349-350 | Added on Friday, November 23, 2012 10:59:55 PM
-
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 352-352 | Added on Friday, November 23, 2012 11:00:06 PM
-
-High backlash results in a longer delay, making the whole mechanism inaccurate and sluggish.
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 353-354 | Added on Friday, November 23, 2012 11:00:17 PM
-
-backlash of many moving parts sums up, meaning that it accumulates over the entire mechanism.
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 362-363 | Added on Friday, November 23, 2012 11:00:48 PM
-
-50 percent efficiency means that a mechanism effectively uses half of the power delivered to it and the other half is lost.
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 363-364 | Added on Friday, November 23, 2012 11:01:06 PM
-
-In LEGO mechanisms, efficiency is generally low
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 368-369 | Added on Friday, November 23, 2012 11:01:28 PM
-
-the simpler and lighter the mechanism, the more efficient it is.
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 398-398 | Added on Friday, November 23, 2012 11:03:14 PM
-
-The steering lock is the maximum steering angle
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 443-443 | Added on Friday, November 23, 2012 11:05:34 PM
-
-low center of gravity makes objects more stable.
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 448-449 | Added on Friday, November 23, 2012 11:05:58 PM
-
-Ground clearance, also called ride height or simply clearance, is the distance between the underside of the chassis and a flat, level surface the vehicle is standing
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 583-584 | Added on Friday, November 23, 2012 11:15:40 PM
-
-Studless pieces have nearly ousted studfull ones from LEGO Technic sets, making the use of bricks and plates as measurements of height obsolete.
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 591-591 | Added on Friday, November 23, 2012 11:16:12 PM
-
-Holes in two bricks separated by two plates are exactly 3 studs apart.
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 635-636 | Added on Friday, November 23, 2012 11:19:58 PM
-
-studless (using beams) and studfull (using bricks and plates). The two styles are significantly different,
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 848-849 | Added on Friday, November 23, 2012 11:33:47 PM
-
-Many accomplished builders abandon the Technic aesthetic completely and instead aim to make their models look as authentic as possible using any LEGO pieces that suit their needs.
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 851-852 | Added on Friday, November 23, 2012 11:34:06 PM
-
-covering the Technic structure with bricks and tiles, thus concealing any pin holes, axles, wires, and motors.
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 1620-1620 | Added on Sunday, November 25, 2012 9:36:10 PM
-
-LEGO actually has its own rubber bands, which work noticeably better.
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 1633-1634 | Added on Sunday, November 25, 2012 9:36:55 PM
-
-the rubber band should be as tight as possible because any play can stop it from transferring drive or even make it fall off the pulleys.
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 1640-1640 | Added on Sunday, November 25, 2012 9:37:27 PM
-
-they create practically no backlash,
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 1664-1665 | Added on Sunday, November 25, 2012 9:38:43 PM
-
-mechanical advantage is simply another way of describing a ratio.
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 1686-1686 | Added on Sunday, November 25, 2012 9:40:09 PM
-
-There are three categories of pulley systems,
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 1688-1689 | Added on Sunday, November 25, 2012 9:40:22 PM
-
-The simplest pulley system consists of two groups that are identical.
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 1707-1708 | Added on Sunday, November 25, 2012 9:43:09 PM
-
-the number of sections of string connecting the groups determines the mechanical advantage they realize.
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 1711-1713 | Added on Sunday, November 25, 2012 9:43:31 PM
-
-With more sections, the whole system becomes less and less efficient, as each pulley creates additional friction and the significant length of string in the whole system is prone to stretching under load.
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 1876-1876 | Added on Sunday, November 25, 2012 9:51:40 PM
-
-We can use this system of parallel levers, also known as a 4-bar linkage, to our advantage.
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 1953-1954 | Added on Sunday, November 25, 2012 9:56:12 PM
-
-In the real world, linkages are used to control the movement of suspension components.
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 2038-2039 | Added on Sunday, November 25, 2012 10:03:44 PM
-
-Differentials are an essential part of every driven axle in a vehicle with wheels.
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 2077-2078 | Added on Sunday, November 25, 2012 10:06:39 PM
-
-As a differential transfers drive between its two outputs, it tends to transfer more of it to the less loaded one.
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 2084-2085 | Added on Sunday, November 25, 2012 10:07:18 PM
-
-a differential lock and a differential can’t work at the same time.
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 2126-2126 | Added on Sunday, November 25, 2012 10:11:10 PM
-
-One better alternative is using a ratchet.
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 2126-2127 | Added on Sunday, November 25, 2012 10:11:21 PM
-
-A LEGO ratchet has two elements: a freely spinning gear and a pawl, the small lever that stops the gear from spinning
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 2142-2143 | Added on Sunday, November 25, 2012 10:12:15 PM
-
-Ratchets, therefore, are gravity sensitive.
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 2167-2168 | Added on Sunday, November 25, 2012 10:14:29 PM
-
-An eccentric mechanism, also called a crank mechanism, is used to transform rotary motion into reciprocating motion and vice versa.
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 2774-2775 | Added on Monday, November 26, 2012 8:52:39 PM
-
-for a pneumatic system in which one or two large cylinders are working at the same time, it takes at least two pumps for a PF Medium motor to provide air pressure at reasonable rate.
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 2902-2903 | Added on Monday, November 26, 2012 8:57:39 PM
-
-Pneumatic engines are advantageous in terms of their performance, resemblance to combustion engines, and sound, which is quite loud and carlike compared to that of electric motors.
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 2930-2931 | Added on Monday, November 26, 2012 8:59:02 PM
-
-The best pneumatic engines from these builders can far outperform any LEGO electric motor in terms of both speed and torque,
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 3137-3138 | Added on Thursday, November 29, 2012 9:58:47 PM
-
-The axle should be supported at least at two points. The axle should be supported as close to the gears on it as possible, preferably from both sides of the gears.
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 3258-3259 | Added on Thursday, November 29, 2012 10:04:49 PM
-
-rails, also called stringers. Almost all LEGO
-==========
-Harry Potter and the Sorcerer's Stone (Book 1) (Rowling, J.K.)
-- Your Highlight on Page 128 | Location 2247-2247 | Added on Saturday, December 1, 2012 3:11:15 PM
-
-“Ah, music,” he said, wiping his eyes. “A magic beyond all we do here!
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 4206-4207 | Added on Saturday, December 1, 2012 11:47:35 PM
-
-vehicle needs at least three points of support, and we’ll call these points fulcrums in our suspensions.
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 4200-4201 | Added on Saturday, December 1, 2012 11:47:45 PM
-
-A suspension is a system of linkages that connects the chassis of the vehicle to the wheels. Its primary purpose is to keep all wheels in constant contact with the ground, thus ensuring stability and proper traction of the vehicle.
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 4209-4210 | Added on Saturday, December 1, 2012 11:48:02 PM
-
-the number of wheels and the number of fulcrums differ.
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 5199-5200 | Added on Sunday, December 2, 2012 7:35:11 PM
-
-It’s best to accept one of two options before you even start building: I can compromise the look in favor of functionality, or I can compromise functionality in favor of the look.
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 5661-5662 | Added on Sunday, December 2, 2012 7:55:34 PM
-
-steered wheels in LEGO models need bigger mudguards than real steered wheels.
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 5717-5718 | Added on Sunday, December 2, 2012 7:58:48 PM
-
-painting rarely produces an effect even remotely close to a stock-colored LEGO piece and is often considered cheating in the community. But this isn’t true when it comes to
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 5719-5720 | Added on Sunday, December 2, 2012 7:59:01 PM
-
-many builders try custom-chroming regular LEGO pieces.
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 5745-5745 | Added on Sunday, December 2, 2012 8:00:40 PM
-
-A good way to plan a model is to decide which of its features are most important and to try to retain or even exaggerate those features.
-==========
-Unofficial LEGO Technic Builder's Guide (Pawel "Sariel" Kmiec)
-- Your Highlight Location 5782-5783 | Added on Sunday, December 2, 2012 8:02:18 PM
-
-match the pieces to the details, not the details to the pieces.
-==========
-
+[O'Reilly listing]:http://shop.oreilly.com/product/9781593274344.do
+[Cover]:http://akamaicovers.oreilly.com/images/9781593274344/lrg.jpg
+[Crane Model]:http://cache.lego.com/upload/contentTemplating/Technic2DesignersBlog/images/pic0C7CAD3824C86E302E3A624C6E1D1D3D.jpg
+[Well-loved]:http://technic.lego.com/en-us/Designers/Blog/Default.aspx?date=3/21/2010
+[Chebyshev]:http://www.youtube.com/watch?v=U76Vg2vceA0
