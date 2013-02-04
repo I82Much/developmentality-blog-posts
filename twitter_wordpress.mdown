@@ -1,4 +1,4 @@
-# Slips vs mistakes - what Twitter does right and Wordpress does wrong.
+# Slips vs mistakes - what Wordpress gets wrong that Blogger and Tumblr get right
 
 You've just finished a blog post and are in the process of scheduling it to go out at a certain time to maximize exposure. You click the confirmation button, only to see your post go live immediately rather than the time you scheduled.
 
@@ -6,90 +6,105 @@ Oops. What went wrong? This happened to me once (and nearly multiple times) due 
 
 # Scheduling a post
 Here is the dialog for publishing on Wordpress.
+
 ![Publish dialog 1][]
 
 If we click Edit, UI elements reveal themselves for choosing a date and time at which to publish the post.
 
 ![Publish dialog 2][]
 
-It was at this point where I pressed the Publish button and my post went live immediately.
+It was at this point where I pressed the Publish button and my post went live immediately. Do you see what I did wrong?
 
 # Slips vs mistakes
 From [my time in Scott Klemmer's Human-Computer Interaction (HCI) course][Coursera], I learned that there are two classes of mistakes that users make - 'Slips' and 'Mistakes'.
 
-A slip is when the user has the correct mental model of the interaction yet makes an error on accident. For instance, if two buttons are close together and you click one rather than the other on accident, that would be a slip. These can often be addressed through things such as making touch targets bigger and buttons more separated. From the screenshot, you can see that the Publish button is very large and there's nothing next to it to accidentally press. This is not the error I made.
+A slip is when the user has the correct mental model of the interaction yet makes an error on accident. For instance, if two buttons are close together and you click one rather than the other on accident, that would be a slip. These can often be addressed through things such as making touch targets bigger and buttons more separated. From the screenshot, you can see that the Publish button is very large and there's nothing next to it to accidentally press. (The decision to have the Move to trash button on the same row is rather strange, but it is sufficiently far away that I did not accidentally click on it). This is not the type of error I made.
 
-A mistake, on the other hand, stems from the user having the incorrect mental model. That is precisely what happened to me. I did not accidentally press the Publish button; I intentionally pressed it but I had the wrong mental model as to what would happen. Let's investigate why.
+A mistake stems from the user having the incorrect mental model. That is precisely what happened to me. I did not accidentally press the Publish button; I intentionally pressed it but I had the wrong picture as to what would happen. Let's investigate why.
 
-## Convention
+# Convention
 What makes interfaces intuitive? Part of it comes from adhering to convention and following the [Principle of Least Astonishment][]. The Wikipedia article sums it up nicely:
 
 > In more practical terms, the principle aims to exploit users' pre-existing knowledge as a way to minimize the learning curve for instance by designing interfaces borrowing heavily from "functionally similar or analogous programs with which your users are likely to be familiar."
 
 This publishing widget violates conventions in a few ways.
 
-1. Discarding unsaved user input without warning.
+## Discarding unsaved user input without warning.
 
-Many programs will warn if you're about to do something destructive to unsaved input. For instance, if I'm half way through a message in Gmail and I close the tab, I get the popup warning:
+Many programs will warn if you're about to do something destructive to unsaved input. For instance, if I'm half way through a message in Gmail and I attempt to close the tab or browser, I get the popup warning:
 
 ![Gmail close tab][]
 
-Similarly, all Cocoa applications on Macs will clearly show saved state and warn if you try to close a program without saving:
+Similarly, all Cocoa applications on Macs will clearly show unsaved state and warn if you try to close a program without saving:
 
 ![Unsaved indicator][]
+
 ![Unsaved warning][]
 
 If there are form elements whose state is about to be destroyed by an action, it would make sense to issue a warning about that. This Wordpress form does not do the user that courtesy.
 
-2. Misuse of 'OK' and 'Cancel'
+## Too much state
+Most programmers understand that there is state saved on both the server side and client side. Generally the client will fetch the data from the server and adjust its UI controls to match. Changes to the UI controls don't automatically get sent to the server; generally there's some final OK/Cancel action to either accept or discard the changes. Normal users should not need to know this - it should just work. This control exposes too much information unnecessarily. Why would one care what the current state on the server is vs what's in the UI control for each individual section? Why wouldn't she just set the options the way she likes and hit one button to either discard his changes or accept them?
+
+Even if he understands the distinction between client side and server side state (like I do), it is an *extremely* unfamiliar interface to have to hit OK on a subsection of a form before finally submitting it. I cannot think of one other example that does this. It is such a given that changing a UI control will have its state applied to the final action button that I was virtually blind to the presence of the OK / Cancel buttons that appeared in the subsection. If I *had* pressed OK, then the Publish button would have changed its text to "Schedule." Without knowing that that change would occur, I assumed that this control behaved like all others I had used before and so made the mistake.
+
+![Fully expanded][]
+
+# Alternatives
+Let's look at alternative blogging sites and see how they do things better.
+
+## Blogger
+Blogger separates the configuration of the publishing options from the publish button itself.
+
+![Blogger separate][]
+
+Once you click on the Schedule button, the Schedule section expands. Note that only one section can be expanded at once, unlike the Wordpress widget. example of a 
+
+![Blogger expanded][]
+
+The "automatic" option really means Now, which should be phrased more clearly. Clicking on the "Set date and time" option brings up a date picker:
+
+![Blogger expanded datepicker][]
+
+Note that the setting is immediate - if you click the Publish button while a date is selected, it will be scheduled for that date, even if you haven't hit Done. Done merely saves the state and collapses the Scheduling section.
+
+![Blogger scheduled][]
 
 
-By very strong convention, OK and Cancel are used to complete an action in a dialog box. They indicate that the dialog will go away either having )
+Note that there's no Cancel option - if you don't want to change the date, just put it back to what it was before. 
 
+This approach works well. My one complaint is that the Publish text does not change to something akin to Schedule when a date is selected. I had to use trial and error to see what would happen on clicking Publish when a date had been chosen but before the Done button had been pressed - would it publish immediately like Wordpress or would it respect the date options? Fortunately it does the most sensible thing and treats the state of the UI controls as the source of truth.
 
+## Tumblr
+Tumblr takes an approach similar to Wordpress but executes it much better. They optimize for the case of immediate publishing, hiding most of the options behind a disclosure button:
 
-3. Mixing saved and unsaved state in the same form.
-This is the only widget / form I can think of which has two sets of state for the same field. One state is that of the visual UI picker. The second piece of state is the actual value
+![Tumblr Create Post][]
 
+![Tumblr Menu][]
+![Tumblr Schedule][]
 
+I can't see anything wrong with this, except perhaps the lack of a date picker. Notice that the instant the "Publish on..." option is chosen, a few things happen. First, there's a check box next to the item, indicating unequivocally that this is the current selected option. Contrast this with Wordpress, which has the confusing case of showing two states in the same area:
 
-Tumblr has no way of undoing the change to the scheduling date - but since it's an editable text field, you can just hit undo on the keyboard/edit menu until it goes back to what it was before.
+![Confusing double state][]
 
+Next, notice that the text of the action button immediately changes from "Create post" to "Schedule post", further cementing the fact that the post will not be immediately created. Finally, note that the button is grayed out and disabled - it cannot be clicked until the menu is dismissed and the changes are implicitly accepted. Once the menu goes away, the button becomes enabled.
 
+![Tumblr Menu Dismissed][]
 
-
-
-
-
-## Documents vs dialog boxes vs forms
-
-
-
-## Changing button text
-
-
-
-Conventions are extremely important for making interfaces feel intuitive. 
-
-
- The problem, as you may have guessed, is that the changes you have made don't take effect until you hit "OK". If I had been paying closer attention, there were two tip-offs that could have prevented me from making this mistake. First is that the text above the date picker says "Publish *immediately*" and the second is that the text on the button says Publish rather than Schedule. Let's address each of these points.
-
-## Publish immediately
-
-
-## Changing button text
-If you press the OK button, the main callout button says 
-
-
-
-
-
-
-# Twitter
-
+This does everything correctly. It optimizes for the most common use case while hiding complexity. It uses bold visual cues to explain the state of the system. It follows conventions and makes it much less likely that the user will make a Mistake.
 
 # Conclusion
-I have shown how the Wordpress publish widget violates the principle of least astonishment and has led me to accidentally publish posts prematurely on at least one occasion. This specific error is a mistake rather than a slip, in that it stems from my mental model of the action being different from the designers'. I contrasted the design of this UI control with that of other blog software, such as Blogger and Tumblr and presented a potential redesign.
+Understanding the mental model of the user is crucial for user interface designers. The Wordpress designers have chosen to expose strange implementation details which make the act of scheduling a future post extremely confusing and error prone. For each option that can be modified, there is a saved state and the current UI state. Each section must be explicitly saved with 'OK' in order for changes to take effect. This leads to confusion in the UI because there is contradictory information being shown - on the one hand dates have been chosen but on the other text says 'Publish Immediately'. 
+
+I have shown how Blogger and Tumblr address the task of scheduling posts in two different but superior ways to Wordpress. Blogger separates the Publish action from the configuration of scheduling, while at the same time making the current state of those settings take place immediately without explicitly confirming the selection. Because of this simplicity, there is no need for an explicit cancel or undo button. Tumblr hides the scheduling details behind a button but makes it absolutely clear through both a large checkbox and an immediate change in button text what will happen when you click it.
+
+The general principles to take away from this case study are:
+
+1. Keep things simple
+2. Follow convention
+3. Update button text immediately when UI changes are made
+
+In my mistake, there was no real harm done. Since this same confusing interface is present for setting privacy options, I can only hope people trying to post privately do not make the mistake I did.
 
 [Principle of Least Astonishment]:http://en.wikipedia.org/wiki/Principle_of_least_astonishment
 [Coursera]:http://developmentality.wordpress.com/2012/07/26/courseras-human-computer-interaction-class-a-triumph-of-education/
@@ -98,8 +113,23 @@ I have shown how the Wordpress publish widget violates the principle of least as
 [Publish dialog 1]:https://lh6.googleusercontent.com/-_tF0RGA2bxg/UQ8lvzCjNsI/AAAAAAAADDg/HRK7aSdqw-Q/s287/Screen%2520Shot%25202013-02-03%2520at%25203.11.44%2520PM.png
 [Publish dialog 2]:https://lh5.googleusercontent.com/-o_vfirRQTe8/UQ8lv_de8XI/AAAAAAAADDc/Z9WvhAYK4RE/s320/Screen%2520Shot%25202013-02-03%2520at%25203.12.03%2520PM.png
 
-[Gmail close tab]:https://lh4.googleusercontent.com/-WlTmParzazY/UQ8t1qXyqUI/AAAAAAAADFQ/AwTQ9HtVhfA/h120/Screen+shot+2013-02-03+at+7.40.34+PM.png
+[Gmail close tab]:https://lh3.googleusercontent.com/-QUmI1mg1cYA/UQ9qJciydBI/AAAAAAAADLA/KkTZqDvkDeg/s506/Screen%2520shot%25202013-02-03%2520at%252011.57.59%2520PM.png
 [Unsaved indicator]:https://lh6.googleusercontent.com/-eb__XFy97eQ/UQ8ucLoacjI/AAAAAAAADFc/wwiQqP5KX3Q/h120/Screen+shot+2013-02-03+at+7.43.01+PM.png
 [Unsaved warning]:https://lh5.googleusercontent.com/-gNLQc_NVVco/UQ8uqqVXgNI/AAAAAAAADFw/dYwaC90TxGs/s454/Screen%2520shot%25202013-02-03%2520at%25207.43.17%2520PM.png
 [Hipmunk date picker]:https://lh3.googleusercontent.com/-pzJHdAaLLdM/UQ8xN38k7gI/AAAAAAAADGQ/lijtUdiCqYM/s512/Screen%2520shot%25202013-02-03%2520at%25207.55.06%2520PM.png
 [Google Flights date picker]:https://lh5.googleusercontent.com/-0ITfwzW1hww/UQ8xXq8_qAI/AAAAAAAADGg/a8V6TD9jamo/s719/Screen%2520shot%25202013-02-03%2520at%25207.55.41%2520PM.png
+[Fully expanded]:https://lh4.googleusercontent.com/-YmXfDd6-WzI/UQ9npc4bD1I/AAAAAAAADKs/yaOp1mFxfqA/s512/Screen%2520shot%25202013-02-03%2520at%252011.47.10%2520PM.png
+[Confusing double state]:https://lh6.googleusercontent.com/-n0OgvZrqawQ/UQ9eSmFs3WI/AAAAAAAADKU/8NtiRgAzayg/h120/Screen+shot+2013-02-03+at+11.07.32+PM.png
+
+
+
+[Blogger separate]:https://lh4.googleusercontent.com/-6MKQIldg1L0/UQ82DLI8oHI/AAAAAAAADH0/k-3BZqvM2yY/s791/Screen%2520shot%25202013-02-03%2520at%25208.15.10%2520PM.png
+[Blogger expanded]:https://lh6.googleusercontent.com/-J9TS9-dCNRY/UQ82DFmamlI/AAAAAAAADIM/KV7j9RsPvBE/s284/Screen%2520shot%25202013-02-03%2520at%25208.15.17%2520PM.png
+[Blogger expanded datepicker]:https://lh4.googleusercontent.com/-kwgPp-kVEhQ/UQ82Ddef2eI/AAAAAAAADH4/Nx0ZYsw8tlY/s400/Screen%2520shot%25202013-02-03%2520at%25208.15.22%2520PM.png
+[Blogger scheduled]:https://lh3.googleusercontent.com/-YIGsUBb7DkU/UQ82EUROYgI/AAAAAAAADII/zttd8HcFxRI/s781/Screen%2520shot%25202013-02-03%2520at%25208.15.51%2520PM.png
+
+
+[Tumblr Create Post]:https://lh4.googleusercontent.com/-Cb8pxgb1NIs/UQ81q0U1wgI/AAAAAAAADHE/SHcjDg4MW1s/s543/Screen%2520shot%25202013-02-03%2520at%25208.06.46%2520PM.png
+[Tumblr Menu]:https://lh5.googleusercontent.com/-YPWnxvixb-s/UQ81rC6FEUI/AAAAAAAADHI/p3WD-__iqig/s336/Screen%2520shot%25202013-02-03%2520at%25208.07.03%2520PM.png
+[Tumblr Schedule]:https://lh5.googleusercontent.com/-O4itdRyHLXQ/UQ81rsUDswI/AAAAAAAADHQ/eQV8Dvp0F_8/s329/Screen%2520shot%25202013-02-03%2520at%25208.07.17%2520PM.png
+[Tumblr Menu Dismissed]:https://lh5.googleusercontent.com/--M4VfZ_8hE0/UQ81ri3bXxI/AAAAAAAADHU/4BN94Rohrxg/s338/Screen%2520shot%25202013-02-03%2520at%25208.07.37%2520PM.png
