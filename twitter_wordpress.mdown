@@ -1,0 +1,105 @@
+# Slips vs mistakes - what Twitter does right and Wordpress does wrong.
+
+You've just finished a blog post and are in the process of scheduling it to go out at a certain time to maximize exposure. You click the confirmation button, only to see your post go live immediately rather than the time you scheduled.
+
+Oops. What went wrong? This happened to me once (and nearly multiple times) due to poor UI design on Wordpress.com. Fortunately I only lost a few potential page views; in other cases early releases of information have [cost businesses dearly][Early stock report].
+
+# Scheduling a post
+Here is the dialog for publishing on Wordpress.
+![Publish dialog 1][]
+
+If we click Edit, UI elements reveal themselves for choosing a date and time at which to publish the post.
+
+![Publish dialog 2][]
+
+It was at this point where I pressed the Publish button and my post went live immediately.
+
+# Slips vs mistakes
+From [my time in Scott Klemmer's Human-Computer Interaction (HCI) course][Coursera], I learned that there are two classes of mistakes that users make - 'Slips' and 'Mistakes'.
+
+A slip is when the user has the correct mental model of the interaction yet makes an error on accident. For instance, if two buttons are close together and you click one rather than the other on accident, that would be a slip. These can often be addressed through things such as making touch targets bigger and buttons more separated. From the screenshot, you can see that the Publish button is very large and there's nothing next to it to accidentally press. This is not the error I made.
+
+A mistake, on the other hand, stems from the user having the incorrect mental model. That is precisely what happened to me. I did not accidentally press the Publish button; I intentionally pressed it but I had the wrong mental model as to what would happen. Let's investigate why.
+
+## Convention
+What makes interfaces intuitive? Part of it comes from adhering to convention and following the [Principle of Least Astonishment][]. The Wikipedia article sums it up nicely:
+
+> In more practical terms, the principle aims to exploit users' pre-existing knowledge as a way to minimize the learning curve for instance by designing interfaces borrowing heavily from "functionally similar or analogous programs with which your users are likely to be familiar."
+
+This publishing widget violates conventions in a few ways.
+
+1. Discarding unsaved user input without warning.
+
+Many programs will warn if you're about to do something destructive to unsaved input. For instance, if I'm half way through a message in Gmail and I close the tab, I get the popup warning:
+
+![Gmail close tab][]
+
+Similarly, all Cocoa applications on Macs will clearly show saved state and warn if you try to close a program without saving:
+
+![Unsaved indicator][]
+![Unsaved warning][]
+
+If there are form elements whose state is about to be destroyed by an action, it would make sense to issue a warning about that. This Wordpress form does not do the user that courtesy.
+
+2. Misuse of 'OK' and 'Cancel'
+
+
+By very strong convention, OK and Cancel are used to complete an action in a dialog box. They indicate that the dialog will go away either having )
+
+
+
+3. Mixing saved and unsaved state in the same form.
+This is the only widget / form I can think of which has two sets of state for the same field. One state is that of the visual UI picker. The second piece of state is the actual value
+
+
+
+Tumblr has no way of undoing the change to the scheduling date - but since it's an editable text field, you can just hit undo on the keyboard/edit menu until it goes back to what it was before.
+
+
+
+
+
+
+
+## Documents vs dialog boxes vs forms
+
+
+
+## Changing button text
+
+
+
+Conventions are extremely important for making interfaces feel intuitive. 
+
+
+ The problem, as you may have guessed, is that the changes you have made don't take effect until you hit "OK". If I had been paying closer attention, there were two tip-offs that could have prevented me from making this mistake. First is that the text above the date picker says "Publish *immediately*" and the second is that the text on the button says Publish rather than Schedule. Let's address each of these points.
+
+## Publish immediately
+
+
+## Changing button text
+If you press the OK button, the main callout button says 
+
+
+
+
+
+
+# Twitter
+
+
+# Conclusion
+I have shown how the Wordpress publish widget violates the principle of least astonishment and has led me to accidentally publish posts prematurely on at least one occasion. This specific error is a mistake rather than a slip, in that it stems from my mental model of the action being different from the designers'. I contrasted the design of this UI control with that of other blog software, such as Blogger and Tumblr and presented a potential redesign.
+
+[Principle of Least Astonishment]:http://en.wikipedia.org/wiki/Principle_of_least_astonishment
+[Coursera]:http://developmentality.wordpress.com/2012/07/26/courseras-human-computer-interaction-class-a-triumph-of-education/
+[Early stock report]:http://money.cnn.com/2012/10/18/technology/google-earnings/index.html
+
+[Publish dialog 1]:https://lh6.googleusercontent.com/-_tF0RGA2bxg/UQ8lvzCjNsI/AAAAAAAADDg/HRK7aSdqw-Q/s287/Screen%2520Shot%25202013-02-03%2520at%25203.11.44%2520PM.png
+[Publish dialog 2]:https://lh5.googleusercontent.com/-o_vfirRQTe8/UQ8lv_de8XI/AAAAAAAADDc/Z9WvhAYK4RE/s320/Screen%2520Shot%25202013-02-03%2520at%25203.12.03%2520PM.png
+
+[Gmail close tab]:https://lh4.googleusercontent.com/-WlTmParzazY/UQ8t1qXyqUI/AAAAAAAADFQ/AwTQ9HtVhfA/h120/Screen+shot+2013-02-03+at+7.40.34+PM.png
+[Unsaved indicator]:https://lh6.googleusercontent.com/-eb__XFy97eQ/UQ8ucLoacjI/AAAAAAAADFc/wwiQqP5KX3Q/h120/Screen+shot+2013-02-03+at+7.43.01+PM.png
+[Unsaved warning]:https://lh5.googleusercontent.com/-gNLQc_NVVco/UQ8uqqVXgNI/AAAAAAAADFw/dYwaC90TxGs/s454/Screen%2520shot%25202013-02-03%2520at%25207.43.17%2520PM.png
+[Hipmunk date picker]:https://lh3.googleusercontent.com/-pzJHdAaLLdM/UQ8xN38k7gI/AAAAAAAADGQ/lijtUdiCqYM/s512/Screen%2520shot%25202013-02-03%2520at%25207.55.06%2520PM.png
+[Google Flights date picker]:https://lh5.googleusercontent.com/-0ITfwzW1hww/UQ8xXq8_qAI/AAAAAAAADGg/a8V6TD9jamo/s719/Screen%2520shot%25202013-02-03%2520at%25207.55.41%2520PM.png
