@@ -45,7 +45,7 @@ boolean hasMobileProduct(products: array of products) {
 
 
 
-One of the most valuable things I've learned at Google is that sometimes these refactorings actually make the code less comprehensible and less maintainable. There's really no harm in repeating very simple logic that's not lkely to change.
+One of the most valuable things I've learned at Google is that sometimes these refactorings actually make the code less comprehensible and less maintainable. There's really no harm in repeating very simple logic that's not likely to change.
 
 
 

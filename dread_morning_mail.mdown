@@ -1,55 +1,54 @@
-# Lessons in email etiquette from E.B. White
+# Why E.B. White Couldn't Write the Next Charlotte's Web - Lessons in Mail Overload
 
-[Letters of Note][] recently published an incredibly well-written letter by E.B. White explaining how the amount of fan mail he gets has become his enemy, as it saps all of his time and prevents him from performing the creative endeavour which got him fame in the first place.  What's amazing is how relevant this letter written in 1961 is today, particularly to those making their living as knowledge workers.
+E.B. White, the children's book author of Charlotte's Web, wrote [a letter explaining how fan mail has become his enemy][Letters of Note] - it saps all of his time and prevents him from doing the work that made him famous. Substitute email for fan mail, and you get an almost perfect description of the problems many office workers face. I'll describe some of these problems and strategies for solving them.
+
+All of the following quotes come from the letter, followed by my thoughts.
 
 > I would like to write another book for children but I spend all my spare time just answering the letters I get from children about the books I have already written.
 
-White talks about the inadvertant harm that results from teachers encouraging their students to write him and other authors letters; each thinks of the class in isolation without thinking of all the other people having the exact same idea.  This leads to far more mail than he can possibly deal with:
+White talks about the inadvertant harm that results from teachers encouraging their students to write him letters; each teacher thinks of the class in isolation without thinking of all the other people having the exact same idea.  This leads to far more mail than he can possibly deal with:
 
 > The result is the author swamped with mail. Letters now come to me faster than I can answer them. Many of the letters contain requests—for an autograph, for a dust jacket, for an explanation, for a photograph. This to me presents a real problem. I have no secretary here at home, and if I am to deal with my mail I must do it myself; if I am to mail a book I must find the wrapping paper, the string, the energy, the right amount of stamps, and take the parcel to the post office up the road. This can occupy a whole morning, and often does. 
 
 This problem still exists, as message senders do not consider all the other requests vying for the attention of the recipient. I've heard of a few ideas to combat this, like the now defunct [Smoke Signal][Smoke signal hacker news discussion], and [Courteous.ly][], which both aim to indicate to the sender how much email the recipient has in his inbox. 
 
-each request in and of itself is doable but in aggregate it's too much - 'straw that broke the camel's back' e.g. 
-
-
-
 > About four years ago, I had an idea for a story for children. It seemed like such a pleasant idea that I spent my spare time for several weeks doing research and making notes—the raw material of a book. I put everything in a folder and there it still lies, awaiting a spell when I feel enough caught up with life to tackle the writing. Every once in a while I take this folder out and examine it, hungrily. But then I look at my desk where the unanswered letters and the undone things lie in accusing piles, and I stick the folder back in its corner. 
 
+I relate to this a distressing amount. I find it very difficult to ignore requests that come into my inbox, and as a result spend a large portion of time reading and responding to emails instead of actually accomplishing the things that are on *my* list. I try to mitigate this problem in a few ways.
 
+# Reducing distractions
+I've written [previously on ways to deal with information overload][Mac more like iPhone], including including shutting off any sort of email alerts (sounds, growl notifications, etc). I turn off all push notifications on my phone, and I do not link my phone to my work email account. This keeps email a 'pull' sort of system which I can read at my leisure rather than a 'push' system. I try not to leave a tab open, and instead open my inbox only a few times a day.
 
+# Aggressive filtering
+I use Priority Inbox in Gmail and it does a remarkably good job of classifying emails as important or not. I set up additional filters so that, in general, only mail which directly includes me on the 'to' line makes it into my Important box. I try to keep the Starred and Everything Else sections minimized or hidden so that those streams of messages do not distract me from the important ones at the top of my inbox.
 
-How much email can you *avoid* sending today? Email is too easy to create, too easy to flood peoples' inboxes (hello reply all). 
+# Snooze
+Despite what I mention above, I still check my email too frequently, and I still get too much email. I have a tendency to want to reply immediately to questions that come my way, even if it's to a group of people and not directly addressed to me. This is a Very Bad Thing, because it conditions people to expect an immediate response from you, and reinforces the sender's notion that their request really was urgent. I'm trying to learn to sit on my hands for the emails I see that are 1) addressed to more than just me and 2) don't seem urgent. That way it gives others a chance to chime in and hopefully resolve the issue without my involvement.
 
+Some products that implement the ability to ignore a message for a set amount of time are [Snooze Your Email for Gmail][] and [Boomerang for Gmail][]. I personally use a small Google Apps Script, so I can't vouch for those two products.
 
+# Conclusion
+E.B. White describes the problems that excessive fan mail caused him. I see very similar problems every workday dealing with email.
 
+It's dangerous to get in the habit of answering each request, no matter how small.
 
-how much of our days is spent reading and responding to emails instead of actually working?  A distressing amount of time.  
+1. It is distracting. The messages are likely to be about many different topics, causing context shifts and interrupting flow.
+2. Answering quickly reinforces the notion that the person making the request was right to consider the request as urgent.
+3. Answering emails tends to lead to receiving more email.
+4. You can feel a false sense of accomplishment by responding to emails, at the expense of doing your real work.
 
-For most of us we're not receiving fan mail but it's still stuff that seems to require a response.
+Some celebrities like [Ringo Starr][] and [Thomas Wilson][] choose to handle the problem of excessive fan mail by refusing to open any of it. Most of us cannot get away with that approach for email, but there is a middle ground we should take between that extreme and the extreme of obsessively answering each request as soon as it comes in.
 
-urgent but not important
-
-another blog post mentioned some ways I personally try to deal with the overload, including shutting off any sort of email alerts  (sounds, growl notifications, etc).  Why should you let someone else dictate your attention?  It's the most important thing you have
-
-Why is email so dangerous?  Just a few things I find
-
-1) it is distracting.  The messages are liable to be about many different topics, causing massive amounts of context shifts and causing you to run around looking for different info
-2) if you answer quickly, causes people to expect you to answer quickly in the future.  If you answer slowly, can be perceived as obstructing progress
-3) answering it leads to more of it
-4) weighs at back of mind
-5) it's easy to get trapped into feeling productive by answering a few emails when it's not actually that important.  the thing you're being paid to do 
-
-
-setting up some filters helps but it's not sufficient
-
-
-Obviously I'm not the only one with these sorts of ideas; Merlin Mann's 43 folders has a lot to say about managing email overload.
+There are mitigating strategies you can use to prevent emails from dominating your time and creativity. These include removing notifications, filtering your inbox, and snoozing non-urgent mails. For many other techniques you can read Merlin Mann's [43 folders][] site.
 
 
 [Smoke signal]:http://www.getsmokesignal.com/
-
 [Smoke signal hacker news discussion]:http://news.ycombinator.com/item?id=3131611
-[Courteous.ly]:http://courteous.ly/
-
-[Letters of Note]:www.lettersofnote.com/2012/08/the-morning-mail-is-my-enemy.html
+[Courteous.ly]:http://www.killerstartups.com/web-app-tools/courteous-ly-share-your-email-load/
+[Letters of Note]:http://www.lettersofnote.com/2012/08/the-morning-mail-is-my-enemy.html
+[Mac more like iPhone]:http://developmentality.wordpress.com/2010/11/11/make-your-mac-more-like-an-iphone-how-to-reduce-distractions-and-improve-focus/
+[Snooze Your Email for Gmail]:https://chrome.google.com/webstore/detail/snooze-your-email-for-gma/pbmfoncgccdhoknelpglaacbgkclcape?hl=en
+[Boomerang for Gmail]:https://chrome.google.com/webstore/detail/boomerang-for-gmail/mdanidgdpmkimeiiojknlnekblgmpdll
+[43 folders]:http://www.43folders.com/
+[Ringo Starr]:http://www.rollingstone.com/music/news/ringo-starr-does-damage-control-over-fan-mail-controversy-20081015
+[Thomas Wilson]:http://www.bigpopfun.com/faq.shtml

@@ -1,6 +1,8 @@
 # Steve Krug
 Don't Make Me Think
 
+
+
 slightly dated (many examples from dot-com bust) but many things are still relevant
 
 Don't make me think - first chapter, title. Number one rule. True of all software, not just on the web. Endless dialog boxes, asking for junk that the user doens't care about, shouldn't have to
