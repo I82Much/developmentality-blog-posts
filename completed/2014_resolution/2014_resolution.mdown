@@ -1,0 +1,26 @@
+I have barely blogged in the past two years:
+
+<img src="https://docs.google.com/spreadsheet/oimg?key=0AtoPMoUoEyTvdG1jMy1pb2VRSm1GZ3daYV9ubUlKblE&oid=2&zx=zg6wzd7larvu" />
+
+The two main reasons are
+
+* Some of my posting has moved to [Google+](https://plus.google.com/+NicholasDunn)
+* I've gotten lazy
+
+Writing is an important skill to hone, so I'm going to do better in 2014. Inspired by Jennifer Dewalt's [180 websites in 180 days][], and Brian Brushwood's video [Why Resolutions are DUMB][], I publicly commit to **publish 52 posts in 2014**. If I'm successful, that will be over twice as many as I've managed to publish in the past 2 years combined.
+
+To whet your appetite, here's some of the things I'm planning on writing about:
+
+* Meeting [Edward Tufte][], one of the foremost experts on data visualization
+* A talk given by Don Norman, author of [The Design of Everyday Things][]
+* A walkthrough of a Go program that converts images into LEGO mosaics (see [gallery on G+][Darth Vader gallery])
+* Switching to Android after 4 years on iPhone - what took so long, what's better, and what I miss
+
+I hope you'll join me.
+
+
+[180 websites in 180 days]:http://blog.jenniferdewalt.com/post/56319597560/im-learning-to-code-by-building-180-websites-in-180
+[Why Resolutions are DUMB]:http://www.youtube.com/watch?v=JWsXI-XJRuA&feature=youtu.be 
+[Edward Tufte]:http://en.wikipedia.org/wiki/Edward_Tufte
+[The Design of Everyday Things]:http://en.wikipedia.org/wiki/The_Design_of_Everyday_Things
+[Darth Vader gallery]:https://plus.google.com/photos/110571686519390324685/albums/5916823366279322801
