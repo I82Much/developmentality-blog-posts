@@ -5,7 +5,32 @@ Disclaimer: I received a free review copy from No Starch Press. The images I'm l
 [Beautiful LEGO][], by Mike Doyle, asks the question "Can LEGO be art?" Given that Mr. Doyle is himself a LEGO artist, it's no surprise that the answer presented in the work is a resounding yes. If you're looking for an in-depth discussion of the subject with academic criticism, look somewhere else. If you're already a fan, this book is an incredible collection of artistic talent, and one I recommend without reservation.
 
 # Contents
-The book is divided into various themed sections, punctuated by interviews with some of the artists. Usually these interviews try to get at how the artists got into the medium, or what they find compelling about it. My favorite quote is from Lino Martins:
+The book is divided into various themed sections, punctuated by interviews with the artists. The sections include
+
+* Everyday Wonderful - Depicts everyday objects such as a Polaroid camera, the Nintendo Entertainment system, cameras, and telephones. These works are very realistic and not stylized.
+	
+* Attic Treasures - Works by Matt Armstrong, in the same vein as Everyday Wonderful, but focused more on older technologies such as Morse code, sewing machines, and telescope.
+
+* CubeDudes™ - Angus Maclane creates famous characters and historical figures out of LEGO, with the heads at 45 degree angle (pointing towards you). These include Smokey the Bear, Abraham Lincoln, and Star Trek characters. Here we really start to see the art form come alive as more than just a representational medium. There is great style and care put into these small figures, instantly recognizable despite their size.
+
+In all there are about 30 sections/interviews throughout the book. The usual suspects such as cars, buildings, space ships, and mechs, are present, as well as less usual subjects, like Monty Python (Pythonscape) and mosaics.
+
+# Interviews
+There are about 10 interviews with the artists, and they might be my favorite part of the book. The artists discuss how they got into using LEGO as an artistic medium as well as their design process. 
+
+Interview subjects include 
+
+* Ramón and Amador Alfaro Marcilla - two brothers who work together to create incredible sci-fi works, such as the chest burster from the movie Alien (p. 9). They also have the honor of having the most disturbing picture in the whole book, The Doll (p. 5).
+* Jordan Schwartz - a professional LEGO designer working in Denmark.
+* Nathan Sawaya - a builder who creates life-size sculptures, and who has an art show called "[The Art of the Brick][]".
+* Mike Nieves - a builder who uses pieces I've never seen before, as well as using familar pieces in creative ways. For instance, [Olaf the Bearded][] depicts a warrior with a long flowing beard. On closer inspection, the beard is an octopus figure.
+* Arthur Gugick - a creator of incredibly detailed architectural creations, such as Big Ben and Salisbury Cathedral.
+* Mike Doyle - the author of the book. Like Arthur Gugick, he creates large scale buildings. He is perhaps best known for his beautiful decaying Old Victorian mansions.
+* Nannan Zhang - very short interview, but Mr. Zhang creates some of the darker pieces in the book, such as [End of Days][].
+* Lino Martins - a builder best known for his series of car creations.
+* Ian Heath - creates human characters with lots of personality, like [Freddy Mercury][]
+
+My favorite quote is from Lino Martins, whose work "Hidden Treasure - 1949 Buick Fastback" is shown below:
 
 ![Lino Martins' "Hidden Treasure - 1949 Buick Fastback"](http://www.inmygarage.com/wordpress/wp-content/uploads/2011/04/brickwork_lego-cars_lino-martins_07.jpg)
 
@@ -23,9 +48,10 @@ At the most minimal level are Eric Constantino's adorable [Big Eyed LEGO Duck][]
 
 This book helped me appreciate the fact that there is real artistry and talent that goes into making very small scenes. It's easy to appreciate the enormous scale of Nathan Sawaya and Mike Doyle's work, but I am convinced that just as much skill goes into some of the smaller compositions featured in this book.
 
-# Conclusion
+# Quality
 The production quality of this book is excellent. All of the pictures have had their backgrounds digitally erased and replaced with a pleasing gradient texture (look at the Mike Doyle pictures I linked to above to get a sense of what all the pictures look like). There are a few places where the photos submitted by the artist were clearly not high resolution enough to feature in the book, and they look very out of place. The two instances I found were "Mort" (p. 101) and "Pierre, Of Course" (p. 133). This is a minor nitpick of an otherwise excellent book. For some sample high-res images see [MicroBots][], or the page of [horses][].
 
+# Conclusion
 I have read through this book about four times now, twice on my own, and twice with a 2- and 3-year-old on my lap. They would not let me put it down and were awe-struck on every page, oohing and awwing. As soon as I finished it once, they made me immediately start over again. It was wonderful to see such excitement and energy channeled towards these LEGO creations. 
 
 This book is a wonderful addition to my library, and I'm confident that anyone with a passing appreciation for LEGO will love it too.
@@ -44,3 +70,8 @@ This book is a wonderful addition to my library, and I'm confident that anyone w
 [Big Eyed LEGO Peacock]:http://www.flickr.com/photos/24713250@N06/5442922788/
 [MicroBots]:http://www.nostarch.com/images/BLEGO_230-231_web.jpg
 [horses]:http://www.nostarch.com/images/BLEGO_082-083_web.jpg
+[The Art of the Brick]:http://www.thisiscolossal.com/2013/06/art-of-the-brick-nathan-sawayas-lego-solo-show-in-new-york/
+[Olaf the Bearded]:http://www.flickr.com/photos/retinence/5446203285/
+[End of Days]:http://www.mocpages.com/moc.php/87661
+[Freddy Mercury]:http://www.blameitonthevoices.com/2011/11/lego-freddie-mercury.html
+[Stephen Hawking]:http://www.thesun.co.uk/sol/homepage/news/3983790/Lego-artist-builds-Stephen-Hawking-out-of-Lego.html
