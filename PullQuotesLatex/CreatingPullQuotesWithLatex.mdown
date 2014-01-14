@@ -1,0 +1,63 @@
+2012-03-21
+
+# Creating pull quotes with LaTeX
+
+## Intro
+A few years ago I conducted an [interview with William Wilson, author of my favorite guitar software][Interview]. I wanted to insert large pull quotes into the post to break up the monotony of the text and to catch the reader's attention, especially those just skimming the post.  While the "correct" way to do this would have been through HTML and CSS, I couldn't get them to look the way I wanted with the limited options available to me using the standard Wordpress.com templates.  As an alternative, I decided to try to create the pull quotes as images (with appropriate alt text, of course).
+
+Here's an example:
+
+![Pull Quote Example. Quote: While the "correct" way to do this would have been through HTML and CSS, I couldn't get them to look the way I wanted with the limited options available to me using the standard Wordpress.com templates.  As an alternative, I decided to try to create the pull quotes as images][Pull Quote Example]
+
+I tried a few approaches with standalone graphics editors (such as creating text in [Acorn][]) but my limited knowledge of those tool didn't produce an acceptable result.  I decided to try something I have a little more experience with - LaTeX.
+
+The unfortunately-named [LaTeX][] is a program for creating and typesetting documents. Proponents of LaTeX extol how it separates rendering from the content, just as web designers rely on the separation between HTML (content) and CSS (style). This separation makes it fundamentally different from editors like Microsoft Word and Google Drive which intermingle styles and content together (so-called [What You See Is What You Get (WYSIWYG)][WYSIWYG] editors).
+
+I first learned about LaTeX in college, when all of the computer science professors typeset their problem sets and papers using it.  The documents looked gorgeous, and I learned just enough to get by.  I use the [MacTeX][] distribution for Mac, with the [TeXShop][] frontend for editing. If you're at all interested in trying it out yourself, [ScribTeX][] allows you to play around with the language without having to install anything.
+
+Everyone I've ever talked to who uses LaTeX ends up copying and pasting styles and snippets of markup from existing templates; it's an incredibly complex system and one that's hard to keep in your head. If you need absolute precision of how things render, you will probably end up being very frustrated with LaTeX. I remember spending hours trying to move figures to a certain position on the page or align certain, before giving up in frustration. For the task of rendering pull quotes and others where you don't need absolute control over the output, LaTeX does a great job.
+
+In order to create large, arresting images, I needed to increase the font size and increase the margins from the default.  The best solution I found was the following:
+
+	\documentclass[36pt]{amsart}
+	\usepackage[margin=2.5in]{geometry}
+	\geometry{letterpaper}
+
+	\begin{document}
+
+	{\Huge``I started designing apps for my guitar students as a way to compete with Guitar Hero.''}\\
+
+	{\Huge``I like to hand someone my phone and say, try this. You'd be amazed at how they struggle to find 
+	something you thought was obvious.''}\\
+
+	{\Huge``If my wife looks at me like I'm nuts (which happens frequently) I try to rethink things.''}\\
+
+	{\Huge``Only include features in an app that 80\% of users will use''}\\
+
+	{\Huge``If you look at Apple's success I think it's largely the result of keeping things simple and easy to use, and gearing products for the average user. Take the same approach in your apps.''}\\
+
+	\end{document}
+
+Once you have that entered into a .tex file, you can hit Typeset and out pops a rendered PDF. 
+
+![TeXShop Screenshot][TeXShop Screenshot]
+![TexShop Screenshot - Rendered PDF][TeXShop Screenshot - Rendered PDF]
+
+At that point I took a screenshot of the section of the text I wanted, uploaded that to my hosting provider, and linked the image as usual.
+
+## Conclusion
+LaTeX is an incredibly powerful tool for document creation and typesetting. In a pinch you can use it to do as I did and render small snippets of text as pull quotes. 
+
+[Interview]:http://developmentality.wordpress.com/2012/03/13/an-interview-with-william-wilson-self-taught-developer-of-fret-tester-and-more/
+[TeXShop]:http://pages.uoregon.edu/koch/texshop/
+[MacTeX]:http://www.tug.org/mactex/2011/
+[ScribTeX]:http://www.scribtex.com/
+[10 Essential Mac Programs]:http://developmentality.wordpress.com/2010/03/24/my-ten-essential-mac-programs/
+[Pull Quote File]:https://raw.github.com/I82Much/developmentality-blog-posts/master/completed/Fret_Tester_Pull_Quotes.tex
+[Acorn]:http://www.flyingmeat.com/acorn/
+[LaTeX wikipedia]:http://en.wikipedia.org/wiki/LaTeX
+[Pull Quote Example]:https://developmentality.files.wordpress.com/2014/01/pull-quote.png
+[WYSIWYG]:http://en.wikipedia.org/wiki/WYSIWYG
+[TeXShop Screenshot]:https://developmentality.files.wordpress.com/2014/01/tex-example.png?w=640
+[TeXShop Screenshot - Rendered PDF]:https://developmentality.files.wordpress.com/2014/01/rendered-png-example.png?w=640
+[LaTeX]:http://www.latex-project.org/
