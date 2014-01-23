@@ -1,0 +1,100 @@
+# Why You'll (Rarely) Catch Me With a Printed Book
+
+![E-reader on top of books][E-reader photo]
+
+kodumut via [Flickr under Creative Commons license](http://www.flickr.com/photos/kodomut/6736940485/sizes/m/)
+
+I love books. I love book stores. I worked in a library for four years. But when I read Ali Wunderman's post entitled [Why You'll Never Catch Me With An E-Reader][], I was not convinced. In almost all cases I prefer to buy and read digitally. The crux of her argument comes down to two points:
+
+* She likes the sensations of reading a physical book (touch, smell, sight)
+* She values the serendipity of meeting new friends who share a love for the book that she's reading. With an e-reader people can't see what you're reading so she would have missed out on such encounters
+
+I can't argue against the first point - it's a matter of opinion whether or not holding a book feels good. Since e-readers are such a recent invention, I think this argument is really rooted in nostalgia more than anything else. It would be interesting to see whether children who grow up with a choice between e-readers and physical books end up with such a physical attachment to books. I do like the touch and smell of books, but it's not enough to make me buy paperbacks.
+
+I have never experienced the second point, and I'd be willing to bet it's a rare occurrence. On the other hand, I have had new friends express admiration of the books on my bookshelf and vice versa, and sparked conversations that way. If I had none of those books in a physical location that, we would have missed out on some level of connection.
+
+I do not think this last point is strong enough reason to stay completely attached to dead trees. Once you have established a relationship with other people, it's easy to converse about books you've read, no matter the medium.
+
+The reasons I prefer digital books are price, convenience, and lack of physical clutter.
+
+## Price
+E-books are often cheaper than physical alternatives (they should be - the price of publishing and distribution is virtually zero). This is a nice bonus but it's not the biggest reason I like to buy digital.
+
+## Convenience
+A bigger reason for me is the convenience. Let me count the ways:
+
+* Instant gratification - purchase, download, and start reading a book in less than a minute. No need to wait for a book to be shipped to you, or to go to a store
+* Instant definitions - no need to break the flow of reading to learn the meaning of a word. Tap and hold on the word to get a quick pop-up definition
+* Can read samples of a book before committing to buying it
+* Free lending library - check out one free book a month to read
+
+There's a saying that the best camera is the one you have with you. It's the same with books. I rarely bring physical books with me. Slightly more often I have my [Kindle Paperwhite][Paperwhite review]. I *always* have my phone with me, and that phone has all of my Kindle purchases on it. When I used to use an iPhone it was uncomfortable to read on such a small screen, but I recently switched to a Nexus 5 and have happily consumed entire books on it. The progress I make on one device is instantly synced with all of my other Kindle compatible devices.
+
+## Ergonomics
+I find it more pleasant to read digitally in many ways. I can control how big the font is. I can read it one-handed. I can read in the dark with no external lights. Both my phone and Kindle are light to hold (I remember buying Cryptonomicon on Kindle partly because I was tired of holding up such a big bulky hardback book).
+
+## Clutter-free
+Perhaps the most important thing to me is that buying digitally frees me from physical clutter. If you've ever moved, you know how heavy and unwieldy books are. If you're traveling, it adds a lot of weight and bulk to your luggage to have just a few physical books with you. Just as you can replace stacks of CDs with an iPod the size of a deck of cards, you can fit an entire library in a Kindle or in your phone.
+
+# "Rarely"
+I caveated the title of this post by saying I rarely buy and read printed books. Digital books aren't perfect, and I still do buy and enjoy physical books.
+
+I acquired four physical books in the past month or so:
+
+Paco Underhill's [Why We Buy: The Science of Shopping][Why We Buy]. This was a Christmas present based on my Amazon wish list. I'm glad I read it and I dog-eared some pages to come back to later. I would have been fine having this digitally. It's a hard back book and takes up a fair amount of space. I probably won't re-read it after I write my blog post about it. I'll probably donate it to charity.
+
+Austin Kleon's [Steal Like An Artist][]. This was another gift, and one I'm happy to have a physical copy of. It has a lot of illustrations that would not translate too well to a digital copy on a small format e-reader.
+
+Raph Koster's [A Theory of Fun for Game Design][]. This was an impulse purchase at a local mom and pop bookstore I frequent. It was $30 for a paperback; had I bought it on Amazon for Kindle it would have been $14. I bought the physical copy because I wanted to 
+
+* I wanted to support the bookstore.
+* The book had many illustrations (one every other page). Illustrations work better at a large physical scale than on the phone
+
+Ken Binmore's [Game Theory: A Very Short Introduction][]. I got this at a used bookstore for roughly the price it would have been on Kindle (about $5 in each case). It was another case where I wasn't looking for it but I stumbled upon it and it looked interesting. It's so tiny I knew it wouldn't take up a lot of space on my bookshelf.
+
+
+## Lending
+Lending digital books is much worse digitally than with physical books. Not all publishers allow it, and those that do have draconian limitations. From the [help page](http://www.amazon.com/gp/help/customer/display.html?nodeId=200549320):
+
+> You can lend a Kindle book to another reader for up to 14 days... A book can only be loaned one time.
+
+This is incredible to me. I would bet that this is the only concession publishers were willing to make with Amazon, but it is clearly consumer-hostile. I can lend physical copies of books to as many people as I want. 
+
+## Ownership + Longevity
+When you buy digital, what do you actually own? In 2009, Amazon [deleted unauthorized versions of Animal Farm and 1984][1984 Removal] straight off of owners' Kindles. As the article says,
+
+> Digital books bought for the Kindle are sent to it over a wireless network. Amazon can also use that network to synchronize electronic books between devices — and apparently to make them vanish.
+
+It's a somewhat scary thought. Even if you buy DRM free content, you take the chance that that same format won't be readable by the e-readers of a few decades from now.
+
+With physical books, you know exactly what you're getting. There is no risk that what you bought will suddenly stop working or be removed from your house by the publisher.
+
+## Batteries
+Digital readers run out of batteries. Books don't. Fortunately the battery is extremely long-lived on the Kindle Paperwhite (I only need to charge it every few weeks) but phones die a lot sooner. If I were traveling and didn't have ready access to electricity, this would be a concern. In practice this isn't a big problem for me.
+
+
+
+
+price, 
+convenience,
+lack of space
+
+
+Batteries run out. (but battery life on kindle is incredible)
+
+
+
+* Physical sensations
+** Likes the 'feel' / smell of books
+* Meet new friends through shared connections with books
+
+
+[Why You'll Never Catch Me With an E-Reader]:http://dotcomplicated.co/content/2014/01/youll-never-catch-e-reader/
+[E-reader photo]:http://farm8.staticflickr.com/7168/6736940485_f949fdc8bd.jpg
+
+[Paperwhite review]:http://developmentality.wordpress.com/2012/11/06/kindle-paperwhite-touching-is-good/
+[A Theory of Fun for Game Design]:http://www.amazon.com/s/ref=nb_sb_noss_1?url=search-alias%3Daps&field-keywords=a+theory+of+fun+for+game+design
+[Game Theory: A Very Short Introduction]:http://www.amazon.com/Game-Theory-Short-Introduction-Introductions-ebook/dp/B000SHOV78/ref=sr_1_1?ie=UTF8&qid=1390365476&sr=8-1&keywords=game+theory+a+very+short+introduction
+[Why We Buy]:http://www.amazon.com/Why-We-Buy-Science-Shopping/dp/0684849135/ref=tmm_hrd_swatch_0?_encoding=UTF8&sr=&qid=
+[Steal Like An Artist]:http://www.amazon.com/Steal-Like-Artist-Things-Creative-ebook/dp/B0074QGGK6/ref=sr_1_1?s=books&ie=UTF8&qid=1390366387&sr=1-1&keywords=steal+like+an+artist
+[1984 Removed]:http://www.nytimes.com/2009/07/18/technology/companies/18amazon.html?_r=0
