@@ -30,6 +30,8 @@ A bigger reason for me is the convenience. Let me count the ways:
 * Read free samples of a book before committing to buying it
 * Free lending library - check out one free book a month to read
 
+![Press on a word for a second and get a definition. No need to leave the book. Kindle App on Android][Highlight Example]
+
 There's a saying that the best camera is the one you have with you. It's the same with books. I rarely bring physical books with me. Slightly more often I have my [Kindle Paperwhite][Paperwhite review]. I *always* have my phone with me, and that phone has all of my Kindle purchases on it. When I used to use an iPhone it was uncomfortable to read on such a small screen, but I recently switched to a Nexus 5 and have happily consumed entire books on it. The progress I make on one device is instantly synced with all of my other Kindle compatible devices.
 
 ## Ergonomics
@@ -61,13 +63,18 @@ Until you can freely loan or give away your digital copies of books, paper wins 
 ## Longevity
 Even if you buy DRM free content, you take the chance that you won't be able to read that content in a few years or decades. There is certainly a strong precedent for technologies dying and content being trapped on obsolete devices; see [Lost Formats][] for many examples of this. If Amazon goes out of business in 10 years, what happens to all of the Kindle content you've amassed? Hopefully if that ever were to happen, Amazon would offer a service like [Google Takeout][] to transfer the books to a new service. (Full disclosure: I work for Google).
 
+![Floppy disk][]
+
+Trav1085 via [Wikipedia](http://commons.wikimedia.org/wiki/File:Floppy_disk_300_dpi.jpg)
+
+
 The other aspect of longevity is that of the e-readers themselves. I haven't had the best of luck with my Kindles so far - I am on my fourth Kindle in about as many years. Three of these died extremely quickly; fortunately I've had no problems in the past 2 and a half years from the Kindle Paperwhite. It makes me wonder how long on average these devices last. If you have to buy a new $100 device every 3-5 years, this changes the calculus of whether e-books are more affordable.
 
 ## Batteries
 Digital readers run out of batteries. Books don't. Fortunately the battery is extremely long-lived on the Kindle Paperwhite (I only need to charge it every few weeks) but phones die a lot sooner. If I were traveling and didn't have ready access to electricity, this would be a concern. In practice this isn't a big problem for me.
 
 ## Screens
-Some people prefer the look of a book to a screen. The e-ink display on the Kindle has improved with each generation; I barely notice the e-ink refresh while turning pages on the Paperwhite. I don't think there's an objective winner here. The display on my Nexus 5 is incredibly sharp and I can read it in the dark, just as with the Paperwhite. My only objection to the screen is that it contributes to my spending [90% of my time staring at a glowing rectangle][]. I mitigate this somewhat by changing to the white text on black background on my phone, and keeping the light low on the Paperwhite.
+Some people prefer the look of a book to a screen. The e-ink display on the Kindle has improved with each generation; I barely notice the e-ink refresh while turning pages on the Paperwhite. I don't think there's an objective winner here. The display on my Nexus 5 is incredibly sharp and I can read it in the dark, just as with the Paperwhite. My only objection to the screen is that it contributes to my spending [90% of my time staring at a glowing rectangle][Onion]. I mitigate this somewhat by changing to the white text on black background on my phone, and keeping the light low on the Paperwhite.
 
 ## Distractions
 It's easy to get distracted if you are reading digital books on a multi-purpose digital device. Reading takes time and concentration. Sometimes it's hard to stick with that when there's the allure of games and an infinite expanse of Internet content that's a few button presses away.
@@ -85,8 +92,10 @@ I vividly remember seeing the first clunky version of the Kindle just a few year
 [Game Theory: A Very Short Introduction]:http://www.amazon.com/Game-Theory-Short-Introduction-Introductions-ebook/dp/B000SHOV78/ref=sr_1_1?ie=UTF8&qid=1390365476&sr=8-1&keywords=game+theory+a+very+short+introduction
 [Why We Buy]:http://www.amazon.com/Why-We-Buy-Science-Shopping/dp/0684849135/ref=tmm_hrd_swatch_0?_encoding=UTF8&sr=&qid=
 [Steal Like An Artist]:http://www.amazon.com/Steal-Like-Artist-Things-Creative-ebook/dp/B0074QGGK6/ref=sr_1_1?s=books&ie=UTF8&qid=1390366387&sr=1-1&keywords=steal+like+an+artist
-[1984 Removed]:http://www.nytimes.com/2009/07/18/technology/companies/18amazon.html?_r=0
+[1984 Removal]:http://www.nytimes.com/2009/07/18/technology/companies/18amazon.html?_r=0
 [Lost Formats]:http://www.experimentaljetset.nl/archive/lostformats
 [Google Takeout]:https://www.google.com/settings/takeout
 [Onion]:http://www.theonion.com/articles/report-90-of-waking-hours-spent-staring-at-glowing,2747/
 [Microsoft DRM]:http://www.engadget.com/2013/06/19/xbox-one-drm-used-games-reversal/
+[Highlight example]:http://developmentality.files.wordpress.com/2014/01/wpid-screenshot_2014-01-21-23-30-34.png?w=300
+[Floppy disk]:http://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Floppy_disk_300_dpi.jpg/229px-Floppy_disk_300_dpi.jpg
