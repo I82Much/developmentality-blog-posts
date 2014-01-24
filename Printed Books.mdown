@@ -11,11 +11,11 @@ I love books. I love book stores. I worked in a library for four years. But when
 
 I can't argue against the first point - it's a matter of opinion whether or not holding a book feels good. Since e-readers are such a recent invention, I think this argument is really rooted in nostalgia more than anything else. It would be interesting to see whether children who grow up with a choice between e-readers and physical books end up with such a physical attachment to books. I do like the touch and smell of books, but it's not enough to make me buy paperbacks.
 
-I have never experienced the second point, and I'd be willing to bet it's a rare occurrence. On the other hand, I have had new friends express admiration of the books on my bookshelf and vice versa, and sparked conversations that way. If I had none of those books in a physical location that, we would have missed out on some level of connection.
+The second point is also subjective. I've never had strangers comment on what I'm reading, but I can imagine it would be a fun experience. I am willing to bet that it's rare. On the other hand, I have heard that some women are more comfortable reading romance novels on their e-readers than physical copies. Personally I don't see this as a very strong argument.
 
-I do not think this last point is strong enough reason to stay completely attached to dead trees. Once you have established a relationship with other people, it's easy to converse about books you've read, no matter the medium.
+I have had new friends express admiration of the books on my bookshelf and vice versa, and sparked conversations that way. If I had none of those books in a physical location that, we would have missed out on some level of connection. While this makes more sense to me than the serendipity argument, I still don't think this is a reason to stay slavishly attached to dead trees. Once you have established a relationship, it's easy to converse about books you've read, no matter the medium.
 
-The reasons I prefer digital books are price, convenience, and lack of physical clutter.
+The reasons I prefer digital books are price, convenience, ergonomics and lack of physical clutter.
 
 ## Price
 E-books are often cheaper than physical alternatives (they should be - the price of publishing and distribution is virtually zero). This is a nice bonus but it's not the biggest reason I like to buy digital.
@@ -25,7 +25,7 @@ A bigger reason for me is the convenience. Let me count the ways:
 
 * Instant gratification - purchase, download, and start reading a book in less than a minute. No need to wait for a book to be shipped to you, or to go to a store
 * Instant definitions - no need to break the flow of reading to learn the meaning of a word. Tap and hold on the word to get a quick pop-up definition
-* Can read samples of a book before committing to buying it
+* Read free samples of a book before committing to buying it
 * Free lending library - check out one free book a month to read
 
 There's a saying that the best camera is the one you have with you. It's the same with books. I rarely bring physical books with me. Slightly more often I have my [Kindle Paperwhite][Paperwhite review]. I *always* have my phone with me, and that phone has all of my Kindle purchases on it. When I used to use an iPhone it was uncomfortable to read on such a small screen, but I recently switched to a Nexus 5 and have happily consumed entire books on it. The progress I make on one device is instantly synced with all of my other Kindle compatible devices.
@@ -52,6 +52,7 @@ Raph Koster's [A Theory of Fun for Game Design][]. This was an impulse purchase 
 
 Ken Binmore's [Game Theory: A Very Short Introduction][]. I got this at a used bookstore for roughly the price it would have been on Kindle (about $5 in each case). It was another case where I wasn't looking for it but I stumbled upon it and it looked interesting. It's so tiny I knew it wouldn't take up a lot of space on my bookshelf.
 
+Let's look at some of the legitimate problems with buying and reading digitally, none of which were broached by Ms. Wunderman
 
 ## Lending
 Lending digital books is much worse digitally than with physical books. Not all publishers allow it, and those that do have draconian limitations. From the [help page](http://www.amazon.com/gp/help/customer/display.html?nodeId=200549320):
@@ -60,33 +61,35 @@ Lending digital books is much worse digitally than with physical books. Not all 
 
 This is incredible to me. I would bet that this is the only concession publishers were willing to make with Amazon, but it is clearly consumer-hostile. I can lend physical copies of books to as many people as I want. 
 
+## FIXME THIS NEEDS SOME POLISHING AND BREAKING INTO PIECES
 ## Ownership + Longevity
 When you buy digital, what do you actually own? In 2009, Amazon [deleted unauthorized versions of Animal Farm and 1984][1984 Removal] straight off of owners' Kindles. As the article says,
 
 > Digital books bought for the Kindle are sent to it over a wireless network. Amazon can also use that network to synchronize electronic books between devices — and apparently to make them vanish.
 
-It's a somewhat scary thought. Even if you buy DRM free content, you take the chance that that same format won't be readable by the e-readers of a few decades from now.
+It's a somewhat scary thought. Even if you buy DRM free content, you take the chance that that same format won't be readable by the e-readers of a few decades from now. 
 
-With physical books, you know exactly what you're getting. There is no risk that what you bought will suddenly stop working or be removed from your house by the publisher.
+With physical books, you know exactly what you're getting. There is no risk that what you bought will suddenly stop working or be removed from your house by the publisher. 
+
+In addition to the risk of incompatible formats, there is the more imminent threat of hardware deterioration. I haven't had the best of luck with my Kindles so far - I have been through four Kindles in about as many years. Three of these died extremely quickly and most were under warranty, but it makes me wonder how long on average these devices last. If you have to buy a new $100 device every 3 years, this changes the calculus of whether e-books are more affordable.
 
 ## Batteries
 Digital readers run out of batteries. Books don't. Fortunately the battery is extremely long-lived on the Kindle Paperwhite (I only need to charge it every few weeks) but phones die a lot sooner. If I were traveling and didn't have ready access to electricity, this would be a concern. In practice this isn't a big problem for me.
 
+## Screens
+Some people prefer the look of a book to a screen. The e-ink displays on the Kindle have improved with each generation; I barely notice the e-ink refresh while turning pages on the Kindlewhite.
 
+## Distractions
+Standalone e-readers are focused reading experiences. Reading on a phone can be more fragmented since there's always the temptation to stop what you're doing and go to some other time waster e.g. facebook or surfing.
 
+## Random access
+If you need to jump around a work or make extensive references, it's easier with a physical book. e.g. textbooks are much better 
+if you're just reading a novel it's fine. Flip flip flip.
+There is highlighting on the Kindle but to make notes in the margins etc it's easier with a real book
 
-price, 
-convenience,
-lack of space
-
-
-Batteries run out. (but battery life on kindle is incredible)
-
-
-
-* Physical sensations
-** Likes the 'feel' / smell of books
-* Meet new friends through shared connections with books
+# Conclusion
+It's not a clear cut decision whether to read books digitally or not. In my experience I do a mixture of both
+Good mix - O'Reilly lets you 'upgrade' to the digital version for a nominal fee.
 
 
 [Why You'll Never Catch Me With an E-Reader]:http://dotcomplicated.co/content/2014/01/youll-never-catch-e-reader/
@@ -98,3 +101,4 @@ Batteries run out. (but battery life on kindle is incredible)
 [Why We Buy]:http://www.amazon.com/Why-We-Buy-Science-Shopping/dp/0684849135/ref=tmm_hrd_swatch_0?_encoding=UTF8&sr=&qid=
 [Steal Like An Artist]:http://www.amazon.com/Steal-Like-Artist-Things-Creative-ebook/dp/B0074QGGK6/ref=sr_1_1?s=books&ie=UTF8&qid=1390366387&sr=1-1&keywords=steal+like+an+artist
 [1984 Removed]:http://www.nytimes.com/2009/07/18/technology/companies/18amazon.html?_r=0
+[Lost Formats]:http://www.experimentaljetset.nl/archive/lostformats
