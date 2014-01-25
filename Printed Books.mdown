@@ -2,28 +2,29 @@
 
 ![E-reader on top of books][E-reader photo]
 
-kodumut via [Flickr under Creative Commons license](http://www.flickr.com/photos/kodomut/6736940485/sizes/m/)
+<small>kodumut via [Flickr under Creative Commons license](http://www.flickr.com/photos/kodomut/6736940485/sizes/m/)</small>
 
-I love books. I love book stores. I worked in a library for four years. But when I read Ali Wunderman's post entitled [Why You'll Never Catch Me With An E-Reader][], I was not convinced. In almost all cases I prefer to buy and read digitally. First I'll discuss her argument, followed by my reasons for preferring digital in most cases. Finally I'll discuss cases where e-readers and digital books are worse than their paper alternatives.
+I love books. I love book stores. I worked in a library for four years. But when I read Ali Wunderman's post entitled [Why You'll Never Catch Me With An E-Reader][], I was not convinced. In almost all cases I prefer to buy and read digitally. I'll discuss her argument, my reasons for preferring digital in most cases, and finally cases where e-readers and digital books are worse than their paper alternatives.
 
 The two main points of Ms. Wunderman's argument are:
 
 * She likes the sensations of reading a physical book (touch, smell, sight)
 * She values the serendipity of meeting new friends who love the book that she's reading. Had she used an e-reader, those people would not have been able to see what she was reading, and thus she would have missed out on such encounters
 
-I can't argue against the first point - it's a matter of opinion whether or not holding a book feels good. Since e-readers are such a recent invention, I think this argument is really rooted in nostalgia more than anything else. It would be interesting to see whether children who grow up with a choice between e-readers and physical books end up with such a physical attachment to books. I do like the touch and smell of books, but it's not enough to make me buy paperbacks exclusively.
+I can't argue against the first point - it's a matter of opinion whether or not holding a book feels good. Since e-readers are such a recent invention, I think this argument is rooted in nostalgia more than anything else. It would be interesting to see whether children who grow up with a choice between e-readers and physical books end up with such a physical attachment to books. I do like the touch and smell of books, but it's not enough to make me buy paperbacks exclusively.
 
 The second point is also subjective. I've never had strangers comment on what I'm reading, but I can imagine it would be a fun experience. I am willing to bet that it's rare. On the other hand, I have heard that some women are more comfortable reading romance novels on their e-readers than physical copies. I don't really care one way or another; I don't read books with the intention of showing others what I'm reading.
 
 I have had the experience of bonding with new friends over the contents of our respective bookshelves. If there were no books for us to look at, we would have missed out on some level of connection. While this makes more sense to me than the serendipity argument, I still don't think this is a reason to stay slavishly attached to dead trees. Once you have established a relationship, it's easy to converse about books you've read, no matter the medium.
 
+# Digital preference
 The reasons I prefer digital books are price, convenience, ergonomics and lack of physical clutter.
 
 ## Price
 E-books are often cheaper than physical alternatives. This makes sense - the price of publishing and distribution is virtually zero. 
 
 ## Convenience
-A bigger reason for me is the convenience. Let me count the ways:
+E-books are incredibly convenient. Let me count the ways:
 
 * Instant gratification - purchase, download, and start reading a book in less than a minute. No need to wait for a book to be shipped to you, or to go to a store
 * Instant definitions - no need to break the flow of reading to learn the meaning of a word. Tap and hold on the word to get a quick pop-up definition
@@ -32,56 +33,52 @@ A bigger reason for me is the convenience. Let me count the ways:
 
 ![Press on a word for a second and get a definition. No need to leave the book. Kindle App on Android][Highlight Example]
 
-There's a saying that the best camera is the one you have with you. It's the same with books. I rarely bring physical books with me. Slightly more often I have my [Kindle Paperwhite][Paperwhite review]. I *always* have my phone with me, and that phone has all of my Kindle purchases on it. When I used to use an iPhone it was uncomfortable to read on such a small screen, but I recently switched to a Nexus 5 and have happily consumed entire books on it. The progress I make on one device is instantly synced with all of my other Kindle compatible devices.
+There's a saying that the best camera is the one you have with you. It's the same with books. I rarely bring physical books with me, sometimes I have my [Kindle Paperwhite][Paperwhite review], but I *always* have my phone with me, and that phone has all of my Kindle purchases on it. When I used to use an iPhone it was uncomfortable to read on such a small screen, but I recently switched to a Nexus 5 and have happily consumed entire books on it. The progress I make on one device is instantly synced with all of my other Kindle compatible devices.
 
 ## Ergonomics
-I find it more pleasant to read digitally in many ways. I can control how big the font is. I can read it one-handed. I can read in the dark with no external lights. Both my phone and Kindle are light to hold. I bought Cryptonomicon on Kindle partly because I was tired of holding up such a bulky hardback book.
+I find it more pleasant to read digitally. I can control how big the font is, I can turn pages one-handed, I can read in the dark with no external illumination, and my devices are light to hold. For example, I bought Cryptonomicon on Kindle to replace a hardcover version partly because I was tired of reading such a bulky book.
 
 ## Clutter-free
 Most importantly, buying digitally frees me from physical clutter. If you've ever moved, you know how heavy and unwieldy books are. If you're traveling, they add weight and bulk to your luggage. 
 
-It's strange to me that most people I know happily embrace a digital music lifestyle, yet are unwilling to give digital books a chance.
-
 # "Rarely"
-Unlike Ms. Wunderman, I am not absolute in my preference. While the proportion of the books that I consume is increasingly digital, I can see some areas where digital books are not perfect, and I'm willing to acknowledge and discuss these flaws.
-
-Let's look at some problems with buying and reading digitally.
+Unlike Ms. Wunderman, I am not absolute in my preference. I often prefer digital, but I acknowledge that there are some real problems with digital books. These include ownership, longevity, batteries, screens, and the distractions of reading digitally.
 
 ## Ownership
-When you buy digital, what do you actually own? In 2009, Amazon [deleted unauthorized versions of Animal Farm and 1984][1984 Removal] straight off of owners' Kindles. As the article says,
+When you buy digital content, what do you actually own? In 2009, Amazon [deleted unauthorized versions of Animal Farm and 1984][1984 Removal] straight off of owners' Kindles. As the article says,
 
 > Digital books bought for the Kindle are sent to it over a wireless network. Amazon can also use that network to synchronize electronic books between devices — and apparently to make them vanish.
 
 When you deal with DRM (digital rights management) content, there are very strong restrictions placed on what you can and can't do with the content. It's more like a limited license to view the content rather than outright ownership. 
 
-For instance, let's look at lending. With physical books, you can lend your book to whomever you want for as long as you want. With Amazon's titles, not all publishers allow digital lending in the first place. Of those that do, there are draconian limitations. From the [help page](http://www.amazon.com/gp/help/customer/display.html?nodeId=200549320):
+For instance, let's look at lending. With physical books, you can lend your book to whomever you want for as long as you want. With Amazon's titles, not all publishers allow digital lending in the first place. Of those that do, there are Draconian limitations. From the Amazon Kindle [help page](http://www.amazon.com/gp/help/customer/display.html?nodeId=200549320):
 
 > You can lend a Kindle book to another reader for up to 14 days... A book can only be loaned one time.
 
 Until you can freely loan or give away your digital copies of books, paper wins hands down.
 
 ## Longevity
-Even if you buy DRM free content, you take the chance that you won't be able to read that content in a few years or decades. There is certainly a strong precedent for technologies dying and content being trapped on obsolete devices; see [Lost Formats][] for examples. If Amazon goes out of business in 10 years, what happens to all of the Kindle content you've amassed? Hopefully if that ever were to happen, Amazon would offer a service like [Google Takeout][] to transfer the books to a new service. (Full disclosure: I work for Google.)
+Even if you buy DRM-free content, you take the chance that you won't be able to read that content in a few years or decades. There is a strong precedent of technologies dying and data being trapped on obsolete devices; see [Lost Formats][] for examples. If Amazon goes out of business, what happens to all of the Kindle content you've amassed? Hopefully if that were to happen, Amazon would offer a service like [Google Takeout][] to transfer the books to you. (Full disclosure: I work for Google.)
 
 ![A floppy disk - one of many dead storage formats][Floppy disk]
 
-Trav1085 via [Wikipedia](http://commons.wikimedia.org/wiki/File:Floppy_disk_300_dpi.jpg)
+<small>Trav1085 via [Wikipedia](http://commons.wikimedia.org/wiki/File:Floppy_disk_300_dpi.jpg)</small>
 
-The other aspect of longevity is the e-readers themselves. I haven't had the best of luck with my Kindles so far - I am on my fourth Kindle in about as many years. Three of these died extremely quickly; fortunately I've had no problems in the past 2.5 years with the Kindle Paperwhite. It makes me wonder how long on average these devices last. If you have to buy a new $100 device every 3-5 years, this changes the calculus of whether e-books are more affordable.
+The other aspect of longevity is the e-readers themselves. I haven't had the best of luck with my Kindles so far - I am on my fourth Kindle in about as many years. Three of them died quickly, but as of yet I've had no problems in the past 2.5 years with the Paperwhite. It makes me wonder how long these devices last. If you have to buy a new $100 device every 3-5 years, this changes the calculus of whether e-books are more affordable.
 
 ## Batteries
-Digital readers run out of batteries. Books don't. Fortunately the battery is extremely long-lived on the Kindle Paperwhite (I only need to charge it every few weeks) but phones die a lot sooner. If I were traveling and didn't have ready access to electricity, this would be a concern. In practice this isn't a big problem for me.
+Digital readers run out of batteries; books don't. Standalone e-readers typically don't need charging very often, but phones do. If I were traveling and didn't have ready access to electricity, this would be a concern. In practice this isn't a big problem for me.
 
 ## Screens
-Some people prefer the look of a book to a screen. The e-ink display on the Kindle has improved with each generation; I barely notice the e-ink refresh while turning pages on the Paperwhite. I don't think there's an objective winner here. The display on my Nexus 5 is incredibly sharp and I can read it in the dark, just as with the Paperwhite. My only objection to the screen is that it contributes to my spending [90% of my time staring at a glowing rectangle][Onion]. I mitigate this somewhat by changing to the white text on black background on my phone, and keeping the light low on the Paperwhite.
+Some people prefer the look of a book to an e-reader screen. The e-ink display on the Kindle has improved with each generation, both in resolution, sharpness, and refresh speed. I don't think there's an objective winner here. The display on my Nexus 5 is incredibly sharp and I can read it in the dark, just as with the Paperwhite. My only objection to the screen is that it contributes to my spending [90% of my time staring at a glowing rectangle][Onion]. I mitigate this somewhat by changing to the white text on black background on my phone, and keeping the light low on the Paperwhite.
 
 ## Distractions
-It's easy to get distracted if you are reading digital books on a multi-purpose digital device. Reading takes time and concentration. Sometimes it's hard to stick with that when there's the allure of games and an infinite expanse of Internet content that's a few button presses away.
+It's easy to get distracted if you are reading digital books on a multi-purpose device. Reading takes time and concentration. Sometimes it's hard to stick with that when there's the allure of games and an infinite expanse of Internet content that's a few button presses away.
 
 Standalone e-readers offer a more focused reading experience that's closer to that of reading a book. Since there's fewer things you can do on it, there's less temptation to do something other than read. Depending on your level of willpower, this point could be completely moot.
 
 # Conclusion
-I vividly remember seeing the first clunky version of the Kindle just a few years ago and wondering how its owner could enjoy reading on it. The technology has improved so much since then that I'm a happy convert. While I acknowledge the superiority of physical books in some ways, it often makes sense to buy digital. Doing so avoids physical clutter and is extremely convenient. Most of the technical problems with digital books and e-readers have been solved; the remaining hurdles of consumer-unfriendliness are sociological problems that we can combat. For example, [Microsoft changed its restrictive DRM in the Xbox One due to overwhelming negative response][Microsoft DRM]; if consumers raised a similar stink with the publishers and Amazon, perhaps we'd see a loosening of the reins as well.
+I vividly remember seeing the first clunky version of the Kindle just a few years ago and wondering how its owner could enjoy reading on it. The technology has improved so much since then that I'm a happy convert. While I acknowledge the superiority of physical books in some ways, it often makes sense to buy digital. Doing so avoids physical clutter and is extremely convenient. Most of the technical problems with digital books and e-readers have been solved; the remaining hurdles of consumer-unfriendliness are sociological problems that we can combat. For example, [Microsoft changed its restrictive DRM in the Xbox One due to overwhelming negative response][Microsoft DRM]. If consumers showed as much passion for their rights to the book publishers and Amazon, perhaps we'd see a loosening of the reins as well.
 
 [Why You'll Never Catch Me With an E-Reader]:http://dotcomplicated.co/content/2014/01/youll-never-catch-e-reader/
 [E-reader photo]:http://farm8.staticflickr.com/7168/6736940485_f949fdc8bd.jpg
