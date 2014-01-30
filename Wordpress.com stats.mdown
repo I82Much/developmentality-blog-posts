@@ -1,0 +1,154 @@
+The stats that Wordpress.com provides are nice, but I wanted the raw data. I found a method for downloading my Wordpress.com blog data in either CSV, XML, or JSON format. 
+
+There are three steps. 
+
+1. Get an API key
+2. Get your blog URL
+3. Construct a URL to download the data
+
+# Get your API key
+Akismet is Wordpress.com's anti-spam solution. Register for an Akismet API key at [http://akismet.com/wordpress/]() by clicking on "Get an Akismet API key". 
+
+Sign up for an account. If you choose the personal blog option, you can drag the slider all the way to the left and register for free. If you value the service that Akismet provides, you can pay more. When you complete the signup flow, you will be provided with a 12 digit ID. Copy this down. (It will also be emailed to you.)
+
+# Get your Blog URL
+Copy the full URL of your blog, minus the leading https://. For me this is `developmentality.wordpress.com`.
+
+# Assemble the URL
+There is a limited API for downloading your data at the following URL:
+
+[http://stats.wordpress.com/csv.php](http://stats.wordpress.com/csv.php)
+
+View this in a browser to see what the API parameters are.
+
+![API as of 2014/01/28](https://developmentality.files.wordpress.com/2014/01/api.png?w=800)
+
+Construct the url
+
+	http://stats.wordpress.com/csv.php?api_key=<api_key>&blog_uri=<blog_uri>
+	
+View this URL in the browser (or via `wget` / `curl`) and you should see the view data.
+
+![CSV rows returned](https://developmentality.files.wordpress.com/2014/01/downloaded_csv.png?w=800)
+
+There are multiple data sources. From the documentation:
+
+> table       String    One of views, postviews, referrers, referrers_grouped, searchterms, clicks, videoplays
+
+Here is some sample data from each table. Change the `format` param from `csv` to `json` or `xml` to get the data in different formats.
+
+## views
+### CSV
+
+	"date","views"
+	"2013-12-31",118
+
+### JSON
+
+	[{"date":"2010-02-05","views": 46},...]
+
+### XML
+
+	<views>
+		<day date="2014-01-01">112</day>
+	</views>
+
+## postviews
+### CSV
+
+	"date","post_id","post_title","post_permalink","views"
+	"2014-01-28",369876479,"Three ways of creating dictionaries in Python","http://developmentality.wordpress.com/2012/03/30/three-ways-of-creating-dictionaries-in-python/",46
+
+### JSON
+	
+	[{"date":"2014-01-29","postviews":[{"post_id":369876479,"post_title":"Three ways of creating dictionaries in Python","permalink":"http:\/\/developmentality.wordpress.com\/2012\/03\/30\/three-ways-of-creating-dictionaries-in-python\/","views":22},{"post_id":369875635,"post_title":"R - Sorting a data frame by the contents of a column","permalink":"http:\/\/developmentality.wordpress.com\/2010\/02\/12\/r-sorting-a-data-frame-by-the-contents-of-a-column\/","views":16}]}]
+
+### XML
+	<postviews>
+		<day date="2014-01-30"></day>
+		<day date="2014-01-29">
+			<post id="369876479" title="Three ways of creating dictionaries in Python" url="http://developmentality.wordpress.com/2012/03/30/three-ways-of-creating-dictionaries-in-python/">54</post>
+		</day>
+	</postviews>
+
+## referrers
+
+### CSV
+	"date","referrer","views"
+	"2014-01-28","http://www.google.com/",63
+
+### JSON
+	[{"date":"2014-01-30","referrers":[]},{"date":"2014-01-29","referrers":[{"referrer":"http:\/\/www.google.com\/","views":66},{"referrer":"www.google.com\/search","views":27},{"referrer":"www.google.co.uk","views":10}]}]
+
+### XML
+	<referrers>
+		<day date="2014-01-30"></day>
+		<day date="2014-01-29">
+			<referrer value="http://www.google.com/" count="" limit="100">66</referrer>
+		</day>
+	</referrers>
+
+## referrers_grouped
+
+### CSV
+	"date","group","group_name","referrer","views"
+	"-","Search Engines","Search Engines","http://www.google.com/",1256
+
+### JSON
+	[{"date":"-","referrers_grouped":[{"referrers_grouped":"Search Engines","views":{"http:\/\/www.google.com\/":1305}}]}]
+
+### XML
+	<referrers_grouped>
+		<day date="-">
+			<group domain="Search Engines" name="Search Engines">
+				<referrer value="http://www.google.com/">1305</referrer>
+			</group>
+		</day>
+	</referrers_grouped>
+
+Dates aren't included so it's the sum over the past `N` days, defaulting to 30. To change this, set the `days` URL parameter:
+
+	http://stats.wordpress.com/csv.php?api_key=<api_key>&blog_uri=<blog_uri>&table=referrers_grouped&days=<num_days>
+
+## searchterms
+
+### CSV
+	"date","searchterm","views"
+	"2014-01-28","encrypted_search_terms",190
+
+### JSON
+	[{"date":"2014-01-30","searchterms":[]},{"date":"2014-01-29","searchterms":[{"searchterm":"encrypted_search_terms","views":159},{"searchterm":"dynamically load property file in mule","views":2}]}]
+
+### XML
+	<searchterms>
+		<day date="2014-01-30"></day>
+		<day date="2014-01-29">
+			<searchterm value="encrypted_search_terms" count="" limit="100">159</searchterm>
+			<searchterm value="dynamically load property file in mule" count="" limit="100">2</searchterm>
+		</day>
+	</searchterms>
+
+
+## clicks
+### CSV
+	"date","click","views"
+	"2014-01-28","http://grab.by/grabs/b608b9c315119ca07a1f7083aabbb9c7.png",3
+
+### JSON
+	[{"date":"2014-01-30","clicks":[]},{"date":"2014-01-29","clicks":[{"click":"http:\/\/www.anddev.org\/extended_checkbox_list__extension_of_checkbox_text_list_tu-t5734.html","views":2},{"click":"http:\/\/android.amberfog.com\/?p=296","views":2}]}]
+
+### XML
+	<clicks>
+		<day date="2014-01-30"></day>
+		<day date="2014-01-29">
+			<click value="http://www.anddev.org/extended_checkbox_list__extension_of_checkbox_text_list_tu-t5734.html" count="" limit="100">2</click>
+		</day>
+	</clicks>
+
+## videoplays
+I am not sure what this format is as I have no video plays on my blog.
+
+
+
+# Conclusion
+I hope you find this useful. I'm going to go crunch some numbers now and see if I can find some insight in the raw stats.
