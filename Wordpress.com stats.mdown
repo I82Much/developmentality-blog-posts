@@ -1,20 +1,20 @@
-The stats that Wordpress.com provides are nice, but I wanted the raw data. I found a method for downloading my Wordpress.com blog data in either CSV, XML, or JSON format. 
+I wanted raw data about the popularity of my various posts on this blog to better determine what sort of topics I should post about. Wordpress.com provides some nice aggregate stats, but I wanted more. After stumbling around the Internet for awhile, I cobbled together a way to download my blog data in either CSV, XML, or JSON format. 
 
-There are three steps. 
+There are three steps:
 
 1. Get an API key
 2. Get your blog URL
-3. Construct a URL to download the data
+3. Construct the URL to download the data
 
-# Get your API key
+# Get an API key
 Akismet is Wordpress.com's anti-spam solution. Register for an Akismet API key at [http://akismet.com/wordpress/]() by clicking on "Get an Akismet API key". 
 
-Sign up for an account. If you choose the personal blog option, you can drag the slider all the way to the left and register for free. If you value the service that Akismet provides, you can pay more. When you complete the signup flow, you will be provided with a 12 digit ID. Copy this down. (It will also be emailed to you.)
+Sign up for an account. If you choose the personal blog option, you can drag the slider all the way to the left and register for free. If you value the service that Akismet provides, you can pay more. When you complete the signup flow, you will be provided with a 12 digit ID. Copy this down.
 
-# Get your Blog URL
+# Get your blog URL
 Copy the full URL of your blog, minus the leading https://. For me this is `developmentality.wordpress.com`.
 
-# Assemble the URL
+# Construct the URL
 There is a limited API for downloading your data at the following URL:
 
 [http://stats.wordpress.com/csv.php](http://stats.wordpress.com/csv.php)
@@ -45,7 +45,7 @@ Here is some sample data from each table. Change the `format` param from `csv` t
 
 ### JSON
 
-	[{"date":"2010-02-05","views": 46},...]
+	[{"date":"2010-02-05","views": 46}]
 
 ### XML
 
@@ -151,4 +151,4 @@ I am not sure what this format is as I have no video plays on my blog.
 
 
 # Conclusion
-I hope you find this useful. I'm going to go crunch some numbers now and see if I can find some insight in the raw stats.
+I hope you find this useful. I'll make another post later showing how to crunch some of this data and extract meaningful information from the raw data.
