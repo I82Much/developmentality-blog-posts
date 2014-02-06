@@ -1,0 +1,82 @@
+I want to analyze the popularity of my posts in order to better understand what topics are important to my audience. In my [last post][First part], I showed you how to retrieve viewership data about your Wordpress.com blog. By itself this data doesn't tell you much. You can get a top level impression of the popularity of a blog over time, as well as which posts are getting how much traffic. I wanted to go a bit deeper and pull in metadata about the posts themselves, not just their identifiers. This post will show you how to download some raw data and use BeautifulSoup and Python to clean and extract the key metadata.
+
+When faced with a data analysis task, I usually go through the following tasks
+
+* Find the data
+* Extract the data
+* Clean the data
+* Analyze the data
+
+## Find the data
+I'm interested in answering questions such as 'Do posts about Python get more views, or Java? Does the time of day I post make a difference? Do tags matter? How about the length of a post?' With these questions in mind, I can start to formulate what an ideal data source would look like. In [protocol buffer][protobuf] syntax, I'd want something like the following:
+
+	message Post {
+		// The unique identifier of the post
+		optional string id = 1;
+	
+		// What was the title of the post?
+		optional string title = 2;
+	
+		// What is the URL to the post?
+		optional string url = 3;
+	
+		// Publishing date, in YYYY-MM-DD HH:MM format
+		optional string publish_date = 4;
+	
+		// How was this post categorized?
+		repeated string categories = 5;
+	
+		// How was the post tagged?
+		repeated string tags = 6;
+	
+		// How many pictures were in the post?
+		optional int32 num_pictures = 7;
+	
+		// How many words?
+		optional int32 num_words = 8;
+	}
+
+The API I uncovered in my last post does not contain any of this post metadata. Fortunately I found another source - the Wordpress admin dashboard of posts.
+
+![PostsDashboard][]
+
+Parsing HTML to extract metadata is not ideal, but it is the only source of this data that I know of, so I'm going to use it.
+
+The first step is to ensure that the table can fit all of your posts; by default it only shows around 10 posts on a page. 
+
+Click the "Screen Options" in the upper right corner.
+
+![ChangeScreenOptions][]
+
+Change the number of posts shown to the max (300) and click Apply. If you have more than 300 posts, you'll have to repeat the rest of this blog post multiple times.
+
+![SetTo300][]
+
+Next, right click on the table and choose Inspect Element (I assume you're using Chrome; if you're not, you can just save the entire website as HTML and pick out the table element manually).
+
+![InspectTable][]
+
+
+Navigate until you find the `<table>` element; select it. Right click and choose 'Copy as HTML'
+
+![CopyAsHTML][]
+
+At this point you have the entire set of metadata about your posts as HTML in your clipboard. Create a new file and paste the data into it. Save it somewhere you can find it later; I called mine "all_posts.html".
+
+
+# Cleaning the data
+
+
+
+
+
+[First part]:http://developmentality.wordpress.com/2014/01/30/how-to-download-your-wordpress-com-stats-in-csv-json-or-xml-format/#comment-1477
+[protobuf]:https://code.google.com/p/protobuf/
+[PostsDashboard]:https://developmentality.files.wordpress.com/2014/02/postsdashboard.png
+
+
+[SetTo300]:https://developmentality.files.wordpress.com/2014/02/setto300.png
+[ChangeScreenOptions]:https://developmentality.files.wordpress.com/2014/02/changescreenoptions.png
+[InspectTable]:https://developmentality.files.wordpress.com/2014/02/inspectelement.png
+[SelectTable]:https://developmentality.files.wordpress.com/2014/02/choosethetable.png
+[CopyAsHTML]:https://developmentality.files.wordpress.com/2014/02/choosecopyhtml.png
