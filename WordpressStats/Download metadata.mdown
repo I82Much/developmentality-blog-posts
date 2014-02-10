@@ -1,14 +1,23 @@
-I want to analyze the popularity of my posts in order to better understand what topics are important to my audience. In my [last post][First part], I showed you how to retrieve viewership data about your Wordpress.com blog. By itself this data doesn't tell you much. You can get a top level impression of the popularity of a blog over time, as well as which posts are getting how much traffic. I wanted to go a bit deeper and pull in metadata about the posts themselves, not just their identifiers. This post will show you how to download some raw data and use BeautifulSoup and Python to clean and extract the key metadata.
+I want to analyze the popularity of my posts in order to better understand which topics are important to my audience. In my [last post][First part], I showed  how to retrieve viewership data about your Wordpress.com blog. By itself this data doesn't tell you much. You can get high level view of the popularity of a blog over time, as well as the traffic for each post. I wanted to go a bit deeper and pull in metadata about the posts themselves, not just their identifiers. This post will show you how to download some raw data and use BeautifulSoup and Python to clean and extract the key metadata.
 
-When faced with a data analysis task, I usually go through the following tasks
+When faced with a data analysis task, I usually go through the following tasks:
 
-* Find the data
-* Extract the data
-* Clean the data
-* Analyze the data
+* Find the data - what data do you need? Where can you get it?
+* Extract the data - after you have the raw data, extract meaningful signal from the noise
+* Clean the data - filter out erroneous or corrupted records
+* Analyze the data - extract meaning/insight from the data
+
+This post will detail the first two phases.
 
 ## Find the data
-I'm interested in answering questions such as 'Do posts about Python get more views, or Java? Does the time of day I post make a difference? Do tags matter? How about the length of a post?' With these questions in mind, I can start to formulate what an ideal data source would look like. In [protocol buffer][protobuf] syntax, I'd want something like the following:
+I'm interested in answering questions such as 
+
+* Do posts about Python get more views, or Java? 
+* Does the time of day I post make a difference? 
+* Do tags matter? 
+* How about the length of a post?
+
+With these questions in mind, I can start to formulate what an ideal data source would look like. In [protocol buffer][protobuf] syntax, I'd want something like the following:
 
 	message Post {
 		// The unique identifier of the post
@@ -28,21 +37,17 @@ I'm interested in answering questions such as 'Do posts about Python get more vi
 	
 		// How was the post tagged?
 		repeated string tags = 6;
-	
-		// How many pictures were in the post?
-		optional int32 num_pictures = 7;
-	
-		// How many words?
-		optional int32 num_words = 8;
 	}
 
-The API I uncovered in my last post does not contain any of this post metadata. Fortunately I found another source - the Wordpress admin dashboard of posts.
+The API I uncovered in my last post does not contain any of this post metadata. Fortunately I found another source - the Wordpress admin dashboard of posts. Navigate to `https://yourblog.wordpress.com/wp-admin/edit.php` or click on the Posts category on the left hand side while logged into the administrator dashboard.
+
+## Download the raw data
 
 ![PostsDashboard][]
 
-Parsing HTML to extract metadata is not ideal, but it is the only source of this data that I know of, so I'm going to use it.
+Parsing HTML to extract metadata is not ideal because it is very brittle - if WordPress changes the format of the table containing this data, I would need to rewrite the script that processes it. With no other alternatives, I'm willing to take that chance.
 
-The first step is to ensure that the table can fit all of your posts; by default it only shows around 10 posts on a page. 
+The first step to download the data is to ensure that the table can fit all of your posts; by default it only shows around 10 posts on a page. 
 
 Click the "Screen Options" in the upper right corner.
 
@@ -56,7 +61,6 @@ Next, right click on the table and choose Inspect Element (I assume you're using
 
 ![InspectTable][]
 
-
 Navigate until you find the `<table>` element; select it. Right click and choose 'Copy as HTML'
 
 ![CopyAsHTML][]
@@ -64,19 +68,167 @@ Navigate until you find the `<table>` element; select it. Right click and choose
 At this point you have the entire set of metadata about your posts as HTML in your clipboard. Create a new file and paste the data into it. Save it somewhere you can find it later; I called mine "all_posts.html".
 
 
-# Cleaning the data
+## Extract the metadata using `BeautifulSoup`
+We'll be using [BeautifulSoup][], an excellent Python library for parsing HTML and XML files. In brief, it allows us to search a hierarchical document for nodes matching certain criteria and extract data from those nodes. 
 
+Here is a table row in the HTML with the location of various pieces of metadata illustrated:
 
+![Table row illustration][Highlighted]
 
+After [installing the library][installing], create a new Python script and import the library, and create a `BeautifulSoup` object out of the raw text of the HTML document:
 
+	from bs4 import BeautifulSoup
+
+	def main():
+	  soup = BeautifulSoup(open("all_posts.html"))
+
+	if __name__ == '__main__':
+		main()
+
+The `BeautifulSoup` object allows us to search for our metadata. Let's start by finding all of the table rows, since they are the location of the data about each post.
+
+	# Extract all of the tr id="post" rows.
+	# <tr id="post-357234106" class="post-357234106 type-post status-publish format-standard hentry category-photo alternate iedit author-self level-0" valign="top">
+	trs = soup.find_all('tr')
+
+`find_all` is [a key method in the BeautifulSoup API][Searching the Tree]; it allows you to give some criteria and get back a collection of nodes that match. If none are found, it will be return an empty list. The complement of the `find_all` function is `find`, which will return the first such node, or `None`, if none matches.
+
+Next we loop through the table rows, throwing out the ones that don't have a post ID and thus don't represent posts.
+
+	for tr in trs:
+	# Only care about the tr's with ids. These represent the posts.
+	post_id = tr.get('id')
+	if post_id is None:
+  		continue
+
+Here we use the `get` function of the BeautifulSoup API, which allows you to look up attributes of nodes. If the attribute is not present, `get` returns `None`. Just like a normal dictionary in Python, you can use the index operation if you're sure that the key is present. For instance,
+
+	post_id = tr['id']
+	
+This will yield a `KeyError` if the key doesn't exist. If I'm sure that the node has this attribute, this is a good way to extract the data; if I'm not sure then I'll use `get`. 
+
+With `get`, I can also provide a default value to use if the key isn't present:
+
+	post_id = tr.get('id', 'fallback_value')
+	
+Note that these nodes don't behave entirely like standard dictionaries. For instance, it's standard to check for presence of a key in a dictionary as follows:
+
+	if 'key' in the_dict:
+	
+This won't work the way you expect for the nodes.
+
+The `id` of the node contains some extra cruft that we don't need - namely a 'post' prefix. For instance, `<tr id="post-456">`. Strip off the extra prefix with standard string functions:
+	
+	post_id = post_id.replace('post-', '')
+	
+Next we look for the anchor node underneath the table row which contains the URL of the post. In the table, this always has the text 'View'. For instance,
+
+	<a href="http://developmentality.wordpress.com/2009/03/10/to-write-clean-code-you-must-first-write-dirty-code-and-then-clean-it/" title="View “To write clean code, you must first write dirty code; and then clean&nbsp;it.”" rel="permalink">View</a>
+
+This is simple in BeautifulSoup:
+
+	# Get the published URL
+	url = tr.find('a', text='View')['href']
+	
+Here I use `find` rather than `find_all` because I expect exactly one such node. I use `['href']` rather than the `get` syntax because it's a simple script and I expect all such nodes to have URLs; it's a fatal error if they don't.
+
+There is a large hidden div underneath the post table row containing extra meta data about the post, including the publish date. For instance,
+
+	<div class="hidden" id="inline_85408649">
+		<div class="post_title">To write clean code, you must first write dirty code; and then clean it.</div>
+		<div class="post_name">to-write-clean-code-you-must-first-write-dirty-code-and-then-clean-it</div>
+		<div class="post_author">881869</div>
+		<div class="comment_status">open</div>
+		<div class="ping_status">open</div>
+		<div class="_status">publish</div>
+		<div class="jj">10</div>
+		<div class="mm">03</div>
+		<div class="aa">2009</div>
+		<div class="hh">23</div>
+		<div class="mn">18</div>
+		<div class="ss">29</div>
+		<div class="post_password"></div><div class="post_category" id="category_85408649">196,3099</div><div class="tags_input" id="post_tag_85408649"></div><div class="sticky"></div><div class="post_format"></div></div>
+
+To find the div, we could do something like the following:
+
+	divs = tr.find_all('div')
+	for div in divs:
+		if div.get('class') != 'hidden':
+			continue
+		# we found it
+		
+There's a better way - we can use the class property directly when we use the `find` or `find_all` function. We use it as a keyword argument; note that we have to call it `class_` rather than `class` because `class` is a reserved keyword in Python.
+
+	metadata = tr.find('div', class_='hidden')
+	
+Once we have this node, we apply the same technique to pull out the title, year, month, and date of publish. The `text` attribute returns the text of the node.
+
+	metadata = tr.find('div', class_='hidden')
+	title = metadata.find('div', class_='post_title').text
+	publish_day = metadata.find('div', class_='jj').text
+	publish_month = metadata.find('div', class_='mm').text
+	publish_year = metadata.find('div', class_='aa').text
+	publish_date = '%s-%s-%s' %(publish_year, publish_month, publish_day)
+
+Finally, we pull out the tags and categories of the post, each of which are found in `div` elements underneath this root hidden `div`:
+
+	# Find the tags, if they're present
+	tags = []
+	tags_div = metadata.find('div', class_='tags_input')
+	if tags_div:
+	  tags = tags_div.text.split(', ')
+
+	# Find the categories - the node should always be present
+	categories_td = tr.find('td', class_='column-categories')
+	categories = [x.text for x in categories_td.find_all('a')]
+	
+I use a slightly different technique for the tags than the categories because each category is a separate anchor node, as opposed to the tags which are in the text of one node.
+
+After going through this procedure, we have a lot of information about each post. In order to hold the data about each post, we could create a class with the appropriate fields. For now, the class is a simple holder of variables with no behavior attached to it. As such it's a great candidate for using the [`namedtuple` functionality of the `collections` library][namedtuple].
+
+	import collections
+	post_metadata = collections.namedtuple('metadata', ['id', 'publish_date', 'title', 'link', 'categories', 'tags'])
+	
+This creates an immutable class with the fields I provided. This saves a bunch of boilerplate and automatically implements correct equality and `__str__` functions. For instance,
+
+	a = post_metadata(id='48586', publish_date='2010-24-26', title='Some Post', link='http://some/link', categories=[], tags=['programming'])
+	print a
+	metadata(id='48586', publish_date='2010-24-26', title='Some Post', link='http://some/link', categories=[], tags=['programming'])
+	
+For each post table row, we create one such post_metadata instance with all the attributes filled in.
+
+	trs = soup.find_all('tr')
+	posts = []
+	for tr in trs:
+		# <snip>
+		data = post_metadata(id=post_id,
+	                publish_date=publish_date,
+	                title=title,
+	                link=url,
+	                categories=categories,
+	                tags=tags)
+		posts.append(data)
+	
+At the end of the script, we now have all the metadata about each post.
+
+	metadata(id=u'369876516', publish_date=u'2012-06-09', title=u'Wind Map - a visualization to make Tufte proud', link=u'http://developmentality.wordpress.com/2012/06/09/wind-map-a-visualization-to-make-tufte-proud/', categories=[u'UI'], tags=[u'chart', u'chart junk', u'climate', u'color', u'edward tufte', u'elevation maps', u'hue', u'intensity', u'michael kleber', u'quantitative', u'science', u'tufte', u'UI', u'visualization'])
+	metadata(id=u'369876270', publish_date=u'2011-04-01', title=u"WordPress Stats April Fool's", link=u'http://developmentality.wordpress.com/2011/04/01/wordpress-stats-april-fools/', categories=[u'Uncategorized'], tags=[u"april fool's", u'wordpress'])
+	metadata(id=u'369876110', publish_date=u'2011-01-25', title=u'WorkFlowy - free minimalist list webapp', link=u'http://developmentality.wordpress.com/2011/01/25/workflowy-free-minimalist-list-webapp/', categories=[u'UI', u'Uncategorized'], tags=[u'breadcrumb', u'getting things done', u'hierarchy', u'lists', u'nested', u'nodes', u'todo', u'UI', u'webapp', u'workflowy'])
+	metadata(id=u'80156276', publish_date=u'2009-02-21', title=u'WriteRoom', link=u'http://developmentality.wordpress.com/2009/02/21/writeroom/', categories=[u'link'], tags=[u''])
+	
+
+In my next post I will show how to join this metadata with the view data we accessed via the API in last week's post in order to gain insight into which types of posts provide value to readers.
 
 [First part]:http://developmentality.wordpress.com/2014/01/30/how-to-download-your-wordpress-com-stats-in-csv-json-or-xml-format/#comment-1477
 [protobuf]:https://code.google.com/p/protobuf/
 [PostsDashboard]:https://developmentality.files.wordpress.com/2014/02/postsdashboard.png
-
-
 [SetTo300]:https://developmentality.files.wordpress.com/2014/02/setto300.png
 [ChangeScreenOptions]:https://developmentality.files.wordpress.com/2014/02/changescreenoptions.png
 [InspectTable]:https://developmentality.files.wordpress.com/2014/02/inspectelement.png
 [SelectTable]:https://developmentality.files.wordpress.com/2014/02/choosethetable.png
 [CopyAsHTML]:https://developmentality.files.wordpress.com/2014/02/choosecopyhtml.png
+[BeautifulSoup]:http://www.crummy.com/software/BeautifulSoup/bs4/doc/
+[Highlighted]:https://developmentality.files.wordpress.com/2014/02/highlighted.png
+[namedtuple]:http://docs.python.org/2/library/collections.html
+[installing]:http://www.crummy.com/software/BeautifulSoup/bs4/doc/#installing-beautiful-soup
+[Searching the Tree]:http://www.crummy.com/software/BeautifulSoup/bs4/doc/#searching-the-tree
