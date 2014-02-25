@@ -1,0 +1,279 @@
+Disclaimer: Go is open source and developed by many Google employees. I work for Google, but the opinions expressed here are my own and do not necessarily represent that of Google.
+
+[Go](http://golang.org/) is my new favorite programming language. It's compact, garbage collected, terse, and very easy to read. There are some things that trip me up even now after I've been using it for awhile. Today I'm going to discuss the `range` construct and how it has a surprising feature that might violate your assumptions.
+
+## Range
+First, the `range` keyword is a way to iterate through the various builtin data structures in Go. For instance,
+
+	a := map[string]int {
+		"hello": 1,
+		"world": 2,
+	}
+	// 2 element range gets key and value
+	for key, value := range a {
+		fmt.Printf("key %s value %d\n", key, value)
+	}
+	// 1 element is just the key
+	for key := range a {
+		fmt.Printf("key %s\n", key)
+	}
+	
+	// Works for slices (think of them as vectors/lists) too
+	b := []string {"hello", "world"}
+	// 2 element range gets the index as well as the entry
+	for i, s := range b {
+		fmt.Printf("entry %d: %s\n", i, s)
+	}
+	// 1 element gets just the index (notice the pattern?)
+	for i := range b {
+		fmt.Printf("entry %d\n", i)
+	}
+
+This outputs
+
+	key hello value 1
+	key world value 2
+	key hello
+	key world
+	entry 0: hello
+	entry 1: world
+	entry 0
+	entry 1
+
+[Try this code in the Go Playground](http://play.golang.org/p/6Lgkx86hdG)
+
+## Solution search - pointers
+Imagine the case where we have a struct as follows
+
+	type Solution struct {
+		Name string
+		Cost int
+		Complete bool
+	}
+
+Say that we're doing some sort of optimization where we're looking for the minimum cost solution that meets some criteria; for simplicity's sake, I've put that as the 'complete' bool. It's possible that no such Solution matches, in which case we return a nil solution.
+
+A reasonable implementation would be as follows
+
+	func FindBestSolution(solutions []Solution) *Solution {
+		var best *Solution
+		for _, solution := range solutions {
+			if solution.Complete {
+				if best == nil || solution.Cost < best.Cost {
+					best = &solution
+				}
+			}
+		}
+		return best
+	}
+
+Do you see the bug? Don't worry if you don't - I've made this mistake a few times now.
+
+Let's add some tests to find the problem. This is an example of a table driven test, where the test cases are given as a slice of struct literals. This makes it very easy to add new test cases.
+
+	func TestFindBestSolution(t *testing.T) {
+		tests := []struct {
+			name      string
+			solutions []Solution
+			want      *Solution
+		}{
+			{
+				name:      "Nil list",
+				solutions: nil,
+				want:      nil,
+			},
+			{
+				name: "No complete solution",
+				solutions: []Solution{
+					{
+						Name:     "Foo",
+						Cost:     25,
+						Complete: false,
+					},
+				},
+				want: nil,
+			},
+			{
+				name: "Sole solution",
+				solutions: []Solution{
+					{
+						Name:     "Bar",
+						Cost:     12,
+						Complete: true,
+					},
+				},
+				want: &Solution{
+					Name:     "Bar",
+					Cost:     12,
+					Complete: true,
+				},
+			},
+			{
+				name: "Multiple complete solution",
+				solutions: []Solution{
+					{
+						Name:     "Foo",
+						Cost:     25,
+						Complete: false,
+					},
+					{
+						Name:     "Bar",
+						Cost:     12,
+						Complete: true,
+					},
+					{
+						Name:     "Baz",
+						Cost:     25,
+						Complete: true,
+					},
+				},
+				want: &Solution{
+					Name:     "Bar",
+					Cost:     12,
+					Complete: true,
+				},
+			},
+		}
+		for _, test := range tests {
+			got := FindBestSolution(test.solutions)
+			if got == nil && test.want != nil {
+				t.Errorf("FindBestSolution(%q): got nil wanted %v", test.name, *test.want)
+			} else if got != nil && test.want == nil {
+				t.Errorf("FindBestSolution(%q): got %v wanted nil", test.name, *got)
+			} else if got == nil && test.want == nil {
+				// This is OK
+			} else if *got != *test.want {
+				t.Errorf("FindBestSolution(%q): got %v wanted %v", test.name, *got, *test.want)
+			}
+		}
+	}
+
+
+If you [run the tests][Broken test] you'll find that the last test fails:
+
+	--- FAIL: TestFindBestSolution (0.00 seconds)
+		prog.go:82: FindBestSolution("One complete solution"): got {Baz 25 true} wanted {Bar 12 true}
+	FAIL
+	 [process exited with non-zero status]
+
+
+This is strange - it works fine in the single element case, but not with multiple values. Let's try adding a case where the correct value is last in the list.
+
+		{
+			name: "Multiple - correct solution is last",
+			solutions: []Solution{
+				{
+					Name:     "Baz",
+					Cost:     25,
+					Complete: true,
+				},
+				{
+					Name:     "Bar",
+					Cost:     12,
+					Complete: true,
+				},
+			},
+			want: &Solution{
+				Name:     "Bar",
+				Cost:     12,
+				Complete: true,
+			},
+		},
+		
+Sure enough, [this test passes][Additional test showing a pass]. So somehow if the element is last the algorithm works. What's going on?
+
+From the [go-wiki entry on Range][]:
+
+> When iterating over a slice or map of values, one might try this:
+
+	items := make([]map[int]int, 10)
+	for _, item := range items {
+	        item = make(map[int]int, 1) // Oops! item is only a copy of the slice element.
+	        item[1] = 2                 // This 'item' will be lost on the next iteration.
+	}
+
+> The make and assignment look like they might work, but the value property of range (stored here as item) is a copy of the value from items, not a pointer to the value in items.
+
+This is exactly what's happening in this case. The `solution` variable is getting a copy of each entry, not the entry itself. Thus when you take the address of the entry, you end up with a pointer pointing at the LAST element in the slice (since the iteration stops at that point). To illustrate:
+
+	package main
+
+	import "fmt"
+
+	func main() {
+		strings := []string{"some","value"}
+		for i, s := range strings {
+			fmt.Printf("Element %d: %s Pointer %v\n", i, s, &s)
+		}
+	}
+
+	Element 0: some Pointer 0x10500168
+	Element 1: value Pointer 0x10500168
+	
+Note that the same pointer is used in both cases. This explains why the Solution pointer ended up pointing at the last element of the slice.
+[Playground][Range gotcha illustration]
+
+So how do we work around this problem? The key is to introduce a new variable whose address it's safe to take; its contents won't change out from underneath you. 
+
+Broken:
+
+	if solution.Complete {
+		if best == nil || solution.Cost < best.Cost {
+			best = &solution
+		}
+	}
+
+Fixed:
+
+	if solution.Complete {
+		if best == nil || solution.Cost < best.Cost {
+			tmp := solution
+			best = &tmp
+		}
+	}
+	
+With [this patch][Final patch] the tests pass:
+
+	PASS
+
+	Program exited.
+
+
+
+## Alternative design
+A great feature of Go is that you can return multiple values from a single function. Here's an alternative implementation that doesn't suffer from the previous problem.
+
+
+	func FindBestSolution(solutions []Solution) (Solution, bool) {
+		var best Solution
+		found := false
+		for _, solution := range solutions {
+			if solution.Complete {
+				if !found || solution.Cost < best.Cost {
+					best = solution
+					found = true
+				}
+			}
+		}
+		return best, found
+	}
+
+Since `best` is copying the VALUE of the `solution` variable, this works correctly. You can play with this example and see how the tests change in the [Playground][Alternative implementation].
+
+This illustrates one other nice feature of Go - all types have a 'zero' value that is legal to use. For strings this is the empty string, for pointers it's nil, for ints it's 0, for structs all of types are set to zero values. The line `var best Solution` implicitly sets best to be the zero solution. If I wanted to I could get rid of the `found` bool altogether and just compare the returned solution with another zero valued struct.
+
+# Conclusion
+I introduced some basic features of Go, including maps, slices, `range`, structs, and functions. I provided links to the amazingly useful [Go playground](play.golang.org) which lets you easily test out code, format it, and share it with others. 
+
+I showed two implementations of a function that searches through a slice of struct values, searching for a solution that meets some criteria. I showed that the approach one might take if you have a Java background leads to a subtle bug that's hard to find and solve unless you know how `range` works. I showed how to write unit tests that exercise the function and helped flush out the bug.
+
+Finally I showed a version of the same function that uses Go's multiple return types to return a found boolean rather than using a nil pointer to signify that the value wasn't found.
+
+	
+[Broken test]:http://play.golang.org/p/voapg7xp4s
+[Additional test showing a pass]:http://play.golang.org/p/189aXRSkFx
+[go-wiki entry on Range]:https://code.google.com/p/go-wiki/wiki/Range
+[Range gotcha illustration]:http://play.golang.org/p/SbRpfzsY-G
+[Final patch]:http://play.golang.org/p/w6h35ve9UK
+
+[Alternative implementation]:http://play.golang.org/p/0NuUcd5E2T
