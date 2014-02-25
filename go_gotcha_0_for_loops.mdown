@@ -1,4 +1,9 @@
-Disclaimer: Go is open source and developed by many Google employees. I work for Google, but the opinions expressed here are my own and do not necessarily represent that of Google.
+![Golang mascot](http://upload.wikimedia.org/wikipedia/commons/2/23/Golang.png)
+<small> Go mascot - by Renée French under [Creative Commons Attribution-Share Alike 3.0 Unported](http://creativecommons.org/licenses/by-sa/3.0/deed.en) from [http://en.wikipedia.org/wiki/File:Golang.png](http://en.wikipedia.org/wiki/File:Golang.png)</small>
+
+
+<small>Disclaimer: Go is open source and developed by many Google employees. I work for Google, but the opinions expressed here are my own and do not necessarily represent that of Google.</small>
+
 
 [Go](http://golang.org/) is my new favorite programming language. It's compact, garbage collected, terse, and very easy to read. There are some things that trip me up even now after I've been using it for awhile. Today I'm going to discuss the `range` construct and how it has a surprising feature that might violate your assumptions.
 
@@ -260,12 +265,14 @@ A great feature of Go is that you can return multiple values from a single funct
 
 Since `best` is copying the VALUE of the `solution` variable, this works correctly. You can play with this example and see how the tests change in the [Playground][Alternative implementation].
 
-This illustrates one other nice feature of Go - all types have a 'zero' value that is legal to use. For strings this is the empty string, for pointers it's nil, for ints it's 0, for structs all of types are set to zero values. The line `var best Solution` implicitly sets best to be the zero solution. If I wanted to I could get rid of the `found` bool altogether and just compare the returned solution with another zero valued struct.
+This illustrates one other nice feature of Go - all types have a 'zero' value that is legal to use. For strings this is the empty string, for pointers it's nil, for ints it's 0, for structs all of types are set to zero values. The line `var best Solution` implicitly sets best to be the zero solution. If I wanted to I could get rid of the `found` bool altogether and just compare the returned solution with another zero valued `Solution`.
 
 # Conclusion
 I introduced some basic features of Go, including maps, slices, `range`, structs, and functions. I provided links to the amazingly useful [Go playground](play.golang.org) which lets you easily test out code, format it, and share it with others. 
 
-I showed two implementations of a function that searches through a slice of struct values, searching for a solution that meets some criteria. I showed that the approach one might take if you have a Java background leads to a subtle bug that's hard to find and solve unless you know how `range` works. I showed how to write unit tests that exercise the function and helped flush out the bug.
+I showed two implementations of a function that searches through a slice of struct values, searching for a solution that meets some criteria.
+
+The first example using pointers led to a subtle bug that's hard to find and solve unless you know how `range` works. I showed how to write unit tests that exercise the function and helped flush out the bug. I also explained what the bug was and how to work around it.
 
 Finally I showed a version of the same function that uses Go's multiple return types to return a found boolean rather than using a nil pointer to signify that the value wasn't found.
 
