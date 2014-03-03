@@ -54,11 +54,11 @@ The bug is in this line:
 
 	best := solution
 
-The problem is that we're declaring and initializing a new variable (with the := operator) rather than assigning to the existing `best` variable in the outer scope. The corrected line is
+The problem is that we're declaring and initializing a new variable (with the `:=` operator) rather than assigning to the existing `best` variable in the outer scope. The corrected line is
 
 	best = solution
 	
-Use a single equal sign to change the value of an existing variable, use := to create a new variable.
+Use `=` to change the value of an existing variable, use `:=` to create a new variable.
 
 If I had not referenced the new variable with the debug print statement, this code would not have compiled:
 
