@@ -1,0 +1,158 @@
+# Go Gotcha #1 - Variable shadowing
+
+<small>Disclaimer: Go is open source and developed by many Google employees. I work for Google, but the opinions expressed here are my own and do not necessarily represent that of Google.</small>
+
+Last week I [described how the `range` keyword in conjunction with taking the address of the iterator variable will lead to the wrong result][Go gotcha #0]. This week I'll discuss how it's possible to accidentally shadow one variable with another, leading to hard to find bugs.
+
+Let's take the same basic setup as last week; we have a `Solution` struct, and we're searching for the best (lowest cost) one in a slice of potential candidates. I've changed the example slightly to use pointers so that the gotcha from last week is avoided.
+
+	package main
+
+	import "fmt"
+
+	type Solution struct {
+		Name     string
+		Cost     int
+		Complete bool
+	}
+
+	func FindBestSolution(solutions []*Solution) *Solution {
+		var best *Solution
+		for _, solution := range solutions {
+			if solution.Complete {
+				if best == nil || solution.Cost < best.Cost {
+					best := solution
+					fmt.Printf("new best: %v\n", *best)
+				}
+			}
+		}
+		return best
+	}
+
+	func main() {
+		solutions := []*Solution{
+			&Solution{
+				Name:     "foo",
+				Cost:     10,
+				Complete: true,
+			},
+		}
+		fmt.Printf("Best solution is: %v", FindBestSolution(solutions))
+	}
+
+Output:
+
+	new best: {foo 10 true}
+	Best solution is: <nil>
+	Program exited.
+
+[Go playground][Basic main program]
+
+What's going on? We see that we have a good candidate solution from the debugging information. Why does the function return the wrong value?
+
+The bug is in this line:
+
+	best := solution
+
+The problem is that we're declaring and initializing a new variable (with the := operator) rather than assigning to the existing `best` variable in the outer scope. The corrected line is
+
+	best = solution
+	
+Use a single equal sign to change the value of an existing variable, use := to create a new variable.
+
+If I had not referenced the new variable with the debug print statement, this code would not have compiled:
+
+	if best == nil || solution.Cost < best.Cost {
+		best := solution
+	}
+	prog.go:16: best declared and not used
+	 [process exited with non-zero status]
+
+[Go playground][Without the print]
+
+Why is this shadowing of variables in other scopes allowed at all?
+
+There is a long thread on the subject on [Go-nuts][Go-nuts thread], debating this subject.
+
+## Arguments For
+
+[Nate Finch][]:
+
+	type M struct{}
+
+	func (m M) Max() int {
+		return 5
+	}
+
+	func foo() {
+		math := M{}
+		fmt.Println(math.Max())
+	}
+
+>If shadowing didn't work, importing math would suddenly break this program.
+
+>...
+>My point was about adding an import *after* writing a lot of code (when
+adding features or whatever), and that without shadowing, merely importing
+a package now has the potential to break existing code....
+
+>The current shadowing rules insulate code inside functions from what
+happens at the top level of the file, so that adding imports to the file
+will never break existing code (now waiting for someone to prove me wrong
+on this ;)
+	
+
+[Rui Maciel][]:
+> There is a simpler and better solution: use a short variable declaration
+when you actually want to declare a variable, and use an assignment
+operator when all you want to do is assign a value to a variable which
+you've previously declared. This doesn't require any change to either
+the language or the compiler, particularly one which is that cryptic.
+
+
+## Arguments Against
+[Johann Höchtl][]:
+> See it this way. I can carry a gun in my hand aiming towards a target. I
+pull the trigger and hit the target. Everything happens exactly the whay
+it is expected to happen.
+
+> Suddenly an inner block jumps in ... the instructor. Me, a gun in my
+hand, the instructor in between and on the other side the target. I pull
+the trigger.
+
+> Still ... everything happens exactly the way it is told to behave. Which
+still makes the end results not a desirable result. Adding an "inner
+block", which by itself is behaving in a fully specified way,
+influences the whole.
+
+> Somewhat odd I admit, but you may get what I mean?
+
+## Conclusion
+I don't think that the shadowing should be an error but I do think there should be a warning. The go [vet tool][] already helps find common mistakes, such as forgetting to include arguments to printf. For instance:
+
+example.go:
+
+	package main
+
+	import "fmt"
+
+	func main() {
+		fmt.Printf("%v %v", 5)
+	}
+
+Run:
+
+	go vet example.go
+
+	example.go:6: missing argument for Printf verb %v: need 2, have 1
+
+If the vet tool were modified to add this warning, it would occasionally yield false positives for those cases where the shadowing is done intentionally. I think this is a worthwhile tradeoff. Virtually all Go programmers I've talked with have been bitten by this bug of unintentional shadowing, and I would be willing to bet that these cases are far more frequent than intentional shadowing.
+
+[Go gotcha #0]:http://developmentality.wordpress.com/2014/02/25/go-gotcha-0-why-taking-the-address-of-an-iterated-variable-is-wrong/
+[Basic main program]:http://play.golang.org/p/kD1KH3XEl6
+[Without the print]:http://play.golang.org/p/2inCx36NRz
+[Go-nuts thread]:http://grokbase.com/t/gg/golang-nuts/132kx1r460/go-nuts-shadowing-a-proposal-to-improve-visibility-usage-analysis
+[vet tool]:http://godoc.org/code.google.com/p/go.tools/cmd/vet
+[Johann Höchtl]:http://grokbase.com/t/gg/golang-nuts/132kx1r460/go-nuts-shadowing-a-proposal-to-improve-visibility-usage-analysis#20130219gzendywv5rzy7ro247mwul2hl4
+[Rui Maciel]:http://grokbase.com/t/gg/golang-nuts/132kx1r460/go-nuts-shadowing-a-proposal-to-improve-visibility-usage-analysis#20130219pbdc2h6cq4crsg3fs5edeop2em
+[Nate Finch]:http://grokbase.com/t/gg/golang-nuts/132kx1r460/go-nuts-shadowing-a-proposal-to-improve-visibility-usage-analysis/nested/page/2#20130222hwdrzknz72lr6udzppo2mlmc6q
