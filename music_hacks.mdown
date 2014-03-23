@@ -1,0 +1,107 @@
+I love music. And programming. I really like pieces of technology that either create new or modify existing pieces of music. Here I detail some of my favorite projects I've found in the past few years.
+
+# Songsmith
+Songsmith is a project from Microsoft Research. From the [project description page][Songsmith homepage]:
+  
+> Songsmith generates musical accompaniment to match a singer’s voice. Just choose a musical style, sing into your PC’s microphone, and Songsmith will create backing music for you. Then share your songs with your friends and family, post your songs online, or create your own music videos.
+
+There was a [commercial][Songsmith commercial] that detailed how the project worked, but what I found really great was what the community did with it. They fed the vocals of famous songs through the software to see what sort of music came out. The results are, ahem, mixed.
+
+First, one that I think sounds pretty interesting - a swing version of Katy Perry's I Kissed a Girl
+
+https://developmentality.files.wordpress.com/2014/03/screenshot-2014-03-22-19-20-00.png?w=150
+
+
+Swing version Katy Perry's I Kissed a Girl https://www.youtube.com/watch?v=fwsHVF0unK4
+
+Then going into the realm of hilarious:
+
+* [We Will Rock You - Queen Vs Songsmith](https://www.youtube.com/watch?v=22AWPW5s4EA)
+* [Mortorhead's Ace of Spades](https://www.youtube.com/watch?v=mg0l7f25bhU)
+* [Nirvana's In Bloom](https://www.youtube.com/watch?v=wHduATM-o7M)
+* [Enter Sandman](https://www.youtube.com/watch?v=WmC28cXWqLc)
+* [Roxanne](https://www.youtube.com/watch?v=xWYwY8GpuO0)
+* [The Beatle's A Day in the Life](https://www.youtube.com/watch?v=BPuMD4zaTmc)
+
+# The Swinger
+According to [musicmachinery.com's writeup](http://musicmachinery.com/2010/05/21/the-swinger/), 
+
+>The Swinger is a bit of python code that takes any song and makes it swing.
+
+If you're not into music theory (or old music) you might not know what constitutes swing. The following video (only need to watch the first 30 seconds or so) is a great example of the difference of straight vs swing styles:
+
+<a href="https://www.youtube.com/watch?v=cTu1d1dwZv4"><img src="https://developmentality.files.wordpress.com/2014/03/screenshot-2014-03-22-19-30-52.png?w=600" alt="Drum demonstration of swing vs straight" </img></a>
+
+As you can hear, it sounds very different. The first half of each beat is stretched out, and the second half is shrunk down. It sounds even more different when you start listening to familiar songs converted from straight to swing, or vice versa. While most of the links have died, [Daft Punk's Around The World](https://soundcloud.com/plamere/around-the-world-the-swing-version) still plays, as does [Jefferson Airplane's White Rabbit](https://soundcloud.com/plamere/jeffersonairplane-swing-33)
+
+The source code is available at https://github.com/echonest/remix/blob/master/examples/swinger/swinger.py.
+
+# Autocanonizer
+From [musicmachinery.com's writeup of The Autocanonizer:](http://musicmachinery.com/2014/03/13/the-autocanonizer/)
+
+
+>It takes any song and tries to make a canon out of it. A canon is a song that can be played against a copy of itself.
+
+[Wikipedia](http://en.wikipedia.org/wiki/Canon_(music)) has a bit more information on what exactly a Canon is:
+
+>In music, a canon is a contrapuntal compositional technique that employs a melody with one or more imitations of the melody played after a given duration (e.g., quarter rest, one measure, etc.). The initial melody is called the leader (or dux), while the imitative melody, which is played in a different voice, is called the follower (or comes). The follower must imitate the leader, either as an exact replication of its rhythms and intervals or some transformation thereof (see "Types of canon", below). Repeating canons in which all voices are musically identical are called rounds – "Row, Row, Row Your Boat" and "Frère Jacques" being widely known examples. An example of a classical strict canon is the Minuet of Haydn's String Quartet in D Minor, Op. 76, No. 2 (White 1976, 66).
+
+With that in mind, here are some example.
+
+My favorite is [Adele's Someone Like You](http://static.echonest.com/autocanonizer/go.html?trid=TRLZWAN142E39CDD1A). This one sounds close to a round.
+
+* [Over The Rainbow](http://static.echonest.com/autocanonizer/go.html?trid=TRQPKGR1428F4F24A0) - starts rough but 30 seconds in it sounds good
+* [The Fox](http://static.echonest.com/autocanonizer/go.html?trid=TROHSLA1419395D433) - I like it. Lots of self harmonizing. The doubled up chorus actually works. It gets out of sync with itself at some points
+* [Take Five](http://static.echonest.com/autocanonizer/go.html?trid=TRHDKTV13AFC699E9C) - demonstrates that the technique works with odd meter too. Not perfectly lined up at some points
+
+See all the examples available at http://static.echonest.com/autocanonizer/loader.html
+Source code available at: https://github.com/plamere/autocanonizer
+
+Note: this project seems to be under active development as the UI completely changed from a week ago (https://www.dropbox.com/s/v4x0zxpqt9dlw47/Screenshot%202014-03-15%2009.54.58.png
+) to now
+
+# MajorVsMinor 
+MajorVsMinor is a slight departure from the others I've listed because there is a human in the loop - it's not all algorithmic. From Oleg Berg's description from [olegberg.com](http://olegberg.com/)
+
+>Hello! I am Oleg Berg, a musician from Donetsk, Ukraine. I digitally re-edit famous compositions altering harmonic scale, and I call this experimental music project «Major versus Minor». It may sound surprising and unusual, but it is always interesting. Listen to the music videos below. And please donate to keep the project going
+> [...]
+>I by no means intend to enhance the famous music hits as I rework them; they are perfect already. I simply imagine what would it sound like, had the author written it in another mood. And it appears, I succeed in my imaginations.
+
+Again, if you're not a music nerd you might not know what the difference between major key and minor is. In general picture minor = sad, major = happy. You'll instantly hear the difference in these versions.
+
+First, a must if you're an Arrested Development fan.
+
+"Final Countdown in Major key"
+https://www.youtube.com/watch?v=TcrcuLmwjys
+
+My favorite comment from MYxxLxxCHIBI1:
+> I was literally coming down here to say that myself. GOB finally got accepted to the Alliance of Magicians
+
+Maybe my favorite one - 
+"Be Worry, Don't Happy": Minor Key
+https://www.youtube.com/watch?v=LbTxfN8d2CI&list=TLCjycEk7SUu4AQpKaxnbxXZXWZjBM6hvv
+
+I like this one too.
+Jingle Bells
+https://www.youtube.com/watch?v=nZ6iKq2VDs8
+
+"Hey Jude" in minor key
+https://www.youtube.com/watch?v=8dcfpH8oJoM
+
+
+See the whole channel at https://www.youtube.com/user/MajorVsMinor
+
+Since this isn't a software project per se, there is no link to the source code. According to Asshat8182's comment on [Smells Like Teen Spirit in Major key](https://www.youtube.com/watch?v=g_TEOuyPDNo) (with a name like that, he must be a reliable source of information), the way it's accomplished is
+
+> The 'somehow' is called Celemony Melodyne. Specifically the DNA function
+
+According to [Wikipedia](http://en.wikipedia.org/wiki/Celemony):
+
+>Celemony Software GmbH is a German musical software company that specializes in digital audio pitch correction software. It produces Melodyne, an industry standard audio pitch modification tool similar to Auto-Tune
+
+# Conclusion
+I hope you've found this short roundup of music hacks interesting. There are some very creative people out there. If you find what they're doing interesting, please let them know and/or donate so they'll keep making great stuff. 
+
+
+[Songsmith homepage]:http://research.microsoft.com/en-us/um/redmond/projects/songsmith/
+[Songsmith commercial]:https://www.youtube.com/watch?v=3oGFogwcx-E
