@@ -1,0 +1,129 @@
+# YAGNI - You aren't going to need it
+
+I've been programming professionally for about 5 years now, and one of the slogans that I've learned to incorporate into my work is [YAGNI][Wikipedia], or "You aren't going to need it".
+
+It's taken me a long time to learn the importance of this principle. When I was a senior in college, I had a course that involved programming the AI of an RTS game. For our final project, our team's AI would be plugged in and fight against another team's. I got hung up on implementing a complicated binary protocol for the robots on our team to communicate efficiently and effectively, and our team ended up doing terribly. I was mortified. No other team spent more than an hour or two on their communication protocol, and only after getting everything else up and running. 
+
+<!-- awkward -->
+This principle is somewhat intertwined with more general ones of prioritization and satisficing (making a solution that's good enough). 
+
+First, let's discuss why producing code that's not necessary now but might be in the future is problematic. Then we'll discuss 
+
+
+
+
+
+The violations of this rule take many forms, including
+* Feature creep
+* Speculative design
+* Over-reliance on interfaces
+* "Future proofing"
+* Dead code
+
+Before I discuss each of these in 
+** more code
+*** 
+** more time
+** more bugs
+** more tests (slows the build)
+** more complexity
+
+
+Let's examine each of these in turn
+
+## Feature creep
+All of the programmers I've ever known love to build things. Building new features is fun and it's easy to point to your work to demonstrate impact to your bosses. 
+
+If you build features that you think are cool, but aren't useful or used by the users of your software, then you've made things worse. 
+
+## Over-reliance on interface
+Interfaces are a great way of encapsulating and hiding implementation details. They also make it easy for client code to change their implementations easily. For instance,
+
+[sourcecode language="java"]
+public interface Adder {
+	public int Add(Matrix m1, Matrix m2)
+}
+
+public class SingleThreadedAdder implements Adder {
+	public int Add(Matrix m1, Matrix m2) {
+		// single threaded implementation here
+	}
+}
+
+public class MultiThreadedAdder implements Adder {
+	public int Add(Matrix m1, Matrix m2) {
+		// multi-threaded implementation here
+	}
+}
+
+public class MatrixMath {
+	private final Adder adder;
+	public MatrixMath() {
+		// By changing this line to this.adder = new MultiThreadedAdder(), we'd swap to a multithreaded implementation
+		this.adder = new SingleThreadedAdder();
+	}
+}
+[/sourcecode]
+
+Interfaces are great, but they can easily be overused. I often see cases where there's exactly one implementation of the interface. e.g.
+
+[sourcecode language="java"]
+public interface Adder {
+	public int Add(int x, int y)
+}
+
+public class AdderImpl implements Adder {
+	public int Add(int x, int y) {
+		return x + y;
+	}
+}
+[/sourcecode]
+
+In this case, someone added an interface thinking that there might be multiple implementations in the future. Well, that could be the case. But at the moment it makes the code harder to read through since it forces the reader to jump through files looking for the real implementation.
+
+Interfaces are often useful for testing purposes. But you can also use fakes/mocks for this purpose, so that's not a wholly satisfying reason.
+
+## Speculative design
+
+
+## Future proofing
+
+
+
+## Dead code
+The worst violation of YAGNI is dead code. Dead code is code that is never actually executed in normal production
+
+- hidden behind flags; flags are never set in production
+
+Knight Capital
+- production 
+https://www.ibmdw.net/urbancode/2013/10/28/
+
+sec report;
+http://www.sec.gov/litigation/admin/2013/34-70694.pdf
+
+
+* 
+
+I take this to mean, don't build things just because they could be useful further down the road. 
+
+* intro
+** programming for 5 years
+** this is a key concept to learn and live by
+* has many forms
+** feature creep
+** speculative design
+*** everything is an interface, impl blah blah
+** dead code
+* why is it bad
+** more code
+** more time
+** more bugs
+** more tests (slows the build)
+** more complexity
+
+"My point today is that, if we wish to count lines of code, we should not regard them as "lines produced" but as "lines spent": the current conventional wisdom is so foolish as to book that count on the wrong side of the ledger.
+"
+dijkstra: https://www.cs.utexas.edu/users/EWD/transcriptions/EWD10xx/EWD1036.html
+
+[Wikipedia]:http://en.wikipedia.org/wiki/You_aren't_gonna_need_it
