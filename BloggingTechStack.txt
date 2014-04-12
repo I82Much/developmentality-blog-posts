@@ -1,16 +1,21 @@
 2012-05-03
 
+I thought I'd spend a few minutes detailing my blogggin
 My blogging technology stack
 
-Ideas stored in Google Doc
+
+
+Ideas stored in Google Doc or workflowy, google keep
 
 Text written in TextMate
 
 Markdown
 
+github
+
 code snippets - either embedded inline or as github gists
 
-Image hosting - Google+
+Image hosting - Google+ or uploaded through wordpress.com
 
 LaTeX - pull quotes
 
