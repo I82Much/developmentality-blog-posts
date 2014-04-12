@@ -1,10 +1,8 @@
-# Go Gotcha #1 - Variable shadowing
-
 <small>Disclaimer: Go is open source and developed by many Google employees. I work for Google, but the opinions expressed here are my own and do not necessarily represent that of Google.</small>
 
 Last week I [described how the `range` keyword in conjunction with taking the address of the iterator variable will lead to the wrong result][Go gotcha #0]. This week I'll discuss how it's possible to accidentally shadow one variable with another, leading to hard to find bugs.
 
-Let's take the same basic setup as last week; we have a `Solution` struct, and we're searching for the best (lowest cost) one in a slice of potential candidates. I've changed the example slightly to use pointers so that the gotcha from last week is avoided.
+Let's take the same basic setup as last week; we have a `Solution` struct, and we're searching for the best (lowest cost) one in a slice of potential candidates.
 
 	package main
 
@@ -146,7 +144,7 @@ Run:
 
 	example.go:6: missing argument for Printf verb %v: need 2, have 1
 
-If the vet tool were modified to add this warning, it would occasionally yield false positives for those cases where the shadowing is done intentionally. I think this is a worthwhile tradeoff. Virtually all Go programmers I've talked with have been bitten by this bug of unintentional shadowing, and I would be willing to bet that these cases are far more frequent than intentional shadowing.
+If the vet tool were modified to add this warning, it would occasionally yield false positives for those cases where the shadowing is done intentionally. I think this is a worthwhile tradeoff. Virtually all Go programmers I've talked with have made this mistake, and I would be willing to bet that these cases are far more frequent than intentional shadowing.
 
 [Go gotcha #0]:http://developmentality.wordpress.com/2014/02/25/go-gotcha-0-why-taking-the-address-of-an-iterated-variable-is-wrong/
 [Basic main program]:http://play.golang.org/p/kD1KH3XEl6
