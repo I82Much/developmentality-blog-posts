@@ -1,10 +1,10 @@
 # YAGNI and the scourge of speculative design
 
-I've been programming professionally for sabout 5 years now, and one of the slogans that I've learned to incorporate into my work is [YAGNI][Wikipedia], or "You aren't going to need it".
+I've been programming professionally for 5 years. One of the things that I've learned to incorporate into my work is [YAGNI][Wikipedia], or "You aren't gonna need it".
 
-It's taken me a long time to learn the importance of this principle. When I was a senior in college, I had a course that involved programming the AI of an RTS game. For our final project, our team's AI would be plugged in and fight against another team's. I got hung up on implementing a complicated binary protocol for the robots on our team to communicate efficiently and effectively, and our team ended up doing terribly. I was mortified. No other team spent more than an hour or two on their communication protocol, and only after getting everything else up and running. 
+It's taken me a long time to learn the importance of this principle. When I was a senior in college, I had a course that involved programming the AI of an RTS game. For our final project, our team's AI would be plugged in and fight against another team's. I got hung up on implementing a complicated binary protocol for the robots on our team to communicate efficiently and effectively, and our team ended up doing terribly. I was mortified. No other team spent much time or effort on their communication protocol, and only after getting everything else up and running. 
 
-In this essay I'll primarily be talking about producing code that's not necessary now, but might be in the future. I call this 'speculative design' and it's what YAGNI is designed to prevent. 
+In this essay I'll primarily be talking about producing code that's not necessary now, but might be in the future. I call this "speculative design" and it's what the YAGNI philosphy prevents.
 
 First, let's discuss how and why this speculative design happens. Then we'll discuss the problems with giving into the temptation.
 
@@ -13,24 +13,24 @@ I can only speak to my own experience. The times I've fallen into this trap can 
 
 * It's fun to build new features
 * It feels proactive to anticipate needs
-* I misunderstood priorities
+* Bad prioritization
 
 ## Building features is fun 
-Programming is a creative outlet. It's incredibly satisfying to have an idea, design it in code, and then see it in use. It's certainly more fun to me than other parts of development, which include testing, refactoring, fixing bugs, cleaning up dead code, and so on. These other aspects are incredibly important, but they're 'grungy' and often go unrewarded. Implementing features is not only more fun, it's higher visibility.
+Programming is a creative outlet. It's incredibly satisfying to have an idea, build it in code, and then see it in use. It's more fun to me than other parts of development, which include testing, refactoring, fixing bugs, cleaning up dead code, and so on. These other aspects are incredibly important, but they're 'grungy' and often go unrewarded. Implementing features is not only more fun, it's higher visibility.
 
-## Proactive/Anticipating needs
+## Proactive to anticipate needs
 A second reason one might engage in speculative design is to be proactive and anticipate the needs of the customer. If our requirements say that we must support XML export, it's likely that we'll end up having to support JSON in the future. We might as well get a head start on that feature so when it's asked for we can delight the customer by delivering it in less time.
 
-## Misunderstanding of priorities
-This is the case with the story I started this piece with. I vastly overestimated how important the inter-robot communications would be and spent way too long on it. As such I overengineered it to a point where it hurt every other aspect of the code base (since my time was not correctly prioritized among the other modules). 
+## Bad prioritization
+This is the case with the story I started this piece with. I overestimated the importance of inter-robot communications and overengineered it to a point where it hurt every other feature.
 
-In this case, the feature was arguably necessary and should have been worked on. However, I vastly overestimated its importance. In this case, a strategy of [satisficing](http://en.wikipedia.org/wiki/Satisficing) would have helped (by implementing the bare minimum).
+In this case, the feature was arguably necessary and should have been worked on, but not to the extent and not in the order that I did. In this case I should have used a strategy of [satisficing](http://en.wikipedia.org/wiki/Satisficing) and implemented the bare minimum after all of the more important things were done.
 
 # Why is it problematic
-I've described a few reasons for speculative code. You've already seen one example of why it's problematic. I'll detail some other reasons.
+I've described a few reasons speculative code exists. You've already seen one example of why it's problematic. I'll detail some other reasons.
 
 ## More time, less focus
-Let's start simple. Time spent building out functionality that may be necessary in the future is time NOT spent on making things better today. As I mentioned at the start of this post, I ended up wasting hours and hours on something that ended up being completely irrelevant to the performance of teams in the competition, at the expense of things that mattered a lot more, like pathfinding.
+Let's start simple. Time spent building out functionality that may be necessary in the future is time *not* spent on making things better today. As I mentioned at the start of this post, I ended up wasting hours and hours on something that ended up being completely irrelevant to the performance of teams in the competition, at the expense of things that mattered a lot more, like pathfinding.
 
 Since there is more being developed, it's likely that the overall software product is less focused. Your time and attention are being divided among more modules, including the speculatively designed ones.
 
@@ -47,18 +47,18 @@ The extra code and complexity associated with speculative coding is very expensi
 
 * It slows down readers of the code
 * It slows down building the software (especially if it pulls in more dependencies)
-* Assuming it is adequately tested, it adds additional tests that slow down the test suite
+* It adds additional tests that slow down the test suite
 * The more code, the more bugs
 
 ## Sets unrealistic expectations
-Say that you design a feature because you think that the customer is going to want it soon. Imagine that you actually got it right - what they end up asking for is essentially identical to what you've implemented. You deliver it to the customer a full week before you promised it.
+Say that you design a feature because you think that the customer is going to want. Imagine that you actually got it right - what they end up asking for is essentially identical to what you've implemented. You deliver it to the customer a full week before you promised it.
 
 You might look like a hero, but this sets a very bad precedent. It sets unrealistic expectations as to how much work the feature took to implement, and might lead to the customer setting unrealistic deadlines for features of similar scope. If you were able to finish that feature early, there's no reason you shouldn't produce the next feature in a similarly accelerated timeline.
 
 ## You're probably a bad judge of what will be needed in the future
 The above point probably won't happen - you'll probably guess wrong.
 
-It's hard enough to build software from detailed specifications or requirements. Guessing about what the specifications and requirements of a feature that isn't needed yet is likely to end up with a product that doesn't make anyone happy. It will likely match the designers' [mental model](http://en.wikipedia.org/wiki/Mental_model) but not the users, since there was inadequate input from the users.
+It's hard enough to build software from detailed specifications or requirements. Guessing about what the specifications and requirements of a feature that isn't needed yet is likely to end up with a product that doesn't make anyone happy. It will likely match the designers' [mental model](http://en.wikipedia.org/wiki/Mental_model) but not the users, since there was inadequate input from them.
 
 ## It's hard to take away features after they exist
 Say that you're designing the export feature of your software. You imagine there will be a whole lot of formats you want to support, but at the moment the only hard and fast requirement is [CSV (comma separated value)](http://en.wikipedia.org/wiki/Comma-separated_values) format. As you're writing the CSV export code, you see how it would be trivial to implement JSON encoding. And while you're at it, XML is pretty easy too. At this point, you were required to produce CSV but now you have JSON and XML support too. Great!
@@ -68,9 +68,9 @@ Well, maybe. Maybe not. A year down the line you notice that only a small percen
 I have seen little used features remain in production because they're too much trouble to delete and irritate the few users of said feature. Which leads to...
 
 ## Increased risk of dead code
-Imagine that you've implemented a new feature but it's not ready for prime time yet. Or maybe you used it once or twice but it's not worth turning on for your normal service. You don't want to kill the feature entirely, as it might have some utility down the line. (Warning bells should be going off about now) You decide to hide the feature behind a configuration flag that defaults to off. Great! You get to have the feature easily available should you ever need it again!
+Imagine that you've implemented a new feature but it's not ready for prime time yet. Or maybe you used it once or twice but it's not worth turning on for your normal service. You don't want to kill the feature entirely, as it might have some utility down the line. (Warning bells should be going off about now) You decide to hide the feature behind a configuration flag that defaults to off. Great! The feature can easily be reenabled should you ever need it again.
 
-Only one problem - it accidentally gets turned on and interacts catastrophically with the rest of the system. Your software deals with financial transactions and it ends up costing your company 460 million dollars.
+There's just one problem - it gets turned on accidentally interacts catastrophically with the rest of the system. Your software deals with financial transactions and it ends up costing your company 460 million dollars.
 
 This sounds unlikely - except it's true. This is essentially what happened to [Knight Capital in 2012](https://www.ibmdw.net/urbancode/2013/10/28/).
 
@@ -88,19 +88,20 @@ incidents;
 This is one of the most visible failures caused by [dead](http://en.wikipedia.org/wiki/Dead_code) or [oxbow code](http://en.wikipedia.org/wiki/Oxbow_code). I am not suggesting that Knight Capital speculatively developed the feature that malfunctioned. What I am saying is that
 
 * It's dangerous to leave dead code around in a system
-* Speculative development is likely to lead to features that are not used often and are more likely to be dead code than if they were completely spec'ed out as in normal developpment
+* Speculative development is likely to lead to features that are not used often and are more likely to be dead code than if they were completely spec'ed out as in normal development
 * Therefore speculative development puts you at a greater risk of dead code problems
 
 # Conclusion
-As engineers, it's easy to fall into the trap of implementing features before they're actually needed. You'll look productive and like a real proactive person. In the end, I think it's best to avoid this temptation, for all of the problems I've mentioned. These include
+As an engineer, it's easy to fall into the trap of implementing features before they're actually needed. You'll look productive and proactive. In the end, it's best to avoid this temptation, for all of the problems I've mentioned. These include
 
 * the extra code takes time to write, test, debug, and code review
 * it contributes to a lack of conceptual focus in the system
-* if done to please a customer, it sets unrealistic expectations for the development of other features\
+* if done to please a customer, it sets unrealistic expectations for the development of other features
 * it imparts an extra maintenance cost for the rest of the lifetime of said feature
 * it will be difficult to remove the feature if and when its lack of use becomes apparent
 * it puts you at increased risk of leaving dead code in the system, code which may later be accessed with bad consequences
 
-I love Dijkstra's notion of 'lines spent' when referring to code. Do you want to spend your time and lines of code on a speculative feature? Just remember - You aren't gonna need it.
+I love Dijkstra's notion of 'lines spent'. Do you want to spend your time and lines of code on a speculative feature? Just remember - you aren't gonna need it.
 
 [Wikipedia]:http://en.wikipedia.org/wiki/You_aren't_gonna_need_it
+[Crystal ball image]:http://upload.wikimedia.org/wikipedia/commons/b/bf/Crystal_ball_anning_bell.jpg
