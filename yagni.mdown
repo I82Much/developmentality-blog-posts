@@ -50,7 +50,14 @@ The extra code and complexity associated with speculative coding is very expensi
 * Assuming it is adequately tested, it adds additional tests that slow down the test suite
 * The more code, the more bugs
 
+## Sets unrealistic expectations
+Say that you design a feature because you think that the customer is going to want it soon. Imagine that you actually got it right - what they end up asking for is essentially identical to what you've implemented. You deliver it to the customer a full week before you promised it.
+
+You might look like a hero, but this sets a very bad precedent. It sets unrealistic expectations as to how much work the feature took to implement, and might lead to the customer setting unrealistic deadlines for features of similar scope. If you were able to finish that feature early, there's no reason you shouldn't produce the next feature in a similarly accelerated timeline.
+
 ## You're probably a bad judge of what will be needed in the future
+The above point probably won't happen - you'll probably guess wrong.
+
 It's hard enough to build software from detailed specifications or requirements. Guessing about what the specifications and requirements of a feature that isn't needed yet is likely to end up with a product that doesn't make anyone happy. It will likely match the designers' [mental model](http://en.wikipedia.org/wiki/Mental_model) but not the users, since there was inadequate input from the users.
 
 ## It's hard to take away features after they exist
@@ -89,6 +96,7 @@ As engineers, it's easy to fall into the trap of implementing features before th
 
 * the extra code takes time to write, test, debug, and code review
 * it contributes to a lack of conceptual focus in the system
+* if done to please a customer, it sets unrealistic expectations for the development of other features\
 * it imparts an extra maintenance cost for the rest of the lifetime of said feature
 * it will be difficult to remove the feature if and when its lack of use becomes apparent
 * it puts you at increased risk of leaving dead code in the system, code which may later be accessed with bad consequences
