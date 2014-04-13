@@ -1,129 +1,98 @@
-# YAGNI - You aren't going to need it
+# YAGNI and the scourge of speculative design
 
-I've been programming professionally for about 5 years now, and one of the slogans that I've learned to incorporate into my work is [YAGNI][Wikipedia], or "You aren't going to need it".
+I've been programming professionally for sabout 5 years now, and one of the slogans that I've learned to incorporate into my work is [YAGNI][Wikipedia], or "You aren't going to need it".
 
 It's taken me a long time to learn the importance of this principle. When I was a senior in college, I had a course that involved programming the AI of an RTS game. For our final project, our team's AI would be plugged in and fight against another team's. I got hung up on implementing a complicated binary protocol for the robots on our team to communicate efficiently and effectively, and our team ended up doing terribly. I was mortified. No other team spent more than an hour or two on their communication protocol, and only after getting everything else up and running. 
 
-<!-- awkward -->
-This principle is somewhat intertwined with more general ones of prioritization and satisficing (making a solution that's good enough). 
+In this essay I'll primarily be talking about producing code that's not necessary now, but might be in the future. I call this 'speculative design' and it's what YAGNI is designed to prevent. 
 
-First, let's discuss why producing code that's not necessary now but might be in the future is problematic. Then we'll discuss 
+First, let's discuss how and why this speculative design happens. Then we'll discuss the problems with giving into the temptation.
 
+# Why does it happen
+I can only speak to my own experience. The times I've fallen into this trap can be classified into a few categories:
 
+* It's fun to build new features
+* It feels proactive to anticipate needs
+* I misunderstood priorities
 
+## Building features is fun 
+Programming is a creative outlet. It's incredibly satisfying to have an idea, design it in code, and then see it in use. It's certainly more fun to me than other parts of development, which include testing, refactoring, fixing bugs, cleaning up dead code, and so on. These other aspects are incredibly important, but they're 'grungy' and often go unrewarded. Implementing features is not only more fun, it's higher visibility.
 
+## Proactive/Anticipating needs
+A second reason one might engage in speculative design is to be proactive and anticipate the needs of the customer. If our requirements say that we must support XML export, it's likely that we'll end up having to support JSON in the future. We might as well get a head start on that feature so when it's asked for we can delight the customer by delivering it in less time.
 
-The violations of this rule take many forms, including
-* Feature creep
-* Speculative design
-* Over-reliance on interfaces
-* "Future proofing"
-* Dead code
+## Misunderstanding of priorities
+This is the case with the story I started this piece with. I vastly overestimated how important the inter-robot communications would be and spent way too long on it. As such I overengineered it to a point where it hurt every other aspect of the code base (since my time was not correctly prioritized among the other modules). 
 
-Before I discuss each of these in 
-** more code
-*** 
-** more time
-** more bugs
-** more tests (slows the build)
-** more complexity
+In this case, the feature was arguably necessary and should have been worked on. However, I vastly overestimated its importance. In this case, a strategy of [satisficing](http://en.wikipedia.org/wiki/Satisficing) would have helped (by implementing the bare minimum).
 
+# Why is it problematic
+I've described a few reasons for speculative code. You've already seen one example of why it's problematic. I'll detail some other reasons.
 
-Let's examine each of these in turn
+## More time, less focus
+Let's start simple. Time spent building out functionality that may be necessary in the future is time NOT spent on making things better today. As I mentioned at the start of this post, I ended up wasting hours and hours on something that ended up being completely irrelevant to the performance of teams in the competition, at the expense of things that mattered a lot more, like pathfinding.
 
-## Feature creep
-All of the programmers I've ever known love to build things. Building new features is fun and it's easy to point to your work to demonstrate impact to your bosses. 
+Since there is more being developed, it's likely that the overall software product is less focused. Your time and attention are being divided among more modules, including the speculatively designed ones.
 
-If you build features that you think are cool, but aren't useful or used by the users of your software, then you've made things worse. 
+## More code
+Software complexity is often measured in lines of code; it's not uncommon for large software projects to number in the millions. [Windows XP, for instance, had about 45 million lines.](https://www.facebook.com/windows/posts/155741344475532)
 
-## Over-reliance on interface
-Interfaces are a great way of encapsulating and hiding implementation details. They also make it easy for client code to change their implementations easily. For instance,
+Edsger Dijkstra, one of the most influential computer scientists, has [a particularly good quote about lines of code](https://www.cs.utexas.edu/users/EWD/transcriptions/EWD10xx/EWD1036.html):
 
-[sourcecode language="java"]
-public interface Adder {
-	public int Add(Matrix m1, Matrix m2)
-}
+>My point today is that, if we wish to count lines of code, we should not regard them as "lines produced" but as "lines spent": the current conventional wisdom is so foolish as to book that count on the wrong side of the ledger.
 
-public class SingleThreadedAdder implements Adder {
-	public int Add(Matrix m1, Matrix m2) {
-		// single threaded implementation here
-	}
-}
+At one point I falsely equated lines of code produced to productivity, but nothing could be further from the truth. I consider it a very good week if I can come out net negative in terms of the lines of code I've added (by deleting chunks of code, or rewriting them to be simpler and shorter).
 
-public class MultiThreadedAdder implements Adder {
-	public int Add(Matrix m1, Matrix m2) {
-		// multi-threaded implementation here
-	}
-}
+The extra code and complexity associated with speculative coding is very expensive. 
 
-public class MatrixMath {
-	private final Adder adder;
-	public MatrixMath() {
-		// By changing this line to this.adder = new MultiThreadedAdder(), we'd swap to a multithreaded implementation
-		this.adder = new SingleThreadedAdder();
-	}
-}
-[/sourcecode]
+* It slows down readers of the code
+* It slows down building the software (especially if it pulls in more dependencies)
+* Assuming it is adequately tested, it adds additional tests that slow down the test suite
+* The more code, the more bugs
 
-Interfaces are great, but they can easily be overused. I often see cases where there's exactly one implementation of the interface. e.g.
+## You're probably a bad judge of what will be needed in the future
+It's hard enough to build software from detailed specifications or requirements. Guessing about what the specifications and requirements of a feature that isn't needed yet is likely to end up with a product that doesn't make anyone happy. It will likely match the designers' [mental model](http://en.wikipedia.org/wiki/Mental_model) but not the users, since there was inadequate input from the users.
 
-[sourcecode language="java"]
-public interface Adder {
-	public int Add(int x, int y)
-}
+## It's hard to take away features after they exist
+Say that you're designing the export feature of your software. You imagine there will be a whole lot of formats you want to support, but at the moment the only hard and fast requirement is [CSV (comma separated value)](http://en.wikipedia.org/wiki/Comma-separated_values) format. As you're writing the CSV export code, you see how it would be trivial to implement JSON encoding. And while you're at it, XML is pretty easy too. At this point, you were required to produce CSV but now you have JSON and XML support too. Great!
 
-public class AdderImpl implements Adder {
-	public int Add(int x, int y) {
-		return x + y;
-	}
-}
-[/sourcecode]
+Well, maybe. Maybe not. A year down the line you notice that only a small percentage of your users export in XML, but the feature has led to a disproportionate number of support tickets. Now you're in a tough place - if you kill the feature, you'll irritate these power users. Furthermore, you will have effectively wasted all of the time in implementing the feature in the first place, and all the subsequent patches. 
 
-In this case, someone added an interface thinking that there might be multiple implementations in the future. Well, that could be the case. But at the moment it makes the code harder to read through since it forces the reader to jump through files looking for the real implementation.
+I have seen little used features remain in production because they're too much trouble to delete and irritate the few users of said feature. Which leads to...
 
-Interfaces are often useful for testing purposes. But you can also use fakes/mocks for this purpose, so that's not a wholly satisfying reason.
+## Increased risk of dead code
+Imagine that you've implemented a new feature but it's not ready for prime time yet. Or maybe you used it once or twice but it's not worth turning on for your normal service. You don't want to kill the feature entirely, as it might have some utility down the line. (Warning bells should be going off about now) You decide to hide the feature behind a configuration flag that defaults to off. Great! You get to have the feature easily available should you ever need it again!
 
-## Speculative design
+Only one problem - it accidentally gets turned on and interacts catastrophically with the rest of the system. Your software deals with financial transactions and it ends up costing your company 460 million dollars.
 
+This sounds unlikely - except it's true. This is essentially what happened to [Knight Capital in 2012](https://www.ibmdw.net/urbancode/2013/10/28/).
 
-## Future proofing
+From the [Security and Exchange Commission report of the incident](http://www.sec.gov/litigation/admin/2013/34-70694.pdf):
 
+> Knight also violated the requirements of Rule 15c3-5(b) because Knight did 
+not have technology governance controls and supervisory procedures 
+sufficient to ensure the orderly deployment of new code or to prevent the 
+activation of code no longer intended for use in Knight’s current operations 
+but left on its servers that were accessing the market; and Knight did not 
+have controls and supervisory procedures reasonably designed to guide 
+employees’ responses to significant technological and compliance 
+incidents; 
 
+This is one of the most visible failures caused by [dead](http://en.wikipedia.org/wiki/Dead_code) or [oxbow code](http://en.wikipedia.org/wiki/Oxbow_code). I am not suggesting that Knight Capital speculatively developed the feature that malfunctioned. What I am saying is that
 
-## Dead code
-The worst violation of YAGNI is dead code. Dead code is code that is never actually executed in normal production
+* It's dangerous to leave dead code around in a system
+* Speculative development is likely to lead to features that are not used often and are more likely to be dead code than if they were completely spec'ed out as in normal developpment
+* Therefore speculative development puts you at a greater risk of dead code problems
 
-- hidden behind flags; flags are never set in production
+# Conclusion
+As engineers, it's easy to fall into the trap of implementing features before they're actually needed. You'll look productive and like a real proactive person. In the end, I think it's best to avoid this temptation, for all of the problems I've mentioned. These include
 
-Knight Capital
-- production 
-https://www.ibmdw.net/urbancode/2013/10/28/
+* the extra code takes time to write, test, debug, and code review
+* it contributes to a lack of conceptual focus in the system
+* it imparts an extra maintenance cost for the rest of the lifetime of said feature
+* it will be difficult to remove the feature if and when its lack of use becomes apparent
+* it puts you at increased risk of leaving dead code in the system, code which may later be accessed with bad consequences
 
-sec report;
-http://www.sec.gov/litigation/admin/2013/34-70694.pdf
-
-
-* 
-
-I take this to mean, don't build things just because they could be useful further down the road. 
-
-* intro
-** programming for 5 years
-** this is a key concept to learn and live by
-* has many forms
-** feature creep
-** speculative design
-*** everything is an interface, impl blah blah
-** dead code
-* why is it bad
-** more code
-** more time
-** more bugs
-** more tests (slows the build)
-** more complexity
-
-"My point today is that, if we wish to count lines of code, we should not regard them as "lines produced" but as "lines spent": the current conventional wisdom is so foolish as to book that count on the wrong side of the ledger.
-"
-dijkstra: https://www.cs.utexas.edu/users/EWD/transcriptions/EWD10xx/EWD1036.html
+I love Dijkstra's notion of 'lines spent' when referring to code. Do you want to spend your time and lines of code on a speculative feature? Just remember - You aren't gonna need it.
 
 [Wikipedia]:http://en.wikipedia.org/wiki/You_aren't_gonna_need_it
