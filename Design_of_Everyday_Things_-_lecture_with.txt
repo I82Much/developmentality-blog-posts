@@ -1,0 +1,130 @@
+Design of Everyday Things - lecture with Donald Norman
+
+I recently saw a lecture at Intel by Don Norman, the author of "The Design of Everyday Things".
+
+* starts off talking about doors, and the doors in the auditorium we just entered. Two sets of doors. One was sensible - a push plate that only can be used in one way - even if there were a fire and people were rushing outward, it would work. On the other side of that was a pull pull handle, which made it clear it should be pulled.
+
+IThe outer doors of the auditorium were not so well designed. They were symmetrical, meaning that they afforded both pushing and pulling - and what you had to do depended on what side of the door you were on.
+
+flat plate is visibile - it's a signifier.
+
+The audience got a chcukle out of the introduction w/ doors, because we expected it (given how much tie he devotes to it in his book)
+
+Described his background, Electrical engineering graduate from MIT. Went to UPenn to get a master's degree, hping to learn about computers - but when he got there, there were none. Went on to do psychology. "how much do you know about psychology
+none
+great!"
+"mathematical psychology"
+
+He had a kind of engineering attitude - my circuits work fine except when pesky people get involved.
+
+"information processing"
+
+Brought in after the 3 mile island meltdown to see what went wrong, along with other human factors experts. Operators misdiagnosed the problem.
+
+
+operators made sensible responses, but the problem was design. 4000 dials, things to monitor - banks of identical switches. Organized orderly but in no relation to how the plant worked.
+
+Banks of identical switches, laid out by engineers. Important information was obscured by a piece of paper. There was a switch to open a valve; it lit up when pressed, which operators thought meant that it was working. Really that just indicated that current was flowing (voltage?) whatever. In actuality the valve was jstuck.
+
+Perhaps most damning, there was a sensor that would have revealed that the valve wasn't in correct postion, but it wasn't trusted because 'it was always broken'.
+
+(that could be a whole post in and of itself - why it's crucial not to let things stay broken. maybe related to the broken window theory)
+
+
+Engineering = psychology => appropriate design.
+
+After that described how he went on sabbatical in Cambridge, england. Ended up being very frustrated with, among other things, doors and faucets ('left is universally hot, except in england' again not direct quote).
+
+Ended up writing a book about this, and how people's menal models can be at odds with the designers.
+
+Called it 'the psychology of everyday things'. - published in 1986
+
+later it had its title changed - because it was being put into psychology section, where people weren't at all nterested in design.  He took that as a lesson too - know your audience. Don't be too clever. (He liked the acronym POET)
+
+Lays out the 4 key principles of the book
+
+- affordances
+- signifiers
+- conceptual models (look for hinges) 
+
+everyone invents a conceptual model - make sure it matches that of the designer or frustration will ensue.
+
+- systems image ?
+
+He's gone on to append a few more:
+Action cycle
+5) discoverability
+6) feedback.
+
+talked about how it has sold tremendously well over past 25 years; still selling about 10k copies per year now. Maybe 500k all told.
+
+Technology has changed.
+
+worked at apple - human interface guidelines. All those people have since left - leading to worse UI, in his opinion. e.g. non discoverable gestures on the ipad. Accidental commands. Lack of undo. Lost discoverability and feedback.
+
+says that people come up to him who've read the book, and describe how "things would work better but they'd be ugly".
+
+he goes on to refute that, talking about the work he did for 'emotional design'.
+"attractive things work better"
+
+e.g. the car he loves to drive, feels good, etc.
+
+then he talks about
+
+
+different levels of emotion
+1. Visceral - instinctive. Lowest level. I like sweet tastes
+
+this CAN be overcome. e.g. I dislike bitter things - but you can learn to like coffee, or other bitter things over time.
+
+Muscles tense up so that the fight or flight response is faster.
+Muscles in face signal emotional state.
+
+2. Behavioral
+expectations
+relax vs tense up with devices that work OK or not
+
+blame yourself when you do something wrong in the UI
+
+it's better as a designer to take the plane.
+
+
+
+'who gets the blame when the software makes a mistake'
+story about the newton - 
+handwriting recognition, brilliant russian scientists. They used nearest neighbor matching at the word level - meaning that if it guessed wrong, the word might have no relation whatsoever to what user meant to write.
+
+Palm on the other hand did it letter by letter, and when the system made a mistake (confusing h with n for instance, they'd blame themselves, not the system).
+
+amusing anecdote that he met with one of the original scientists from the newton, who said that apple was so secretive they never told them what the system would be used for. as a result they trained it on the beatles lyrics! 
+
+one system was technically superior but didn't match users' mental models and was hated.
+
+- Don't do things in separate compartments. Design isn't something that happens as a last step - has to be part of process in the beginning.
+
+hardest part - getting requirements right.
+
+people don't follow through with what they say they need or how they would act.
+
+
+3) reflective - conscious level. Watching what we're doing. Self-image.
+Slow but necessary for learning.
+'brand image' - how advertising works.
+
+Cognition - understanding.
+Emotion - value judgments.
+
+talked about his ted talk video (insert link here) where he had a plank of wood across the stage. He could walk across it no problem. 
+But if that exact same stage were 100s of feet in the air, he couldn't
+
+
+when he's brought in to consult, he has one rule - "never solve the problem I'm asked to solve"  it's almost always just a symptom of the underlying problem.
+
+Design process/ alternatives - not wasted work.
+
+
+
+- the apple camera
+he worked on one of the original digital cameras that apple marketed in 1993. big flop. too ahead of its time. bad quality, could only fit 8, couldn't reallly print it (No such printers). hard to transmit. niche product (e.g. field research scientists)
+
+

@@ -1,0 +1,60 @@
+Wordpress analysis
+
+# Read the data
+views = read.csv("~/Desktop/blogposts/developmentality-blog-posts/WordpressStats/post_views.csv")
+> summary(views)
+         date          views       
+ 2010-02-05:   1   Min.   :   4.0  
+ 2010-02-06:   1   1st Qu.: 154.0  
+ 2010-02-07:   1   Median : 263.0  
+ 2010-02-08:   1   Mean   : 266.1  
+ 2010-02-09:   1   3rd Qu.: 367.0  
+ 2010-02-10:   1   Max.   :1363.0  
+ (Other)   :1448
+
+# Plot the data
+
+plot(views)
+
+![Raw Plot][]
+
+# Show the moving average - lowess
+http://en.wikipedia.org/wiki/Local_regression
+"LOESS and LOWESS (locally weighted scatterplot smoothing) are two strongly related non-parametric regression methods that combine multiple regression models in a k-nearest-neighbor-based meta-model. "LOESS" is a later generalization of LOWESS; although it is not a true initialism, it may be understood as standing for "LOcal regrESSion".[1]
+"
+
+Draw on top of the original plot - in red
+
+plot(views)
+lines(lowess(views), col="red")
+
+Thicker:
+> lines(lowess(views), col="red", lwd=4)
+
+
+# What are these outliers?
+
+2 times higher than the lowess predicts:
+points(views[views$views > 2 * lowess(views)$y,], col = "red")
+
+views$views - column of the views
+
+lowess(views)$y = the y value of the lowess curve.
+
+so this is picking out all the points in the data set that are twice as high as the lowess would predict.
+
+Pull out the dates and info
+
+views[views$views > 2 * lowess(views)$y,]
+
+> views[views$views > 2 * lowess(views)$y,]
+          date views
+1   2010-02-05    46
+83  2010-04-28   301
+369 2011-02-08   657
+370 2011-02-09  1177
+371 2011-02-10   405
+846 2012-05-30  1363
+847 2012-05-31   906
+
+
