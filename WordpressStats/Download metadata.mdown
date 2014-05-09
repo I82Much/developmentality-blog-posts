@@ -1,4 +1,4 @@
-I want to analyze the popularity of my posts in order to better understand which topics are important to my audience. In my [last post][First part], I showed  how to retrieve viewership data about your Wordpress.com blog. By itself this data doesn't tell you much. You can get high level view of the popularity of a blog over time, as well as the traffic for each post. I wanted to go a bit deeper and pull in metadata about the posts themselves, not just their identifiers. This post will show you how to download some raw data and use BeautifulSoup and Python to clean and extract the key metadata.
+I want to analyze the popularity of my posts in order to better understand which topics are important to my audience. In my [last post about the topic][First part], I showed  how to retrieve viewership data about your Wordpress.com blog. By itself this data doesn't tell you much. You can get high level view of the popularity of a blog over time, as well as the traffic for each post. I wanted to go a bit deeper and pull in metadata about the posts themselves, not just their identifiers. This post will show you how to download some raw data and use BeautifulSoup and Python to clean and extract the key metadata.
 
 When faced with a data analysis task, I usually go through the following tasks:
 
@@ -184,7 +184,7 @@ Finally, we pull out the tags and categories of the post, each of which are foun
 	
 I use a slightly different technique for the tags than the categories because each category is a separate anchor node, as opposed to the tags which are in the text of one node.
 
-After going through this procedure, we have a lot of information about each post. In order to hold the data about each post, we could create a class with the appropriate fields. For now, the class is a simple holder of variables with no behavior attached to it. As such it's a great candidate for using the [`namedtuple` functionality of the `collections` library][namedtuple].
+After going through this procedure, we have a lot of information about each post. In order to hold the data about each post, we could create a class with the appropriate fields. For now, the class is a simple holder of variables with no behavior attached to it. As such it's a great candidate for using the [`namedtuple` functionality of the `collections` library](namedtuple).
 
 	import collections
 	post_metadata = collections.namedtuple('metadata', ['id', 'publish_date', 'title', 'link', 'categories', 'tags'])
@@ -217,6 +217,29 @@ At the end of the script, we now have all the metadata about each post.
 	metadata(id=u'80156276', publish_date=u'2009-02-21', title=u'WriteRoom', link=u'http://developmentality.wordpress.com/2009/02/21/writeroom/', categories=[u'link'], tags=[u''])
 	
 
+The last step of today's post is to output the data as a [CSV](http://en.wikipedia.org/wiki/Comma-separated_values) file. Unfortunately, the standard Python csv module does not handle encoding unicode characters and the table contains unicode. As such we'll use the `UnicodeWriter` class that the [Python docs include](http://docs.python.org/2/library/csv.html#csv.writer).
+
+	columns = ['id', 'publish_date', 'title', 'link', 'categories', 'tags']
+	post_metadata = collections.namedtuple('metadata', columns)
+
+	class UnicodeWriter:
+	    """
+	    A CSV writer which will write rows to CSV file "f",
+	    which is encoded in the given encoding.
+	    """
+
+	    def __init__(self, f, dialect=csv.excel, encoding="utf-8", **kwds):
+	        # Redirect output to a queue
+	# snip the definition from http://docs.python.org/2/library/csv.html#csv.writer
+	
+    writer = UnicodeWriter(sys.stdout)
+    writer.writerow(columns)
+    for post in posts:
+      row =  [post.id, post.publish_date, post.title, post.link, ','.join(post.categories), ','.join(post.tags)]
+      writer.writerow(row)
+	  
+We then invoke the Python script and redirect the output to our csv file. I've uploaded a slightly redacted version of the csv file to Google Docs; you can [view it here](https://docs.google.com/spreadsheets/d/1F2TH0WYe0iZOkPEu7laCo17HC45v_1p3qFJKRCi2wjg/edit#gid=0).
+	
 In my next post I will show how to join this metadata with the view data we accessed via the API in last week's post in order to gain insight into which types of posts provide value to readers.
 
 [First part]:http://developmentality.wordpress.com/2014/01/30/how-to-download-your-wordpress-com-stats-in-csv-json-or-xml-format/#comment-1477

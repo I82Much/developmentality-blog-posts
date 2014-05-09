@@ -113,7 +113,9 @@ def main():
 
     posts.append(data)
 
-  #writer = csv.writer(sys.stdout)
+  # Cannot use standard csv writer because of the unicode in the table.
+  # See http://stackoverflow.com/questions/1846135/python-csv-library-with-unicode-utf-8-support-that-just-works
+  # writer = csv.writer(sys.stdout)
   writer = UnicodeWriter(sys.stdout)
   writer.writerow(columns)
   for post in posts:
