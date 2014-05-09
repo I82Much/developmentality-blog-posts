@@ -1,0 +1,9 @@
+# Go Gotcha #2: string does not behave the way you might expect
+
+Quick, what does this print?
+
+	fmt.Println(string(65))
+
+http://play.golang.org/p/CZvTvIUPFC
+
+If you said 65, you're wrong. It's understandable you'd think that. 
