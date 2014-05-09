@@ -8,9 +8,9 @@ import cStringIO
 import sys
 from bs4 import BeautifulSoup
 
-
 columns = ['id', 'publish_date', 'title', 'link', 'categories', 'tags']
 post_metadata = collections.namedtuple('metadata', columns)
+
 
 # from http://docs.python.org/2/library/csv.html#csv.writer
 class UnicodeWriter:
@@ -41,6 +41,7 @@ class UnicodeWriter:
     def writerows(self, rows):
         for row in rows:
             self.writerow(row)
+
 
 def main():
   soup = BeautifulSoup(open("all_posts.html"))
